@@ -4,7 +4,7 @@ CXXFLAGS = -Wall -O2
 LDFLAGS = -lasound
 
 # Source files
-SRCS = play_plain_audio.cpp ALSADevices.cpp Fir1.cpp
+SRCS = play_audio.cpp ALSADevices.cpp Fir1.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 # Output executable

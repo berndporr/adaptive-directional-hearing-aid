@@ -1,0 +1,14 @@
+# Ignore compiled object files
+*.o
+
+# Ignore executable binaries
+out
+*.exe
+
+# Ignore backup files
+*~
+*.swp
+
+# Ignore IDE/project files (optional)
+.vscode/
+.idea/
