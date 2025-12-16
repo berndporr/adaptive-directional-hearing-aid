@@ -1,0 +1,2 @@
+/usr/bin/ar qc libfir.a CMakeFiles/fir.dir/Fir1.cpp.o
+/usr/bin/ranlib libfir.a

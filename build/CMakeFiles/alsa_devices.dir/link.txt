@@ -1,0 +1,2 @@
+/usr/bin/ar qc libalsa_devices.a CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o
+/usr/bin/ranlib libalsa_devices.a

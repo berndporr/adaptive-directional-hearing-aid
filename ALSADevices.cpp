@@ -1,7 +1,7 @@
 
 #include "ALSADevices.hpp"
 #include <iostream>
-#include "Fir1.h"
+
 
 bool ALSAPCMDevice::open() {
     snd_pcm_hw_params_t *params;
