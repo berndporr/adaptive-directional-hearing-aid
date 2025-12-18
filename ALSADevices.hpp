@@ -5,16 +5,19 @@
 
 #include <alsa/asoundlib.h>
 #include <string>
+#include <vector>
 
 class ALSAPCMDevice {
     protected:
     snd_pcm_t* handle;
     std::string device_name;
-    unsigned int sample_rate, channels;             // Quality of the recorded audio.
-    snd_pcm_uframes_t frames_per_period;            // Latency - lower numbers will decrease latency and increase CPU usage.
-    snd_pcm_format_t format;                        // Bit depth - Quality.
-    _snd_pcm_stream type;                      // SND_PCM_STREAM_CAPTURE | SND_PCM_STREAM_PLAYBACK
-
+    unsigned int sample_rate, channels;             
+    snd_pcm_uframes_t frames_per_period;            
+    snd_pcm_format_t format;                        
+    _snd_pcm_stream type; 
+    std::vector<char> buffer;
+    size_t bytes_per_frame;
+                         
     public:
     ALSAPCMDevice(
         std::string device_name,
@@ -34,10 +37,11 @@ class ALSAPCMDevice {
 
     bool open();
     void close();
-    char* allocate_buffer();
+    void allocate_buffer();
     unsigned int get_frames_per_period();
     unsigned int get_bytes_per_frame();
     unsigned int get_channels();
+    const std::vector<char>& get_buffer() const;
 };
 
 
@@ -49,7 +53,7 @@ class ALSACaptureDevice : public ALSAPCMDevice {
         unsigned int channels,
         unsigned int frames_per_period,
         snd_pcm_format_t format
-    ) : ALSAPCMDevice( // Calling super constructor
+    ) : ALSAPCMDevice( 
         device_name,
         sample_rate, 
         channels, 
@@ -58,7 +62,7 @@ class ALSACaptureDevice : public ALSAPCMDevice {
         SND_PCM_STREAM_CAPTURE) 
     {}
 
-    unsigned int capture_into_buffer(char* buffer, snd_pcm_uframes_t frames_to_capture);
+    unsigned int capture_into_buffer();
 };
 
 
@@ -70,7 +74,7 @@ class ALSAPlaybackDevice : public ALSAPCMDevice {
         unsigned int channels,
         unsigned int frames_per_period,
         snd_pcm_format_t format
-    ) : ALSAPCMDevice( // Calling super constructor
+    ) : ALSAPCMDevice( 
         device_name,
         sample_rate, 
         channels, 
@@ -79,7 +83,9 @@ class ALSAPlaybackDevice : public ALSAPCMDevice {
         SND_PCM_STREAM_PLAYBACK) 
     {}
 
-    unsigned int play_from_buffer(char* buffer, snd_pcm_uframes_t frames_to_play);
+    unsigned int play_from_buffer();
+    void copy_from_capture(const ALSACaptureDevice& mic);
+    void copy_from_capture_mono(const ALSACaptureDevice& mic);
 };
 
 #endif

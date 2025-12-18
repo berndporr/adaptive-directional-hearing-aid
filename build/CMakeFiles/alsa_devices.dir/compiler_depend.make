@@ -183,6 +183,12 @@ CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o: /home/ross/Downloads/Hearing_aid/
   /usr/include/c++/12/cerrno \
   /usr/include/c++/12/bits/charconv.h \
   /usr/include/c++/12/bits/basic_string.tcc \
+  /usr/include/c++/12/vector \
+  /usr/include/c++/12/bits/stl_uninitialized.h \
+  /usr/include/c++/12/bits/stl_vector.h \
+  /usr/include/c++/12/bits/stl_bvector.h \
+  /usr/include/c++/12/bits/vector.tcc \
+  /usr/include/c++/12/cstring \
   /usr/include/c++/12/iostream \
   /usr/include/c++/12/ostream \
   /usr/include/c++/12/ios \
@@ -231,8 +237,6 @@ CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o: /home/ross/Downloads/Hearing_aid/
 
 /usr/include/aarch64-linux-gnu/c++/12/bits/ctype_inline.h:
 
-/usr/include/c++/12/bits/streambuf_iterator.h:
-
 /usr/include/wctype.h:
 
 /usr/include/c++/12/bits/basic_ios.h:
@@ -274,6 +278,14 @@ CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o: /home/ross/Downloads/Hearing_aid/
 /usr/include/sched.h:
 
 /usr/include/c++/12/iostream:
+
+/usr/include/c++/12/cstring:
+
+/usr/include/c++/12/bits/stl_bvector.h:
+
+/usr/include/c++/12/bits/streambuf_iterator.h:
+
+/usr/include/c++/12/vector:
 
 /usr/include/c++/12/bits/charconv.h:
 
@@ -344,6 +356,8 @@ CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o: /home/ross/Downloads/Hearing_aid/
 /usr/include/ctype.h:
 
 /usr/include/aarch64-linux-gnu/bits/endianness.h:
+
+/usr/include/c++/12/bits/vector.tcc:
 
 /usr/include/c++/12/bits/invoke.h:
 
@@ -551,6 +565,8 @@ CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o: /home/ross/Downloads/Hearing_aid/
 
 /usr/include/aarch64-linux-gnu/bits/thread-shared-types.h:
 
+/usr/include/c++/12/bits/stl_vector.h:
+
 /usr/include/aarch64-linux-gnu/bits/pthreadtypes-arch.h:
 
 /usr/include/c++/12/istream:
@@ -630,6 +646,8 @@ CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o: /home/ross/Downloads/Hearing_aid/
 /usr/include/alsa/version.h:
 
 /usr/include/alsa/global.h:
+
+/usr/include/c++/12/bits/stl_uninitialized.h:
 
 /usr/include/string.h:
 
