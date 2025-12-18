@@ -189,101 +189,10 @@ CMakeFiles/main.dir/play_audio.cpp.o: /home/ross/Downloads/Hearing_aid/play_audi
   /usr/include/c++/12/bits/stl_bvector.h \
   /usr/include/c++/12/bits/vector.tcc \
   /home/ross/Downloads/Hearing_aid/constants.h \
-  /usr/include/alsa/pcm.h \
-  /home/ross/Downloads/Hearing_aid/Fir1.h \
-  /usr/include/signal.h \
-  /usr/include/aarch64-linux-gnu/bits/signum-generic.h \
-  /usr/include/aarch64-linux-gnu/bits/signum-arch.h \
-  /usr/include/aarch64-linux-gnu/bits/types/sig_atomic_t.h \
-  /usr/include/aarch64-linux-gnu/bits/types/siginfo_t.h \
-  /usr/include/aarch64-linux-gnu/bits/types/__sigval_t.h \
-  /usr/include/aarch64-linux-gnu/bits/siginfo-arch.h \
-  /usr/include/aarch64-linux-gnu/bits/siginfo-consts.h \
-  /usr/include/aarch64-linux-gnu/bits/siginfo-consts-arch.h \
-  /usr/include/aarch64-linux-gnu/bits/types/sigval_t.h \
-  /usr/include/aarch64-linux-gnu/bits/types/sigevent_t.h \
-  /usr/include/aarch64-linux-gnu/bits/sigevent-consts.h \
-  /usr/include/aarch64-linux-gnu/bits/sigaction.h \
-  /usr/include/aarch64-linux-gnu/bits/sigcontext.h \
-  /usr/include/aarch64-linux-gnu/asm/sigcontext.h \
-  /usr/include/linux/types.h \
-  /usr/include/aarch64-linux-gnu/asm/types.h \
-  /usr/include/asm-generic/types.h \
-  /usr/include/asm-generic/int-ll64.h \
-  /usr/include/aarch64-linux-gnu/asm/bitsperlong.h \
-  /usr/include/asm-generic/bitsperlong.h \
-  /usr/include/linux/posix_types.h \
-  /usr/include/linux/stddef.h \
-  /usr/include/aarch64-linux-gnu/asm/posix_types.h \
-  /usr/include/asm-generic/posix_types.h \
-  /usr/include/aarch64-linux-gnu/asm/sve_context.h \
-  /usr/include/aarch64-linux-gnu/bits/types/stack_t.h \
-  /usr/include/aarch64-linux-gnu/sys/ucontext.h \
-  /usr/include/aarch64-linux-gnu/sys/procfs.h \
-  /usr/include/aarch64-linux-gnu/sys/time.h \
-  /usr/include/aarch64-linux-gnu/sys/user.h \
-  /usr/include/aarch64-linux-gnu/bits/procfs.h \
-  /usr/include/aarch64-linux-gnu/bits/procfs-id.h \
-  /usr/include/aarch64-linux-gnu/bits/procfs-prregset.h \
-  /usr/include/aarch64-linux-gnu/bits/procfs-extra.h \
-  /usr/include/aarch64-linux-gnu/bits/sigstack.h \
-  /usr/include/aarch64-linux-gnu/bits/sigstksz.h \
-  /usr/include/aarch64-linux-gnu/bits/ss_flags.h \
-  /usr/include/aarch64-linux-gnu/bits/types/struct_sigstack.h \
-  /usr/include/aarch64-linux-gnu/bits/sigthread.h \
-  /usr/include/aarch64-linux-gnu/bits/signal_ext.h \
-  /usr/include/c++/12/atomic \
-  /usr/include/c++/12/bits/atomic_base.h \
-  /usr/include/c++/12/bits/atomic_lockfree_defines.h
+  /usr/include/alsa/pcm.h
 
-
-/usr/include/c++/12/bits/atomic_lockfree_defines.h:
-
-/usr/include/c++/12/atomic:
-
-/usr/include/aarch64-linux-gnu/bits/ss_flags.h:
-
-/usr/include/aarch64-linux-gnu/bits/sigstack.h:
-
-/usr/include/aarch64-linux-gnu/sys/procfs.h:
-
-/usr/include/aarch64-linux-gnu/sys/ucontext.h:
-
-/usr/include/aarch64-linux-gnu/bits/types/stack_t.h:
-
-/usr/include/aarch64-linux-gnu/asm/posix_types.h:
-
-/usr/include/linux/stddef.h:
-
-/usr/include/linux/posix_types.h:
-
-/usr/include/asm-generic/bitsperlong.h:
-
-/usr/include/aarch64-linux-gnu/asm/bitsperlong.h:
-
-/usr/include/aarch64-linux-gnu/asm/types.h:
-
-/usr/include/linux/types.h:
-
-/usr/include/aarch64-linux-gnu/bits/sigcontext.h:
-
-/usr/include/aarch64-linux-gnu/bits/sigevent-consts.h:
-
-/usr/include/aarch64-linux-gnu/bits/siginfo-consts.h:
-
-/usr/include/aarch64-linux-gnu/bits/types/__sigval_t.h:
-
-/usr/include/aarch64-linux-gnu/sys/user.h:
-
-/usr/include/aarch64-linux-gnu/bits/types/siginfo_t.h:
-
-/usr/include/aarch64-linux-gnu/bits/signum-generic.h:
-
-/usr/include/signal.h:
 
 /usr/include/c++/12/bits/stl_bvector.h:
-
-/usr/include/aarch64-linux-gnu/asm/sve_context.h:
 
 /usr/include/c++/12/vector:
 
@@ -301,23 +210,15 @@ CMakeFiles/main.dir/play_audio.cpp.o: /home/ross/Downloads/Hearing_aid/play_audi
 
 /usr/include/c++/12/bits/utility.h:
 
-/usr/include/aarch64-linux-gnu/bits/procfs-id.h:
-
 /usr/include/c++/12/bits/stl_pair.h:
-
-/usr/include/aarch64-linux-gnu/bits/types/sigevent_t.h:
 
 /usr/include/c++/12/bits/stl_algobase.h:
 
 /usr/include/c++/12/backward/binders.h:
 
-/usr/include/aarch64-linux-gnu/bits/siginfo-arch.h:
-
 /usr/include/c++/12/bits/stl_function.h:
 
 /usr/include/c++/12/bits/ptr_traits.h:
-
-/usr/include/aarch64-linux-gnu/bits/sigaction.h:
 
 /usr/include/c++/12/bits/stl_iterator.h:
 
@@ -335,8 +236,6 @@ CMakeFiles/main.dir/play_audio.cpp.o: /home/ross/Downloads/Hearing_aid/play_audi
 
 /usr/include/aarch64-linux-gnu/c++/12/bits/c++locale.h:
 
-/usr/include/aarch64-linux-gnu/bits/sigthread.h:
-
 /usr/include/c++/12/bits/cpp_type_traits.h:
 
 /usr/include/c++/12/bits/exception.h:
@@ -349,8 +248,6 @@ CMakeFiles/main.dir/play_audio.cpp.o: /home/ross/Downloads/Hearing_aid/play_audi
 
 /usr/include/c++/12/cstdint:
 
-/usr/include/aarch64-linux-gnu/bits/types/sig_atomic_t.h:
-
 /usr/include/c++/12/type_traits:
 
 /usr/include/aarch64-linux-gnu/bits/uintn-identity.h:
@@ -361,8 +258,6 @@ CMakeFiles/main.dir/play_audio.cpp.o: /home/ross/Downloads/Hearing_aid/play_audi
 
 /usr/include/aarch64-linux-gnu/bits/endianness.h:
 
-/usr/include/aarch64-linux-gnu/sys/time.h:
-
 /usr/include/c++/12/bits/vector.tcc:
 
 /usr/include/c++/12/bits/invoke.h:
@@ -372,8 +267,6 @@ CMakeFiles/main.dir/play_audio.cpp.o: /home/ross/Downloads/Hearing_aid/play_audi
 /usr/include/c++/12/bits/functexcept.h:
 
 /usr/include/aarch64-linux-gnu/bits/endian.h:
-
-/usr/include/aarch64-linux-gnu/bits/procfs-extra.h:
 
 /usr/include/endian.h:
 
@@ -461,8 +354,6 @@ CMakeFiles/main.dir/play_audio.cpp.o: /home/ross/Downloads/Hearing_aid/play_audi
 
 /usr/include/alsa/asoundlib.h:
 
-/home/ross/Downloads/Hearing_aid/Fir1.h:
-
 /usr/include/aarch64-linux-gnu/bits/types/sigset_t.h:
 
 /usr/include/c++/12/ext/numeric_traits.h:
@@ -478,8 +369,6 @@ CMakeFiles/main.dir/play_audio.cpp.o: /home/ross/Downloads/Hearing_aid/play_audi
 /home/ross/Downloads/Hearing_aid/ALSADevices.hpp:
 
 /usr/include/assert.h:
-
-/usr/include/asm-generic/posix_types.h:
 
 /usr/include/c++/12/bits/move.h:
 
@@ -511,11 +400,7 @@ CMakeFiles/main.dir/play_audio.cpp.o: /home/ross/Downloads/Hearing_aid/play_audi
 
 /usr/include/aarch64-linux-gnu/bits/time.h:
 
-/usr/include/asm-generic/int-ll64.h:
-
 /usr/include/aarch64-linux-gnu/bits/types/timer_t.h:
-
-/usr/include/aarch64-linux-gnu/bits/siginfo-consts-arch.h:
 
 /usr/include/aarch64-linux-gnu/bits/errno.h:
 
@@ -526,8 +411,6 @@ CMakeFiles/main.dir/play_audio.cpp.o: /home/ross/Downloads/Hearing_aid/play_audi
 /usr/lib/gcc/aarch64-linux-gnu/12/include/stddef.h:
 
 /usr/include/linux/falloc.h:
-
-/usr/include/aarch64-linux-gnu/bits/signal_ext.h:
 
 /usr/include/alsa/seqmid.h:
 
@@ -545,8 +428,6 @@ CMakeFiles/main.dir/play_audio.cpp.o: /home/ross/Downloads/Hearing_aid/play_audi
 
 /usr/include/aarch64-linux-gnu/bits/unistd_ext.h:
 
-/usr/include/aarch64-linux-gnu/bits/signum-arch.h:
-
 /usr/include/aarch64-linux-gnu/sys/select.h:
 
 /usr/include/aarch64-linux-gnu/bits/timesize.h:
@@ -561,21 +442,13 @@ CMakeFiles/main.dir/play_audio.cpp.o: /home/ross/Downloads/Hearing_aid/play_audi
 
 /usr/include/aarch64-linux-gnu/bits/pthreadtypes.h:
 
-/usr/include/aarch64-linux-gnu/bits/procfs-prregset.h:
-
 /usr/include/c++/12/bits/postypes.h:
-
-/usr/include/aarch64-linux-gnu/bits/types/sigval_t.h:
 
 /usr/include/aarch64-linux-gnu/bits/thread-shared-types.h:
 
 /usr/include/c++/12/bits/stl_vector.h:
 
 /usr/include/aarch64-linux-gnu/bits/pthreadtypes-arch.h:
-
-/usr/include/c++/12/bits/atomic_base.h:
-
-/usr/include/aarch64-linux-gnu/bits/sigstksz.h:
 
 /usr/include/c++/12/string_view:
 
@@ -633,8 +506,6 @@ CMakeFiles/main.dir/play_audio.cpp.o: /home/ross/Downloads/Hearing_aid/play_audi
 
 /usr/include/aarch64-linux-gnu/bits/poll.h:
 
-/usr/include/asm-generic/types.h:
-
 /usr/include/aarch64-linux-gnu/bits/wordsize.h:
 
 /usr/include/asm-generic/errno-base.h:
@@ -679,15 +550,9 @@ CMakeFiles/main.dir/play_audio.cpp.o: /home/ross/Downloads/Hearing_aid/play_audi
 
 /usr/include/alsa/pcm.h:
 
-/usr/include/aarch64-linux-gnu/bits/procfs.h:
-
 /usr/lib/gcc/aarch64-linux-gnu/12/include/stdint.h:
 
-/usr/include/aarch64-linux-gnu/bits/types/struct_sigstack.h:
-
 /usr/include/aarch64-linux-gnu/bits/stdint-uintn.h:
-
-/usr/include/aarch64-linux-gnu/asm/sigcontext.h:
 
 /usr/include/c++/12/bits/stl_iterator_base_funcs.h:
 

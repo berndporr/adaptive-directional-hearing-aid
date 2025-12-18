@@ -1,7 +1,6 @@
 
 #include "ALSADevices.hpp"
 #include <cstring>
-#include <iostream>
 
 
 bool ALSAPCMDevice::open() {
@@ -48,7 +47,7 @@ void ALSAPCMDevice::close() {
 }
 
 void ALSAPCMDevice::allocate_buffer() {
-    unsigned int total_bytes = frames_per_period * bytes_per_frame;
+    size_t total_bytes = frames_per_period * bytes_per_frame;
     buffer.resize(total_bytes);
 }
 
@@ -57,7 +56,7 @@ unsigned int ALSAPCMDevice::get_channels(){
     return channels;
 }
 
-unsigned int ALSAPCMDevice::get_frames_per_period() {
+snd_pcm_uframes_t ALSAPCMDevice::get_frames_per_period() {
     return frames_per_period;
 }
 
@@ -65,11 +64,11 @@ const std::vector<char>& ALSAPCMDevice::get_buffer() const{
     return buffer;
 }
 
-unsigned int ALSAPCMDevice::get_bytes_per_frame() {
+size_t ALSAPCMDevice::get_bytes_per_frame() {
     return bytes_per_frame;
 }
 
-unsigned int ALSACaptureDevice::capture_into_buffer() {
+snd_pcm_sframes_t ALSACaptureDevice::capture_into_buffer() {
     snd_pcm_sframes_t frames_read = snd_pcm_readi(handle, buffer.data(), frames_per_period);
 
         
@@ -81,12 +80,12 @@ unsigned int ALSACaptureDevice::capture_into_buffer() {
         return 0; 
     }
 
-    if(frames_read != frames_per_period) {
+    if(frames_read != static_cast<snd_pcm_sframes_t>(frames_per_period)) {
         fprintf(stderr, "Short read: we read <%ld> frames\n", frames_read);
         // A -ve return value means an error.
         if(frames_read < 0) {
-            snd_pcm_recover(handle, frames_read, 1);
-            fprintf(stderr, "error from readi: %s\n", snd_strerror(frames_read));
+            snd_pcm_recover(handle, static_cast<int>(frames_read), 1);
+            fprintf(stderr, "error from readi: %s\n", snd_strerror(static_cast<int>(frames_read)));
             return 0;
         }
         return frames_read;
@@ -94,7 +93,7 @@ unsigned int ALSACaptureDevice::capture_into_buffer() {
     return frames_read;
 }
 
-unsigned int ALSAPlaybackDevice::play_from_buffer() {
+snd_pcm_sframes_t ALSAPlaybackDevice::play_from_buffer() {
     snd_pcm_sframes_t frames_written = snd_pcm_writei(handle, buffer.data(), frames_per_period);
 
     if (frames_written == -EINTR) {
@@ -106,8 +105,8 @@ unsigned int ALSAPlaybackDevice::play_from_buffer() {
         fprintf(stderr, "underrun occurred\n");
         snd_pcm_prepare(handle);
     } else if (frames_written < 0) {
-        fprintf(stderr, "error from writei: %s\n", snd_strerror(frames_written));
-    }  else if (frames_written != frames_per_period) {
+        fprintf(stderr, "error from writei: %s\n", snd_strerror(static_cast<int>(frames_written)));
+    }  else if (frames_written != static_cast<snd_pcm_sframes_t>(frames_per_period)) {
         fprintf(stderr, "short write, write %ld frames\n", frames_written);
     }
 

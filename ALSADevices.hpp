@@ -38,8 +38,8 @@ class ALSAPCMDevice {
     bool open();
     void close();
     void allocate_buffer();
-    unsigned int get_frames_per_period();
-    unsigned int get_bytes_per_frame();
+    snd_pcm_uframes_t get_frames_per_period();
+    size_t get_bytes_per_frame();
     unsigned int get_channels();
     const std::vector<char>& get_buffer() const;
 };
@@ -62,7 +62,7 @@ class ALSACaptureDevice : public ALSAPCMDevice {
         SND_PCM_STREAM_CAPTURE) 
     {}
 
-    unsigned int capture_into_buffer();
+    snd_pcm_sframes_t capture_into_buffer();
 };
 
 
@@ -83,7 +83,7 @@ class ALSAPlaybackDevice : public ALSAPCMDevice {
         SND_PCM_STREAM_PLAYBACK) 
     {}
 
-    unsigned int play_from_buffer();
+    snd_pcm_sframes_t play_from_buffer();
     void copy_from_capture(const ALSACaptureDevice& mic);
     void copy_from_capture_mono(const ALSACaptureDevice& mic);
 };
