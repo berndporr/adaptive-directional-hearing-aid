@@ -33,13 +33,13 @@ public:
     {}
 
     void push(AudioMessage msg) {
-        if (queue.size()<MAX_QUEUE_SIZE){        
-            {
-                std::lock_guard<std::mutex> lock(mtx);
-                queue.push(std::move(msg));
-            }
-            cv.notify_one();
-        }
+        std::unique_lock<std::mutex> lock(mtx);
+        if (queue.size() >= MAX_QUEUE_SIZE)
+            return;
+
+        queue.push(std::move(msg));
+        lock.unlock();
+        cv.notify_one();
     }
 
     AudioMessage pop() {
@@ -79,13 +79,33 @@ int main() {
     microphone.open();
     speaker.open();
     
-    AudioQueue audio_queue(1);
+    AudioQueue DSP_receiving_queue(5);
+    AudioQueue DSP_transmission_queue(5);
 
-    std::thread capture_thread(capture_thread_func, &microphone, &audio_queue);
-    std::thread playback_thread(playback_thread_func, &speaker, &audio_queue);
+    std::thread capture_thread(capture_thread_func, &microphone, &DSP_receiving_queue);
+    std::thread playback_thread(playback_thread_func, &speaker, &DSP_transmission_queue);
     
     while (1) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        AudioMessage in_msg = DSP_receiving_queue.pop();
+        AudioMessage out_msg(speaker.get_frames_per_period(),speaker.get_bytes_per_frame());
+        if (!in_msg.data.empty()) {
+            const auto& src = in_msg.data;
+
+            auto* in = reinterpret_cast<const int16_t*>(src.data());
+            auto* out = reinterpret_cast<int16_t*>(out_msg.data.data());
+
+            for (unsigned int i = 0; i < in_msg.frames; i++) {
+                int16_t left  = in[2 * i];
+                int16_t right = in[2 * i + 1];
+
+                int32_t sum = static_cast<int32_t>(left) + static_cast<int32_t>(right);
+
+                int16_t mono = static_cast<int16_t>(sum / 2);
+
+                out[i]= mono;
+            }
+        }
+        DSP_transmission_queue.push(std::move(out_msg));
     }
 
     capture_thread.join();
