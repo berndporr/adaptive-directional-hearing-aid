@@ -63,6 +63,7 @@ class ALSACaptureDevice : public ALSAPCMDevice {
     {}
 
     snd_pcm_sframes_t capture_into_buffer();
+    snd_pcm_sframes_t capture_into_array(std::vector<char>& data);
 };
 
 
@@ -86,6 +87,7 @@ class ALSAPlaybackDevice : public ALSAPCMDevice {
     snd_pcm_sframes_t play_from_buffer();
     void copy_from_capture(const ALSACaptureDevice& mic);
     void copy_from_capture_mono(const ALSACaptureDevice& mic);
+    snd_pcm_sframes_t play_from_array(const std::vector<char>& data,snd_pcm_uframes_t frames_to_play);
 };
 
 #endif

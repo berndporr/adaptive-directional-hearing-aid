@@ -93,6 +93,31 @@ snd_pcm_sframes_t ALSACaptureDevice::capture_into_buffer() {
     return frames_read;
 }
 
+snd_pcm_sframes_t ALSACaptureDevice::capture_into_array(std::vector<char>& data) {
+    snd_pcm_sframes_t frames_read = snd_pcm_readi(handle, data.data(), frames_per_period);
+
+        
+    if(frames_read == 0) {
+        fprintf(stderr, "End of file.\n");
+        return 0;
+    }
+    if (frames_read == -EINTR) {
+        return 0; 
+    }
+
+    if(frames_read != static_cast<snd_pcm_sframes_t>(frames_per_period)) {
+        fprintf(stderr, "Short read: we read <%ld> frames\n", frames_read);
+        // A -ve return value means an error.
+        if(frames_read < 0) {
+            snd_pcm_recover(handle, static_cast<int>(frames_read), 1);
+            fprintf(stderr, "error from readi: %s\n", snd_strerror(static_cast<int>(frames_read)));
+            return 0;
+        }
+        return frames_read;
+    }
+    return frames_read;
+}
+
 snd_pcm_sframes_t ALSAPlaybackDevice::play_from_buffer() {
     snd_pcm_sframes_t frames_written = snd_pcm_writei(handle, buffer.data(), frames_per_period);
 
@@ -112,6 +137,31 @@ snd_pcm_sframes_t ALSAPlaybackDevice::play_from_buffer() {
 
     return frames_written;
 }
+snd_pcm_sframes_t ALSAPlaybackDevice::play_from_array(const std::vector<char>& data,snd_pcm_uframes_t frames_to_play) {
+    if (frames_to_play != frames_per_period){
+        fprintf(stderr, "frames_to_play must equal frames in period <%lu>\n", frames_per_period);
+        return 0;
+    }
+    
+    snd_pcm_sframes_t frames_written = snd_pcm_writei(handle, data.data(), frames_per_period);
+
+    if (frames_written == -EINTR) {
+        return 0;
+    }
+
+    if (frames_written == -EPIPE) {
+        /* EPIPE means underrun */
+        fprintf(stderr, "underrun occurred\n");
+        snd_pcm_prepare(handle);
+    } else if (frames_written < 0) {
+        fprintf(stderr, "error from writei: %s\n", snd_strerror(static_cast<int>(frames_written)));
+    }  else if (frames_written != static_cast<snd_pcm_sframes_t>(frames_per_period)) {
+        fprintf(stderr, "short write, write %ld frames\n", frames_written);
+    }
+
+    return frames_written;
+}
+
 
 void ALSAPlaybackDevice::copy_from_capture(const ALSACaptureDevice& mic){
     const auto& src = mic.get_buffer();
