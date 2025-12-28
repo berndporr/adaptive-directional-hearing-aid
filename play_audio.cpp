@@ -1,12 +1,14 @@
 #include "ALSADevices.hpp"
+#include "Fir1.h"
 #include "constants.h"
 #include <cstddef>
+#include <cstdint>
 #include <thread>
 #include <queue>
 #include <mutex>
 #include <condition_variable>
 #include <vector>
-#include <chrono>
+#include <iostream>
 
 struct AudioMessage {
     std::vector<char> data;
@@ -79,12 +81,14 @@ int main() {
     microphone.open();
     speaker.open();
     
-    AudioQueue DSP_receiving_queue(5);
-    AudioQueue DSP_transmission_queue(5);
+    AudioQueue DSP_receiving_queue(500);
+    AudioQueue DSP_transmission_queue(500);
 
     std::thread capture_thread(capture_thread_func, &microphone, &DSP_receiving_queue);
     std::thread playback_thread(playback_thread_func, &speaker, &DSP_transmission_queue);
     
+    Fir1 fir(NTAPS,0.00000);
+    fir.setLearningRate(LEARNING_RATE);
     while (1) {
         AudioMessage in_msg = DSP_receiving_queue.pop();
         AudioMessage out_msg(speaker.get_frames_per_period(),speaker.get_bytes_per_frame());
@@ -98,12 +102,18 @@ int main() {
                 int16_t left  = in[2 * i];
                 int16_t right = in[2 * i + 1];
 
-                int32_t sum = static_cast<int32_t>(left) + static_cast<int32_t>(right);
+                int32_t sum32 = static_cast<int32_t>(left) + static_cast<int32_t>(right);
+                int32_t diff32 = static_cast<int32_t>(right) - static_cast<int32_t>(left);
+                double sum  = static_cast<double>(sum32 >> 1);
+                double diff = static_cast<double>(diff32 >> 1);
 
-                int16_t mono = static_cast<int16_t>(sum / 2);
-
-                out[i]= mono;
-            }
+                double canceller = fir.filter(diff);
+                double output = sum - canceller;
+                fir.lms_update(output);
+                
+                int16_t out16 = static_cast<int16_t>(output);
+                out[i]= out16*GAIN;
+                }
         }
         DSP_transmission_queue.push(std::move(out_msg));
     }

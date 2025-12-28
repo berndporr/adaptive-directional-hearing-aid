@@ -211,6 +211,7 @@ public:
 	
 	return p;
     }
+    unsigned getOffset();
 
 private:
     void initWithVector(std::vector<double> _coefficients);

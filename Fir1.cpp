@@ -47,7 +47,7 @@ Fir1::Fir1(unsigned number_of_taps, double value) :
 	buffer(new double[number_of_taps]),  
 	taps(number_of_taps) {
 	for(unsigned int i=0;i<number_of_taps;i++) {
-	        coefficients[i] = value;
+	    coefficients[i] = value;
 		buffer[i] = 0;
 	}
 }
@@ -95,6 +95,10 @@ void Fir1::reset()
 	offset = 0;
 }
 
+unsigned Fir1::getOffset()
+{
+	return offset;
+}
 void Fir1::zeroCoeff() {
 	memset(coefficients, 0, sizeof(double)*taps);
 	offset = 0;
