@@ -75,6 +75,7 @@ void playback_thread_func(ALSAPlaybackDevice* speaker, AudioQueue* audio_queue) 
 
 
 int main() {
+    const snd_pcm_format_t FORMAT = SND_PCM_FORMAT_S16_LE;
     ALSACaptureDevice microphone("plughw:5,0", SAMPLING_RATE, MICROPHONE_CHANNELS, FRAMES_PER_PERIOD, FORMAT);
     ALSAPlaybackDevice speaker("default", SAMPLING_RATE, SPEAKER_CHANNELS, FRAMES_PER_PERIOD, FORMAT);
 
@@ -106,12 +107,25 @@ int main() {
                 int32_t diff32 = static_cast<int32_t>(right) - static_cast<int32_t>(left);
                 double sum  = static_cast<double>(sum32 >> 1);
                 double diff = static_cast<double>(diff32 >> 1);
+                
 
                 double canceller = fir.filter(diff);
+                if(std::abs(canceller)>65536){
+                    fir.reset();
+                    out[i]= static_cast<int16_t>(sum)*GAIN;
+                    continue;
+                }
                 double output = sum - canceller;
+                if (output<-32768){
+                    output = -32768;
+                }
+                if(output>32767){
+                    output = 32767;
+                }
                 fir.lms_update(output);
                 
                 int16_t out16 = static_cast<int16_t>(output);
+
                 out[i]= out16*GAIN;
                 }
         }
