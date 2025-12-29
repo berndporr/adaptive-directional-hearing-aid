@@ -136,8 +136,9 @@ int main() {
                 
                 double delayed_sum = delay_line.process(sum);
                 double canceller = fir.filter(diff);
-                if(std::abs(canceller)>65536){
+                if(std::abs(canceller)>500){
                     fir.reset();
+                    fir.zeroCoeff();
                     out[i]= static_cast<int16_t>(sum)*GAIN;
                     continue;
                 }

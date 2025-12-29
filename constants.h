@@ -9,7 +9,7 @@
 #define FRAMES_PER_PERIOD 32
 #define MICROPHONE_CHANNELS 2
 #define SPEAKER_CHANNELS 1
-#define NTAPS 400
+#define NTAPS 200
 #define LEARNING_RATE 0.0000001
 #define GAIN 30
 #endif
