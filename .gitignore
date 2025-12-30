@@ -12,3 +12,4 @@ out
 # Ignore IDE/project files (optional)
 .vscode/
 .idea/
+compile_commands.json
