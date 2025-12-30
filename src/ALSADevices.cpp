@@ -26,7 +26,7 @@ bool ALSAPCMDevice::open() {
     
     snd_pcm_hw_params_set_rate(handle, params, sample_rate, 0);
     
-    snd_pcm_hw_params_set_period_size(handle, params, frames_per_period, 0);
+    snd_pcm_hw_params_set_period_size(handle, params, static_cast<snd_pcm_uframes_t>(frames_per_period), 0);
     
     rc = snd_pcm_hw_params(handle, params);
     if (rc < 0) {
@@ -34,7 +34,7 @@ bool ALSAPCMDevice::open() {
         return false;
     }
 
-    bytes_per_frame = (snd_pcm_format_width(format) / 8) * channels;
+    bytes_per_frame = static_cast<unsigned>((snd_pcm_format_width(format) / 8)) * channels;
     allocate_buffer();
     
 
@@ -47,7 +47,7 @@ void ALSAPCMDevice::close() {
 }
 
 void ALSAPCMDevice::allocate_buffer() {
-    size_t total_bytes = frames_per_period * bytes_per_frame;
+    size_t total_bytes = static_cast<size_t>(frames_per_period) * bytes_per_frame;
     buffer.resize(total_bytes);
 }
 
@@ -56,7 +56,7 @@ unsigned int ALSAPCMDevice::get_channels(){
     return channels;
 }
 
-snd_pcm_uframes_t ALSAPCMDevice::get_frames_per_period() {
+snd_pcm_sframes_t ALSAPCMDevice::get_frames_per_period() {
     return frames_per_period;
 }
 
@@ -69,7 +69,7 @@ size_t ALSAPCMDevice::get_bytes_per_frame() {
 }
 
 snd_pcm_sframes_t ALSACaptureDevice::capture_into_buffer() {
-    snd_pcm_sframes_t frames_read = snd_pcm_readi(handle, buffer.data(), frames_per_period);
+    snd_pcm_sframes_t frames_read = snd_pcm_readi(handle, buffer.data(), static_cast<snd_pcm_uframes_t>(frames_per_period));
 
         
     if(frames_read == 0) {
@@ -94,7 +94,7 @@ snd_pcm_sframes_t ALSACaptureDevice::capture_into_buffer() {
 }
 
 snd_pcm_sframes_t ALSACaptureDevice::capture_into_array(std::vector<char>& data) {
-    snd_pcm_sframes_t frames_read = snd_pcm_readi(handle, data.data(), frames_per_period);
+    snd_pcm_sframes_t frames_read = snd_pcm_readi(handle, data.data(), static_cast<snd_pcm_uframes_t>(frames_per_period));
 
         
     if(frames_read == 0) {
@@ -119,7 +119,7 @@ snd_pcm_sframes_t ALSACaptureDevice::capture_into_array(std::vector<char>& data)
 }
 
 snd_pcm_sframes_t ALSAPlaybackDevice::play_from_buffer() {
-    snd_pcm_sframes_t frames_written = snd_pcm_writei(handle, buffer.data(), frames_per_period);
+    snd_pcm_sframes_t frames_written = snd_pcm_writei(handle, buffer.data(), static_cast<snd_pcm_uframes_t>(frames_per_period));
 
     if (frames_written == -EINTR) {
         return 0;
@@ -137,13 +137,13 @@ snd_pcm_sframes_t ALSAPlaybackDevice::play_from_buffer() {
 
     return frames_written;
 }
-snd_pcm_sframes_t ALSAPlaybackDevice::play_from_array(const std::vector<char>& data,snd_pcm_uframes_t frames_to_play) {
+snd_pcm_sframes_t ALSAPlaybackDevice::play_from_array(const std::vector<char>& data,snd_pcm_sframes_t frames_to_play) {
     if (frames_to_play != frames_per_period){
         fprintf(stderr, "frames_to_play must equal frames in period <%lu>\n", frames_per_period);
         return 0;
     }
     
-    snd_pcm_sframes_t frames_written = snd_pcm_writei(handle, data.data(), frames_per_period);
+    snd_pcm_sframes_t frames_written = snd_pcm_writei(handle, data.data(), static_cast<snd_pcm_uframes_t>(frames_per_period));
 
     if (frames_written == -EINTR) {
         return 0;
@@ -155,7 +155,7 @@ snd_pcm_sframes_t ALSAPlaybackDevice::play_from_array(const std::vector<char>& d
         snd_pcm_prepare(handle);
     } else if (frames_written < 0) {
         fprintf(stderr, "error from writei: %s\n", snd_strerror(static_cast<int>(frames_written)));
-    }  else if (frames_written != static_cast<snd_pcm_sframes_t>(frames_per_period)) {
+    }  else if (frames_written != frames_per_period) {
         fprintf(stderr, "short write, write %ld frames\n", frames_written);
     }
 
@@ -166,7 +166,7 @@ snd_pcm_sframes_t ALSAPlaybackDevice::play_from_array(const std::vector<char>& d
 void ALSAPlaybackDevice::copy_from_capture(const ALSACaptureDevice& mic){
     const auto& src = mic.get_buffer();
 
-    size_t bytes = frames_per_period * bytes_per_frame;
+    size_t bytes = static_cast<size_t>(frames_per_period) * bytes_per_frame;
 
     std::memcpy(buffer.data(), src.data(), bytes);
 

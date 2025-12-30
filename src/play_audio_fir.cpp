@@ -12,12 +12,12 @@
 
 struct AudioMessage {
     std::vector<char> data;
-    snd_pcm_uframes_t frames;
+    snd_pcm_sframes_t frames;
 
-    AudioMessage(snd_pcm_uframes_t frames,size_t bytes_per_frame) : 
+    AudioMessage(snd_pcm_sframes_t frames,size_t bytes_per_frame) : 
         frames(frames) 
         {
-            data.resize(frames * bytes_per_frame);
+            data.resize(static_cast<size_t>(frames) * bytes_per_frame);
         }
 
 };
@@ -56,7 +56,7 @@ public:
 void capture_thread_func(ALSACaptureDevice* mic, AudioQueue* audio_queue) {
     while (1) {
         AudioMessage msg(mic->get_frames_per_period(),mic->get_bytes_per_frame());
-        snd_pcm_uframes_t frames = mic->capture_into_array(msg.data);
+        snd_pcm_sframes_t frames = mic->capture_into_array(msg.data);
         if (frames > 0) {
             msg.frames = frames;
             audio_queue->push(std::move(msg));
