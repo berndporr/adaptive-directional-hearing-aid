@@ -8,13 +8,11 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/ross/Downloads/Hearing_aid/play_audio.cpp" "CMakeFiles/main.dir/play_audio.cpp.o" "gcc" "CMakeFiles/main.dir/play_audio.cpp.o.d"
+  "/home/ross/Downloads/Hearing_aid/src/dnf_torch.cpp" "CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o" "gcc" "CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o.d"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/ross/Downloads/Hearing_aid/build/CMakeFiles/fir.dir/DependInfo.cmake"
-  "/home/ross/Downloads/Hearing_aid/build/CMakeFiles/alsa_devices.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

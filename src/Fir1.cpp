@@ -23,7 +23,7 @@ THE SOFTWARE.
 /* (C) 2013 Graeme Hattan & Bernd Porr */
 /* (C) 2018-2024 Bernd Porr */
 
-#include "Fir1.h"
+#include "../include/Fir1.h"
 
 #include <string.h>
 #include <stdlib.h>

@@ -53,7 +53,7 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ross/Downloads/Hearing_aid
+CMAKE_SOURCE_DIR = /home/ross/Downloads/Hearing_aid/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/ross/Downloads/Hearing_aid/build
@@ -70,18 +70,18 @@ include CMakeFiles/fir.dir/progress.make
 include CMakeFiles/fir.dir/flags.make
 
 CMakeFiles/fir.dir/Fir1.cpp.o: CMakeFiles/fir.dir/flags.make
-CMakeFiles/fir.dir/Fir1.cpp.o: /home/ross/Downloads/Hearing_aid/Fir1.cpp
+CMakeFiles/fir.dir/Fir1.cpp.o: /home/ross/Downloads/Hearing_aid/src/Fir1.cpp
 CMakeFiles/fir.dir/Fir1.cpp.o: CMakeFiles/fir.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ross/Downloads/Hearing_aid/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/fir.dir/Fir1.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/fir.dir/Fir1.cpp.o -MF CMakeFiles/fir.dir/Fir1.cpp.o.d -o CMakeFiles/fir.dir/Fir1.cpp.o -c /home/ross/Downloads/Hearing_aid/Fir1.cpp
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/fir.dir/Fir1.cpp.o -MF CMakeFiles/fir.dir/Fir1.cpp.o.d -o CMakeFiles/fir.dir/Fir1.cpp.o -c /home/ross/Downloads/Hearing_aid/src/Fir1.cpp
 
 CMakeFiles/fir.dir/Fir1.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/fir.dir/Fir1.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ross/Downloads/Hearing_aid/Fir1.cpp > CMakeFiles/fir.dir/Fir1.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ross/Downloads/Hearing_aid/src/Fir1.cpp > CMakeFiles/fir.dir/Fir1.cpp.i
 
 CMakeFiles/fir.dir/Fir1.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/fir.dir/Fir1.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ross/Downloads/Hearing_aid/Fir1.cpp -o CMakeFiles/fir.dir/Fir1.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ross/Downloads/Hearing_aid/src/Fir1.cpp -o CMakeFiles/fir.dir/Fir1.cpp.s
 
 # Object files for target fir
 fir_OBJECTS = \
@@ -106,6 +106,6 @@ CMakeFiles/fir.dir/clean:
 .PHONY : CMakeFiles/fir.dir/clean
 
 CMakeFiles/fir.dir/depend:
-	cd /home/ross/Downloads/Hearing_aid/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ross/Downloads/Hearing_aid /home/ross/Downloads/Hearing_aid /home/ross/Downloads/Hearing_aid/build /home/ross/Downloads/Hearing_aid/build /home/ross/Downloads/Hearing_aid/build/CMakeFiles/fir.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ross/Downloads/Hearing_aid/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ross/Downloads/Hearing_aid/src /home/ross/Downloads/Hearing_aid/src /home/ross/Downloads/Hearing_aid/build /home/ross/Downloads/Hearing_aid/build /home/ross/Downloads/Hearing_aid/build/CMakeFiles/fir.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/fir.dir/depend
 

@@ -1,4 +1,4 @@
-# Install script for directory: /home/ross/Downloads/Hearing_aid
+# Install script for directory: /home/ross/Downloads/Hearing_aid/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

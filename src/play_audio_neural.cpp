@@ -1,6 +1,5 @@
-#include "ALSADevices.hpp"
-#include "Fir1.h"
-#include "constants.h"
+#include "../include/ALSADevices.h"
+#include "../constants.h"
 #include <cstddef>
 #include <cstdint>
 #include <thread>
@@ -8,7 +7,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <vector>
-#include <iostream>
+
 
 struct AudioMessage {
     std::vector<char> data;
@@ -110,8 +109,6 @@ int main() {
     std::thread capture_thread(capture_thread_func, &microphone, &DSP_receiving_queue);
     std::thread playback_thread(playback_thread_func, &speaker, &DSP_transmission_queue);
     
-    Fir1 fir(NTAPS,0.00000);
-    fir.setLearningRate(LEARNING_RATE);
     size_t delay_line_length = NTAPS/2;
 
     DelayLine delay_line(delay_line_length);
@@ -130,20 +127,15 @@ int main() {
                 int16_t right = in[2 * i + 1];
 
                 int32_t sum32 = static_cast<int32_t>(left) + static_cast<int32_t>(right);
-                int32_t diff32 = static_cast<int32_t>(right) - static_cast<int32_t>(left);
+                /*int32_t diff32 = static_cast<int32_t>(right) - static_cast<int32_t>(left);*/
                 double sum  = static_cast<double>(sum32 >> 1);
-                double diff = static_cast<double>(diff32 >> 1);
+                /*double diff = static_cast<double>(diff32 >> 1);*/
                 
                 double delayed_sum = delay_line.process(sum);
-                double canceller = fir.filter(diff);
-                if(std::abs(canceller)>500){
-                    fir.reset();
-                    fir.zeroCoeff();
-                    out[i]= static_cast<int16_t>(sum)*GAIN;
-                    continue;
-                }
+                
+                
 
-                double output = delayed_sum - canceller;
+                double output = delayed_sum;
                 if (output<-32768){
                     output = -32768;
                 }
@@ -151,7 +143,7 @@ int main() {
                     output = 32767;
                 }
 
-                fir.lms_update(output);
+                
                 
                 int16_t out16 = static_cast<int16_t>(output);
 

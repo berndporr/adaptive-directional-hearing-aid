@@ -54,7 +54,7 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ross/Downloads/Hearing_aid
+CMAKE_SOURCE_DIR = /home/ross/Downloads/Hearing_aid/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/ross/Downloads/Hearing_aid/build
@@ -65,7 +65,9 @@ CMAKE_BINARY_DIR = /home/ross/Downloads/Hearing_aid/build
 # The main recursive "all" target.
 all: CMakeFiles/fir.dir/all
 all: CMakeFiles/alsa_devices.dir/all
-all: CMakeFiles/main.dir/all
+all: CMakeFiles/dnf_torch.dir/all
+all: CMakeFiles/main_fir.dir/all
+all: CMakeFiles/main_neural.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -75,7 +77,9 @@ preinstall:
 # The main recursive "clean" target.
 clean: CMakeFiles/fir.dir/clean
 clean: CMakeFiles/alsa_devices.dir/clean
-clean: CMakeFiles/main.dir/clean
+clean: CMakeFiles/dnf_torch.dir/clean
+clean: CMakeFiles/main_fir.dir/clean
+clean: CMakeFiles/main_neural.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -85,7 +89,7 @@ clean: CMakeFiles/main.dir/clean
 CMakeFiles/fir.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/fir.dir/build.make CMakeFiles/fir.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/fir.dir/build.make CMakeFiles/fir.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ross/Downloads/Hearing_aid/build/CMakeFiles --progress-num=3,4 "Built target fir"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ross/Downloads/Hearing_aid/build/CMakeFiles --progress-num=5,6 "Built target fir"
 .PHONY : CMakeFiles/fir.dir/all
 
 # Build rule for subdir invocation for target.
@@ -131,31 +135,84 @@ CMakeFiles/alsa_devices.dir/clean:
 .PHONY : CMakeFiles/alsa_devices.dir/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/main.dir
+# Target rules for target CMakeFiles/dnf_torch.dir
 
 # All Build rule for target.
-CMakeFiles/main.dir/all: CMakeFiles/fir.dir/all
-CMakeFiles/main.dir/all: CMakeFiles/alsa_devices.dir/all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ross/Downloads/Hearing_aid/build/CMakeFiles --progress-num=5,6 "Built target main"
-.PHONY : CMakeFiles/main.dir/all
+CMakeFiles/dnf_torch.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnf_torch.dir/build.make CMakeFiles/dnf_torch.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnf_torch.dir/build.make CMakeFiles/dnf_torch.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ross/Downloads/Hearing_aid/build/CMakeFiles --progress-num=3,4 "Built target dnf_torch"
+.PHONY : CMakeFiles/dnf_torch.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/main.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ross/Downloads/Hearing_aid/build/CMakeFiles 6
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/main.dir/all
+CMakeFiles/dnf_torch.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ross/Downloads/Hearing_aid/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/dnf_torch.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ross/Downloads/Hearing_aid/build/CMakeFiles 0
-.PHONY : CMakeFiles/main.dir/rule
+.PHONY : CMakeFiles/dnf_torch.dir/rule
 
 # Convenience name for target.
-main: CMakeFiles/main.dir/rule
-.PHONY : main
+dnf_torch: CMakeFiles/dnf_torch.dir/rule
+.PHONY : dnf_torch
 
 # clean rule for target.
-CMakeFiles/main.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/clean
-.PHONY : CMakeFiles/main.dir/clean
+CMakeFiles/dnf_torch.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnf_torch.dir/build.make CMakeFiles/dnf_torch.dir/clean
+.PHONY : CMakeFiles/dnf_torch.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/main_fir.dir
+
+# All Build rule for target.
+CMakeFiles/main_fir.dir/all: CMakeFiles/alsa_devices.dir/all
+CMakeFiles/main_fir.dir/all: CMakeFiles/fir.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_fir.dir/build.make CMakeFiles/main_fir.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_fir.dir/build.make CMakeFiles/main_fir.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ross/Downloads/Hearing_aid/build/CMakeFiles --progress-num=7,8 "Built target main_fir"
+.PHONY : CMakeFiles/main_fir.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/main_fir.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ross/Downloads/Hearing_aid/build/CMakeFiles 6
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/main_fir.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ross/Downloads/Hearing_aid/build/CMakeFiles 0
+.PHONY : CMakeFiles/main_fir.dir/rule
+
+# Convenience name for target.
+main_fir: CMakeFiles/main_fir.dir/rule
+.PHONY : main_fir
+
+# clean rule for target.
+CMakeFiles/main_fir.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_fir.dir/build.make CMakeFiles/main_fir.dir/clean
+.PHONY : CMakeFiles/main_fir.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/main_neural.dir
+
+# All Build rule for target.
+CMakeFiles/main_neural.dir/all: CMakeFiles/alsa_devices.dir/all
+CMakeFiles/main_neural.dir/all: CMakeFiles/dnf_torch.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_neural.dir/build.make CMakeFiles/main_neural.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_neural.dir/build.make CMakeFiles/main_neural.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ross/Downloads/Hearing_aid/build/CMakeFiles --progress-num=9,10 "Built target main_neural"
+.PHONY : CMakeFiles/main_neural.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/main_neural.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ross/Downloads/Hearing_aid/build/CMakeFiles 6
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/main_neural.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ross/Downloads/Hearing_aid/build/CMakeFiles 0
+.PHONY : CMakeFiles/main_neural.dir/rule
+
+# Convenience name for target.
+main_neural: CMakeFiles/main_neural.dir/rule
+.PHONY : main_neural
+
+# clean rule for target.
+CMakeFiles/main_neural.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_neural.dir/build.make CMakeFiles/main_neural.dir/clean
+.PHONY : CMakeFiles/main_neural.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

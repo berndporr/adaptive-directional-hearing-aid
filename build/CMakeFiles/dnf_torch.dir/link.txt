@@ -1,0 +1,2 @@
+/usr/bin/ar qc libdnf_torch.a CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o
+/usr/bin/ranlib libdnf_torch.a

@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/ross/Downloads/Hearing_aid
+CXX_INCLUDES = -I/home/ross/Downloads/Hearing_aid/src../include
 
 CXX_FLAGS = -Wall -Wextra -Wconversion -pedantic -std=gnu++17
 

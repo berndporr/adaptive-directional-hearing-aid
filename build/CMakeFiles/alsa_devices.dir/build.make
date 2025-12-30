@@ -53,7 +53,7 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ross/Downloads/Hearing_aid
+CMAKE_SOURCE_DIR = /home/ross/Downloads/Hearing_aid/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/ross/Downloads/Hearing_aid/build
@@ -70,18 +70,18 @@ include CMakeFiles/alsa_devices.dir/progress.make
 include CMakeFiles/alsa_devices.dir/flags.make
 
 CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o: CMakeFiles/alsa_devices.dir/flags.make
-CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o: /home/ross/Downloads/Hearing_aid/ALSADevices.cpp
+CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o: /home/ross/Downloads/Hearing_aid/src/ALSADevices.cpp
 CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o: CMakeFiles/alsa_devices.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ross/Downloads/Hearing_aid/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o -MF CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o.d -o CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o -c /home/ross/Downloads/Hearing_aid/ALSADevices.cpp
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o -MF CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o.d -o CMakeFiles/alsa_devices.dir/ALSADevices.cpp.o -c /home/ross/Downloads/Hearing_aid/src/ALSADevices.cpp
 
 CMakeFiles/alsa_devices.dir/ALSADevices.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/alsa_devices.dir/ALSADevices.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ross/Downloads/Hearing_aid/ALSADevices.cpp > CMakeFiles/alsa_devices.dir/ALSADevices.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ross/Downloads/Hearing_aid/src/ALSADevices.cpp > CMakeFiles/alsa_devices.dir/ALSADevices.cpp.i
 
 CMakeFiles/alsa_devices.dir/ALSADevices.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/alsa_devices.dir/ALSADevices.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ross/Downloads/Hearing_aid/ALSADevices.cpp -o CMakeFiles/alsa_devices.dir/ALSADevices.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ross/Downloads/Hearing_aid/src/ALSADevices.cpp -o CMakeFiles/alsa_devices.dir/ALSADevices.cpp.s
 
 # Object files for target alsa_devices
 alsa_devices_OBJECTS = \
@@ -106,6 +106,6 @@ CMakeFiles/alsa_devices.dir/clean:
 .PHONY : CMakeFiles/alsa_devices.dir/clean
 
 CMakeFiles/alsa_devices.dir/depend:
-	cd /home/ross/Downloads/Hearing_aid/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ross/Downloads/Hearing_aid /home/ross/Downloads/Hearing_aid /home/ross/Downloads/Hearing_aid/build /home/ross/Downloads/Hearing_aid/build /home/ross/Downloads/Hearing_aid/build/CMakeFiles/alsa_devices.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ross/Downloads/Hearing_aid/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ross/Downloads/Hearing_aid/src /home/ross/Downloads/Hearing_aid/src /home/ross/Downloads/Hearing_aid/build /home/ross/Downloads/Hearing_aid/build /home/ross/Downloads/Hearing_aid/build/CMakeFiles/alsa_devices.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/alsa_devices.dir/depend
 

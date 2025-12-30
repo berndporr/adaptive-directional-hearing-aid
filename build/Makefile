@@ -57,7 +57,7 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ross/Downloads/Hearing_aid
+CMAKE_SOURCE_DIR = /home/ross/Downloads/Hearing_aid/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/ross/Downloads/Hearing_aid/build
@@ -143,17 +143,43 @@ alsa_devices/fast:
 .PHONY : alsa_devices/fast
 
 #=============================================================================
-# Target rules for targets named main
+# Target rules for targets named dnf_torch
 
 # Build rule for target.
-main: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main
-.PHONY : main
+dnf_torch: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dnf_torch
+.PHONY : dnf_torch
 
 # fast build rule for target.
-main/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
-.PHONY : main/fast
+dnf_torch/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnf_torch.dir/build.make CMakeFiles/dnf_torch.dir/build
+.PHONY : dnf_torch/fast
+
+#=============================================================================
+# Target rules for targets named main_fir
+
+# Build rule for target.
+main_fir: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main_fir
+.PHONY : main_fir
+
+# fast build rule for target.
+main_fir/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_fir.dir/build.make CMakeFiles/main_fir.dir/build
+.PHONY : main_fir/fast
+
+#=============================================================================
+# Target rules for targets named main_neural
+
+# Build rule for target.
+main_neural: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main_neural
+.PHONY : main_neural
+
+# fast build rule for target.
+main_neural/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_neural.dir/build.make CMakeFiles/main_neural.dir/build
+.PHONY : main_neural/fast
 
 ALSADevices.o: ALSADevices.cpp.o
 .PHONY : ALSADevices.o
@@ -203,29 +229,77 @@ Fir1.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/fir.dir/build.make CMakeFiles/fir.dir/Fir1.cpp.s
 .PHONY : Fir1.cpp.s
 
-play_audio.o: play_audio.cpp.o
-.PHONY : play_audio.o
+dnf_torch.o: dnf_torch.cpp.o
+.PHONY : dnf_torch.o
 
 # target to build an object file
-play_audio.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/play_audio.cpp.o
-.PHONY : play_audio.cpp.o
+dnf_torch.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnf_torch.dir/build.make CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o
+.PHONY : dnf_torch.cpp.o
 
-play_audio.i: play_audio.cpp.i
-.PHONY : play_audio.i
+dnf_torch.i: dnf_torch.cpp.i
+.PHONY : dnf_torch.i
 
 # target to preprocess a source file
-play_audio.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/play_audio.cpp.i
-.PHONY : play_audio.cpp.i
+dnf_torch.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnf_torch.dir/build.make CMakeFiles/dnf_torch.dir/dnf_torch.cpp.i
+.PHONY : dnf_torch.cpp.i
 
-play_audio.s: play_audio.cpp.s
-.PHONY : play_audio.s
+dnf_torch.s: dnf_torch.cpp.s
+.PHONY : dnf_torch.s
 
 # target to generate assembly for a file
-play_audio.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/play_audio.cpp.s
-.PHONY : play_audio.cpp.s
+dnf_torch.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnf_torch.dir/build.make CMakeFiles/dnf_torch.dir/dnf_torch.cpp.s
+.PHONY : dnf_torch.cpp.s
+
+play_audio_fir.o: play_audio_fir.cpp.o
+.PHONY : play_audio_fir.o
+
+# target to build an object file
+play_audio_fir.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_fir.dir/build.make CMakeFiles/main_fir.dir/play_audio_fir.cpp.o
+.PHONY : play_audio_fir.cpp.o
+
+play_audio_fir.i: play_audio_fir.cpp.i
+.PHONY : play_audio_fir.i
+
+# target to preprocess a source file
+play_audio_fir.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_fir.dir/build.make CMakeFiles/main_fir.dir/play_audio_fir.cpp.i
+.PHONY : play_audio_fir.cpp.i
+
+play_audio_fir.s: play_audio_fir.cpp.s
+.PHONY : play_audio_fir.s
+
+# target to generate assembly for a file
+play_audio_fir.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_fir.dir/build.make CMakeFiles/main_fir.dir/play_audio_fir.cpp.s
+.PHONY : play_audio_fir.cpp.s
+
+play_audio_neural.o: play_audio_neural.cpp.o
+.PHONY : play_audio_neural.o
+
+# target to build an object file
+play_audio_neural.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_neural.dir/build.make CMakeFiles/main_neural.dir/play_audio_neural.cpp.o
+.PHONY : play_audio_neural.cpp.o
+
+play_audio_neural.i: play_audio_neural.cpp.i
+.PHONY : play_audio_neural.i
+
+# target to preprocess a source file
+play_audio_neural.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_neural.dir/build.make CMakeFiles/main_neural.dir/play_audio_neural.cpp.i
+.PHONY : play_audio_neural.cpp.i
+
+play_audio_neural.s: play_audio_neural.cpp.s
+.PHONY : play_audio_neural.s
+
+# target to generate assembly for a file
+play_audio_neural.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_neural.dir/build.make CMakeFiles/main_neural.dir/play_audio_neural.cpp.s
+.PHONY : play_audio_neural.cpp.s
 
 # Help Target
 help:
@@ -236,17 +310,25 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... alsa_devices"
+	@echo "... dnf_torch"
 	@echo "... fir"
-	@echo "... main"
+	@echo "... main_fir"
+	@echo "... main_neural"
 	@echo "... ALSADevices.o"
 	@echo "... ALSADevices.i"
 	@echo "... ALSADevices.s"
 	@echo "... Fir1.o"
 	@echo "... Fir1.i"
 	@echo "... Fir1.s"
-	@echo "... play_audio.o"
-	@echo "... play_audio.i"
-	@echo "... play_audio.s"
+	@echo "... dnf_torch.o"
+	@echo "... dnf_torch.i"
+	@echo "... dnf_torch.s"
+	@echo "... play_audio_fir.o"
+	@echo "... play_audio_fir.i"
+	@echo "... play_audio_fir.s"
+	@echo "... play_audio_neural.o"
+	@echo "... play_audio_neural.i"
+	@echo "... play_audio_neural.s"
 .PHONY : help
 
 
