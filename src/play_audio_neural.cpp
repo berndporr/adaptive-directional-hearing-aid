@@ -1,5 +1,6 @@
 #include "../include/ALSADevices.h"
 #include "../constants.h"
+#include "../include/dnf_torch.h"
 #include <cstddef>
 #include <cstdint>
 #include <thread>
@@ -35,8 +36,9 @@ public:
 
     void push(AudioMessage msg) {
         std::unique_lock<std::mutex> lock(mtx);
-        if (queue.size() >= MAX_QUEUE_SIZE)
+        if (queue.size() >= MAX_QUEUE_SIZE){
             return;
+        }
 
         queue.push(std::move(msg));
         lock.unlock();
@@ -100,18 +102,21 @@ int main() {
     ALSACaptureDevice microphone("plughw:5,0", SAMPLING_RATE, MICROPHONE_CHANNELS, FRAMES_PER_PERIOD, FORMAT);
     ALSAPlaybackDevice speaker("default", SAMPLING_RATE, SPEAKER_CHANNELS, FRAMES_PER_PERIOD, FORMAT);
 
+    int delay_line_length = DELAY_LINE_LENGTH;
+    int nLayers = NEURAL_NETWORK_LAYERS;
+
+    DNF dnf(nLayers,delay_line_length);
+
+    dnf.setLearningRate(static_cast<float>(LEARNING_RATE));
+
     microphone.open();
     speaker.open();
     
-    AudioQueue DSP_receiving_queue(500);
-    AudioQueue DSP_transmission_queue(500);
+    AudioQueue DSP_receiving_queue(100000000000000);
+    AudioQueue DSP_transmission_queue(1000000000000);
 
     std::thread capture_thread(capture_thread_func, &microphone, &DSP_receiving_queue);
     std::thread playback_thread(playback_thread_func, &speaker, &DSP_transmission_queue);
-    
-    size_t delay_line_length = NTAPS/2;
-
-    DelayLine delay_line(delay_line_length);
 
     while (1) {
         AudioMessage in_msg = DSP_receiving_queue.pop();
@@ -127,27 +132,20 @@ int main() {
                 int16_t right = in[2 * i + 1];
 
                 int32_t sum32 = static_cast<int32_t>(left) + static_cast<int32_t>(right);
-                /*int32_t diff32 = static_cast<int32_t>(right) - static_cast<int32_t>(left);*/
-                double sum  = static_cast<double>(sum32 >> 1);
-                /*double diff = static_cast<double>(diff32 >> 1);*/
-                
-                double delayed_sum = delay_line.process(sum);
+                int32_t diff32 = static_cast<int32_t>(right) - static_cast<int32_t>(left);
+                float sum  = static_cast<float>(sum32 >> 1);
+                float diff = static_cast<float>(diff32 >> 1);
                 
                 
+                float output = dnf.filter(sum,diff);
+                
+                float y = output * GAIN;
 
-                double output = delayed_sum;
-                if (output<-32768){
-                    output = -32768;
-                }
-                if(output>32767){
-                    output = 32767;
-                }
-
+                if (y >  32767.0f) y =  32767.0f;
+                if (y < -32768.0f) y = -32768.0f;
                 
-                
-                int16_t out16 = static_cast<int16_t>(output);
-
-                out[i]= out16*GAIN;
+                int16_t out16 = static_cast<int16_t>(std::lrintf(y));
+                out[i]= out16;
 
                 
             }

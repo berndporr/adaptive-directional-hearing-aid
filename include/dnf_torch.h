@@ -7,10 +7,12 @@
 #ifndef _DNF_H
 #define _DNF_H
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <assert.h>
 #include <torch/torch.h>
+#include <thread>
 #include <deque>
 #include <vector>
 

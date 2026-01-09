@@ -1,8 +1,10 @@
 #include "../include/ALSADevices.h"
 #include "Fir1.h"
 #include "../constants.h"
+#include <cmath>
 #include <cstddef>
 #include <cstdint>
+#include <iostream>
 #include <thread>
 #include <queue>
 #include <mutex>
@@ -101,6 +103,12 @@ int main() {
     ALSACaptureDevice microphone("plughw:5,0", SAMPLING_RATE, MICROPHONE_CHANNELS, FRAMES_PER_PERIOD, FORMAT);
     ALSAPlaybackDevice speaker("default", SAMPLING_RATE, SPEAKER_CHANNELS, FRAMES_PER_PERIOD, FORMAT);
 
+    Fir1 fir(NTAPS,0.00000);
+    fir.setLearningRate(LEARNING_RATE);
+    size_t delay_line_length = DELAY_LINE_LENGTH;
+
+    DelayLine delay_line(delay_line_length);
+
     microphone.open();
     speaker.open();
     
@@ -110,11 +118,6 @@ int main() {
     std::thread capture_thread(capture_thread_func, &microphone, &DSP_receiving_queue);
     std::thread playback_thread(playback_thread_func, &speaker, &DSP_transmission_queue);
     
-    Fir1 fir(NTAPS,0.00000);
-    fir.setLearningRate(LEARNING_RATE);
-    size_t delay_line_length = NTAPS/2;
-
-    DelayLine delay_line(delay_line_length);
 
     while (1) {
         AudioMessage in_msg = DSP_receiving_queue.pop();
@@ -144,18 +147,17 @@ int main() {
                 }
 
                 double output = delayed_sum - canceller;
-                if (output<-32768){
-                    output = -32768;
-                }
-                if(output>32767){
-                    output = 32767;
-                }
-
+                
                 fir.lms_update(output);
                 
-                int16_t out16 = static_cast<int16_t>(output);
+                double y = output * GAIN;
 
-                out[i]= out16*GAIN;
+                if (y >  32767.0f) y =  32767.0f;
+                if (y < -32768.0f) y = -32768.0f;
+
+                int16_t out16 = static_cast<int16_t>(std::lrintf(static_cast<float>(y)));
+
+                out[i]= out16;
 
                 
                 }
