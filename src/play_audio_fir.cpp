@@ -105,7 +105,7 @@ int main() {
 
     Fir1 fir(NTAPS,0.00000);
     fir.setLearningRate(LEARNING_RATE);
-    size_t delay_line_length = DELAY_LINE_LENGTH;
+    size_t delay_line_length = NTAPS/2;
 
     DelayLine delay_line(delay_line_length);
 

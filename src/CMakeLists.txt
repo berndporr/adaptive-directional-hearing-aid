@@ -57,12 +57,23 @@ add_executable(main_neural
     play_audio_neural.cpp
 )
 
+add_executable(main_training
+    play_audio_training.cpp
+)
+
+
 target_link_libraries(main_fir PRIVATE
     fir
     alsa_devices
 )
 
 target_link_libraries(main_neural PRIVATE
+    dnf_torch
+    alsa_devices
+    torch
+)
+
+target_link_libraries(main_training PRIVATE
     dnf_torch
     alsa_devices
     torch

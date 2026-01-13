@@ -5,13 +5,12 @@
 #include </usr/include/alsa/pcm.h>
 
 
-#define SAMPLING_RATE 8000
+#define SAMPLING_RATE 44100
 #define FRAMES_PER_PERIOD 32
 #define MICROPHONE_CHANNELS 2
 #define SPEAKER_CHANNELS 1
 #define NTAPS 200
-#define LEARNING_RATE 0.00001
+#define LEARNING_RATE 0.0000001
 #define GAIN 30
-#define NEURAL_NETWORK_LAYERS 2
-#define DELAY_LINE_LENGTH 100
+#define NEURAL_NETWORK_LAYERS 4
 #endif

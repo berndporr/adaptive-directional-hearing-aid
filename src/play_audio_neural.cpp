@@ -74,46 +74,23 @@ void playback_thread_func(ALSAPlaybackDevice* speaker, AudioQueue* audio_queue) 
     }
 }
 
-class DelayLine {
-public:
-    explicit DelayLine(size_t delay)
-        : buffer(delay, 0.0), size(delay) {}
-
-    inline double process(double x) {
-        double y = buffer[index];
-        buffer[index] = x;
-
-        index++;
-        if (index == size) index = 0;
-
-        return y;
-    }
-
-private:
-    std::vector<double> buffer;
-    size_t size;
-    size_t index = 0;
-};
-
-
-
 int main() {
     const snd_pcm_format_t FORMAT = SND_PCM_FORMAT_S16_LE;
     ALSACaptureDevice microphone("plughw:5,0", SAMPLING_RATE, MICROPHONE_CHANNELS, FRAMES_PER_PERIOD, FORMAT);
     ALSAPlaybackDevice speaker("default", SAMPLING_RATE, SPEAKER_CHANNELS, FRAMES_PER_PERIOD, FORMAT);
 
-    int delay_line_length = DELAY_LINE_LENGTH;
+    int nTaps = NTAPS;
     int nLayers = NEURAL_NETWORK_LAYERS;
 
-    DNF dnf(nLayers,delay_line_length);
+    DNF dnf(nLayers,nTaps);
 
     dnf.setLearningRate(static_cast<float>(LEARNING_RATE));
 
     microphone.open();
     speaker.open();
     
-    AudioQueue DSP_receiving_queue(100000000000000);
-    AudioQueue DSP_transmission_queue(1000000000000);
+    AudioQueue DSP_receiving_queue(5);
+    AudioQueue DSP_transmission_queue(5);
 
     std::thread capture_thread(capture_thread_func, &microphone, &DSP_receiving_queue);
     std::thread playback_thread(playback_thread_func, &speaker, &DSP_transmission_queue);

@@ -17,6 +17,9 @@ class ALSAPCMDevice {
     _snd_pcm_stream type; 
     std::vector<char> buffer;
     size_t bytes_per_frame;
+    unsigned int period_time;
+
+    void allocate_buffer();
                          
     public:
     ALSAPCMDevice(
@@ -37,11 +40,11 @@ class ALSAPCMDevice {
 
     bool open();
     void close();
-    void allocate_buffer();
     snd_pcm_sframes_t get_frames_per_period();
     size_t get_bytes_per_frame();
     unsigned int get_channels();
     const std::vector<char>& get_buffer() const;
+    unsigned int get_period_time();
 };
 
 
