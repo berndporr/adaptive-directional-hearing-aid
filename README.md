@@ -45,3 +45,7 @@ Below is the device tree overlay to enable i2s communication on port 2 of the Ro
     pinctrl-0 = <&i2s2m1_lrck &i2s2m1_sclk &i2s2m1_sdi &i2s2m1_sdo>;
     status = "okay";
 };
+
+Command to record audio to overwrite training_audio file
+
+ arecord -D hw:5,0 -f S16_LE -c 2 -r 44100 training_audio.wav
