@@ -1,5 +1,9 @@
 # Work in Progress
 
+Command to record audio to overwrite training_audio file
+
+arecord -D hw:5,0 -f S16_LE -c 2 -r 44100 training_audio.wav
+
 Below is the device tree overlay to enable i2s communication on port 2 of the Rock 5B/5B+
 
 ```dts
@@ -46,6 +50,3 @@ Below is the device tree overlay to enable i2s communication on port 2 of the Ro
     status = "okay";
 };
 
-Command to record audio to overwrite training_audio file
-
- arecord -D hw:5,0 -f S16_LE -c 2 -r 44100 training_audio.wav
