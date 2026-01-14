@@ -5,7 +5,7 @@
 
 bool ALSAPCMDevice::open() {
     snd_pcm_hw_params_t *params;
-    snd_pcm_sw_params_t* sw;
+
     /* Open PCM device. */
     int rc = snd_pcm_open(&handle, device_name.c_str(), type, 0);
     if (rc < 0) {
@@ -37,11 +37,6 @@ bool ALSAPCMDevice::open() {
 
     snd_pcm_hw_params_get_period_time(params,&period_time, 0);
 
-    snd_pcm_sw_params_alloca(&sw);
-    snd_pcm_sw_params_current(handle, sw);
-    snd_pcm_sw_params_set_start_threshold(handle, sw, period_time);
-    snd_pcm_sw_params_set_avail_min(handle, sw, period_time);
-    snd_pcm_sw_params(handle, sw);
 
     bytes_per_frame = static_cast<unsigned>((snd_pcm_format_width(format) / 8)) * channels;
     allocate_buffer();
