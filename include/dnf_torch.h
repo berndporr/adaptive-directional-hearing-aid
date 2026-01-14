@@ -64,6 +64,7 @@ public:
      **/
     DNF(const int nLayers,
         const int nTaps,
+        const int signalDelayLineLength,
         const ActMethod am = Act_Tanh,
         const bool tryGPU = false);
 
@@ -214,6 +215,7 @@ private:
     float remover = 0;
     float f_nn = 0;
     torch::Device device = torch::kCPU;
+    float learning_rate;
 };
 
 #endif

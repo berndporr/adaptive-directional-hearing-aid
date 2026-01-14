@@ -192,8 +192,16 @@ int main() {
     //set up neural network for training
     int nTaps = NTAPS;
     int nLayers = NEURAL_NETWORK_LAYERS;
+    
+    int delay_line_length = static_cast<int>(
+        std::round(
+            ((AVERAGE_DISTANCE_FROM_EAR_TO_EAR_CM / 100.0) / SPEED_OF_SOUND)
+            * SAMPLING_RATE
+            * DELAY_LINE_MULTIPLIER
+        )
+    );
 
-    DNF dnf(nLayers,nTaps);
+    DNF dnf(nLayers,nTaps,delay_line_length);
 
     dnf.setLearningRate(static_cast<float>(LEARNING_RATE));
     

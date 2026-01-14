@@ -100,12 +100,20 @@ private:
 
 int main() {
     const snd_pcm_format_t FORMAT = SND_PCM_FORMAT_S16_LE;
-    ALSACaptureDevice microphone("plughw:5,0", SAMPLING_RATE, MICROPHONE_CHANNELS, FRAMES_PER_PERIOD, FORMAT);
-    ALSAPlaybackDevice speaker("default", SAMPLING_RATE, SPEAKER_CHANNELS, FRAMES_PER_PERIOD, FORMAT);
+    ALSACaptureDevice microphone("plughw:5,0", FIR_SAMPLING_RATE, MICROPHONE_CHANNELS, FRAMES_PER_PERIOD, FORMAT);
+    ALSAPlaybackDevice speaker("default", FIR_SAMPLING_RATE, SPEAKER_CHANNELS, FRAMES_PER_PERIOD, FORMAT);
 
-    Fir1 fir(NTAPS,0.00000);
+    Fir1 fir(FIR_NTAPS,0.00000);
     fir.setLearningRate(FIR_LEARNING_RATE);
-    size_t delay_line_length = NTAPS/2;
+
+
+    size_t delay_line_length = static_cast<size_t>(
+        std::round(
+            ((AVERAGE_DISTANCE_FROM_EAR_TO_EAR_CM / 100.0) / SPEED_OF_SOUND)
+            * SAMPLING_RATE
+            * DELAY_LINE_MULTIPLIER
+        )
+    );
 
     DelayLine delay_line(delay_line_length);
 

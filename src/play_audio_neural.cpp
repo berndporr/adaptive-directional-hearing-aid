@@ -74,6 +74,16 @@ void playback_thread_func(ALSAPlaybackDevice* speaker, AudioQueue* audio_queue) 
     }
 }
 
+void loadDNFModel(DNF& dnf, const std::string& filename)
+{
+    torch::serialize::InputArchive archive;
+    archive.load_from(filename);
+    dnf.getModel().load(archive);
+
+    dnf.getModel().eval();
+    dnf.setLearningRate(0.0f);
+}
+
 int main() {
     const snd_pcm_format_t FORMAT = SND_PCM_FORMAT_S16_LE;
     ALSACaptureDevice microphone("plughw:5,0", SAMPLING_RATE, MICROPHONE_CHANNELS, FRAMES_PER_PERIOD, FORMAT);
@@ -82,15 +92,24 @@ int main() {
     int nTaps = NTAPS;
     int nLayers = NEURAL_NETWORK_LAYERS;
 
-    DNF dnf(nLayers,nTaps);
+    int delay_line_length = static_cast<int>(
+        std::round(
+            ((AVERAGE_DISTANCE_FROM_EAR_TO_EAR_CM / 100.0) / SPEED_OF_SOUND)
+            * SAMPLING_RATE
+            * DELAY_LINE_MULTIPLIER
+        )
+    );
 
-    dnf.setLearningRate(static_cast<float>(LEARNING_RATE));
+    DNF dnf(nLayers,nTaps,delay_line_length);
+    std::string model_filename = "../dnf_model.pt";
+
+    loadDNFModel(dnf, model_filename);
 
     microphone.open();
     speaker.open();
     
-    AudioQueue DSP_receiving_queue(5);
-    AudioQueue DSP_transmission_queue(5);
+    AudioQueue DSP_receiving_queue(50);
+    AudioQueue DSP_transmission_queue(50);
 
     std::thread capture_thread(capture_thread_func, &microphone, &DSP_receiving_queue);
     std::thread playback_thread(playback_thread_func, &speaker, &DSP_transmission_queue);
@@ -112,7 +131,6 @@ int main() {
                 int32_t diff32 = static_cast<int32_t>(right) - static_cast<int32_t>(left);
                 float sum  = static_cast<float>(sum32 >> 1);
                 float diff = static_cast<float>(diff32 >> 1);
-                
                 
                 float output = dnf.filter(sum,diff);
                 

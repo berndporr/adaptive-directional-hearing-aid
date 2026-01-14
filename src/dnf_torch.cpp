@@ -53,9 +53,10 @@ torch::Tensor DNF::Net::forward(torch::Tensor x, ActMethod am)
 
 DNF::DNF(const int nLayers,
 		 const int nTaps,
+		 const int signalDelayLineLength,
 		 const ActMethod am,
 		 const bool tryGPU) : noiseDelayLineLength(nTaps),
-							  signalDelayLineLength(noiseDelayLineLength / 2),
+							  signalDelayLineLength(signalDelayLineLength),
 							  actMethod(am),
 							  model(Net(nLayers, nTaps)),
 							  optimizer(torch::optim::SGD(model.parameters(), 0))
@@ -78,6 +79,9 @@ DNF::DNF(const int nLayers,
 
 float DNF::filter(const float signal, const float noise)
 {
+	if(!(learning_rate>0.0f)){
+		torch::NoGradGuard no_grad;
+	}
 	const float delayed_signal = signal_delayLine.process(signal);
 	noise_delayLine.process(noise);
 
@@ -92,13 +96,14 @@ float DNF::filter(const float signal, const float noise)
 	remover = output.to(torch::kCPU).item<float>();
 
 	f_nn = delayed_signal - remover;
-
-	optimizer.zero_grad();
-	torch::Tensor gradient = torch::tensor({-f_nn}).to(device);
-	output.retain_grad();
-	output.backward(gradient);
-	optimizer.step();
-
+	if(learning_rate>0.0f){
+		optimizer.zero_grad();
+		torch::Tensor gradient = torch::tensor({-f_nn}).to(device);
+		output.retain_grad();
+		output.backward(gradient);
+		optimizer.step();
+	}
+	
 	return f_nn;
 }
 
@@ -128,7 +133,8 @@ const std::vector<float> DNF::getLayerWeightDistances() const
 }
 
 void DNF::setLearningRate(float mu)
-{
+{	
+	learning_rate=mu;
 	for (auto &group : optimizer.param_groups())
 	{
 		static_cast<torch::optim::SGDOptions &>(group.options()).lr(mu);
