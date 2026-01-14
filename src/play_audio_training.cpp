@@ -3,7 +3,6 @@
 #include "../include/dnf_torch.h"
 #include <cstddef>
 #include <cstdint>
-#include <thread>
 #include <iostream>
 #include <fstream>
 #include <string>

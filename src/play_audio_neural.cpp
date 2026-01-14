@@ -26,17 +26,17 @@ class AudioQueue {
     std::queue<AudioMessage> queue;
     std::mutex mtx;
     std::condition_variable cv;
-    size_t MAX_QUEUE_SIZE;
+    size_t maxQueueSize;
 
 
 public:
-    AudioQueue(size_t MAX_QUEUE_SIZE):
-        MAX_QUEUE_SIZE(MAX_QUEUE_SIZE)
+    AudioQueue(size_t maxQueueSize):
+        maxQueueSize(maxQueueSize)
     {}
 
     void push(AudioMessage msg) {
         std::unique_lock<std::mutex> lock(mtx);
-        if (queue.size() >= MAX_QUEUE_SIZE){
+        if (queue.size() >= maxQueueSize){
             return;
         }
 
@@ -108,8 +108,8 @@ int main() {
     microphone.open();
     speaker.open();
     
-    AudioQueue DSP_receiving_queue(50);
-    AudioQueue DSP_transmission_queue(50);
+    AudioQueue DSP_receiving_queue(MAX_QUEUE_SIZE);
+    AudioQueue DSP_transmission_queue(MAX_QUEUE_SIZE);
 
     std::thread capture_thread(capture_thread_func, &microphone, &DSP_receiving_queue);
     std::thread playback_thread(playback_thread_func, &speaker, &DSP_transmission_queue);

@@ -16,12 +16,16 @@
 #define GAIN 30
 #define SPEED_OF_SOUND 343
 #define AVERAGE_DISTANCE_FROM_EAR_TO_EAR_CM 18
+//multiplier to increase the delay of the signal so that it is more
+//than the minimum
 #define DELAY_LINE_MULTIPLIER 4
+//queue size for communication between threads
+#define MAX_QUEUE_SIZE 5
 
 //constants for the neural network
 #define SAMPLING_RATE 8000
-#define LEARNING_RATE 100
-#define NTAPS 200
+#define LEARNING_RATE 150
+#define NTAPS 20
 #define NEURAL_NETWORK_LAYERS 4
 
 #endif

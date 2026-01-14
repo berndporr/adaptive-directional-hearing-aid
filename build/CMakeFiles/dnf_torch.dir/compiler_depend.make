@@ -4,8 +4,10 @@
 CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/dnf_torch.cpp \
   /usr/include/stdc-predef.h \
   /home/ross/Downloads/Hearing_aid/include/dnf_torch.h \
-  /usr/include/stdio.h \
-  /usr/include/aarch64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/c++/12/stdlib.h \
+  /usr/include/c++/12/cstdlib \
+  /usr/include/aarch64-linux-gnu/c++/12/bits/c++config.h \
+  /usr/include/aarch64-linux-gnu/c++/12/bits/os_defines.h \
   /usr/include/features.h \
   /usr/include/features-time64.h \
   /usr/include/aarch64-linux-gnu/bits/wordsize.h \
@@ -14,33 +16,21 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
   /usr/include/aarch64-linux-gnu/bits/long-double.h \
   /usr/include/aarch64-linux-gnu/gnu/stubs.h \
   /usr/include/aarch64-linux-gnu/gnu/stubs-lp64.h \
-  /usr/lib/gcc/aarch64-linux-gnu/12/include/stddef.h \
-  /usr/lib/gcc/aarch64-linux-gnu/12/include/stdarg.h \
-  /usr/include/aarch64-linux-gnu/bits/types.h \
-  /usr/include/aarch64-linux-gnu/bits/typesizes.h \
-  /usr/include/aarch64-linux-gnu/bits/time64.h \
-  /usr/include/aarch64-linux-gnu/bits/types/__fpos_t.h \
-  /usr/include/aarch64-linux-gnu/bits/types/__mbstate_t.h \
-  /usr/include/aarch64-linux-gnu/bits/types/__fpos64_t.h \
-  /usr/include/aarch64-linux-gnu/bits/types/__FILE.h \
-  /usr/include/aarch64-linux-gnu/bits/types/FILE.h \
-  /usr/include/aarch64-linux-gnu/bits/types/struct_FILE.h \
-  /usr/include/aarch64-linux-gnu/bits/types/cookie_io_functions_t.h \
-  /usr/include/aarch64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/aarch64-linux-gnu/bits/floatn.h \
-  /usr/include/aarch64-linux-gnu/bits/floatn-common.h \
-  /usr/include/c++/12/stdlib.h \
-  /usr/include/c++/12/cstdlib \
-  /usr/include/aarch64-linux-gnu/c++/12/bits/c++config.h \
-  /usr/include/aarch64-linux-gnu/c++/12/bits/os_defines.h \
   /usr/include/aarch64-linux-gnu/c++/12/bits/cpu_defines.h \
   /usr/include/c++/12/pstl/pstl_config.h \
   /usr/include/stdlib.h \
+  /usr/include/aarch64-linux-gnu/bits/libc-header-start.h \
+  /usr/lib/gcc/aarch64-linux-gnu/12/include/stddef.h \
   /usr/include/aarch64-linux-gnu/bits/waitflags.h \
   /usr/include/aarch64-linux-gnu/bits/waitstatus.h \
+  /usr/include/aarch64-linux-gnu/bits/floatn.h \
+  /usr/include/aarch64-linux-gnu/bits/floatn-common.h \
   /usr/include/aarch64-linux-gnu/bits/types/locale_t.h \
   /usr/include/aarch64-linux-gnu/bits/types/__locale_t.h \
   /usr/include/aarch64-linux-gnu/sys/types.h \
+  /usr/include/aarch64-linux-gnu/bits/types.h \
+  /usr/include/aarch64-linux-gnu/bits/typesizes.h \
+  /usr/include/aarch64-linux-gnu/bits/time64.h \
   /usr/include/aarch64-linux-gnu/bits/types/clock_t.h \
   /usr/include/aarch64-linux-gnu/bits/types/clockid_t.h \
   /usr/include/aarch64-linux-gnu/bits/types/time_t.h \
@@ -183,8 +173,12 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
   /usr/include/c++/12/bits/postypes.h \
   /usr/include/c++/12/cwchar \
   /usr/include/wchar.h \
+  /usr/lib/gcc/aarch64-linux-gnu/12/include/stdarg.h \
   /usr/include/aarch64-linux-gnu/bits/types/wint_t.h \
   /usr/include/aarch64-linux-gnu/bits/types/mbstate_t.h \
+  /usr/include/aarch64-linux-gnu/bits/types/__mbstate_t.h \
+  /usr/include/aarch64-linux-gnu/bits/types/__FILE.h \
+  /usr/include/aarch64-linux-gnu/bits/types/FILE.h \
   /usr/include/c++/12/exception \
   /usr/include/c++/12/bits/exception_ptr.h \
   /usr/include/c++/12/bits/cxxabi_init_exception.h \
@@ -225,6 +219,12 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
   /usr/include/c++/12/bits/string_view.tcc \
   /usr/include/c++/12/ext/string_conversions.h \
   /usr/include/c++/12/cstdio \
+  /usr/include/stdio.h \
+  /usr/include/aarch64-linux-gnu/bits/types/__fpos_t.h \
+  /usr/include/aarch64-linux-gnu/bits/types/__fpos64_t.h \
+  /usr/include/aarch64-linux-gnu/bits/types/struct_FILE.h \
+  /usr/include/aarch64-linux-gnu/bits/types/cookie_io_functions_t.h \
+  /usr/include/aarch64-linux-gnu/bits/stdio_lim.h \
   /usr/include/c++/12/cerrno \
   /usr/include/errno.h \
   /usr/include/aarch64-linux-gnu/bits/errno.h \
@@ -7854,15 +7854,15 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/ATen/ops/min_ops.h:
 
+/usr/include/ATen/ops/sign_native.h:
+
+/usr/include/c++/12/bits/hashtable.h:
+
 /usr/include/ATen/ops/cudnn_grid_sampler_native.h:
 
 /usr/include/ATen/ops/_convert_indices_from_csr_to_coo_ops.h:
 
 /usr/include/c++/12/stdexcept:
-
-/usr/include/ATen/ops/sign_native.h:
-
-/usr/include/c++/12/bits/hashtable.h:
 
 /usr/include/ATen/ops/_thnn_fused_gru_cell_backward_ops.h:
 
@@ -8888,6 +8888,12 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/ATen/ops/_test_string_default_ops.h:
 
+/usr/include/ATen/core/Reduction.h:
+
+/usr/include/ATen/ops/prelu_backward_ops.h:
+
+/usr/include/c10/util/Half.h:
+
 /usr/include/c++/12/ext/string_conversions.h:
 
 /usr/include/c++/12/bits/stl_stack.h:
@@ -8910,13 +8916,13 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/ATen/ops/retain_grad_ops.h:
 
-/usr/include/c10/util/ArrayRef.h:
-
 /usr/include/ATen/ops/amax_native.h:
 
 /usr/include/ATen/ops/_cholesky_solve_helper_native.h:
 
 /usr/include/c10/macros/Macros.h:
+
+/usr/include/c10/util/ArrayRef.h:
 
 /usr/include/aarch64-linux-gnu/bits/types/struct_itimerspec.h:
 
@@ -9068,6 +9074,32 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/ATen/ops/_batch_norm_impl_index_backward.h:
 
+/usr/include/c++/12/bits/locale_facets.tcc:
+
+/usr/include/ATen/ops/_validate_sparse_csr_tensor_args_ops.h:
+
+/usr/include/ATen/ops/eq_meta.h:
+
+/usr/include/ATen/ops/fft_ifft_ops.h:
+
+/usr/include/ATen/ops/bitwise_left_shift.h:
+
+/usr/include/aarch64-linux-gnu/bits/cpu-set.h:
+
+/usr/include/c10/util/reverse_iterator.h:
+
+/usr/include/ATen/ops/binary_cross_entropy_ops.h:
+
+/usr/include/ATen/ops/detach_copy.h:
+
+/usr/include/ATen/ops/view_as_complex_copy_native.h:
+
+/usr/include/ATen/ops/bitwise_and_native.h:
+
+/usr/include/c++/12/bits/concept_check.h:
+
+/usr/include/ATen/core/symbol.h:
+
 /usr/include/torch/csrc/api/include/torch/data/datasets.h:
 
 /usr/include/ATen/ops/output_nr_ops.h:
@@ -9192,8 +9224,6 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/c++/12/pstl/pstl_config.h:
 
-/usr/include/ATen/core/Reduction.h:
-
 /usr/include/ATen/ops/align_as_native.h:
 
 /usr/include/ATen/ops/_aminmax_ops.h:
@@ -9207,6 +9237,16 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 /usr/include/c++/12/bits/enable_special_members.h:
 
 /usr/include/ATen/ops/_foreach_tanh_ops.h:
+
+/usr/include/ATen/ops/nll_loss_forward.h:
+
+/usr/include/ATen/ops/_cast_Char_ops.h:
+
+/usr/include/ATen/ops/prelu_backward_native.h:
+
+/usr/include/ATen/ops/ge_ops.h:
+
+/usr/include/features-time64.h:
 
 /usr/include/ATen/ops/stft_ops.h:
 
@@ -9284,43 +9324,91 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/c++/12/tr1/special_function_util.h:
 
-/usr/include/ATen/ops/atan2_native.h:
+/usr/include/ATen/ops/logical_not_ops.h:
 
-/usr/include/ATen/ops/_embedding_bag_forward_only.h:
+/usr/include/torch/csrc/api/include/torch/nn/utils/rnn.h:
 
-/usr/include/ATen/ops/col_indices.h:
+/usr/include/c++/12/bits/ostream.tcc:
 
-/usr/include/features.h:
+/usr/include/ATen/ops/_validate_sparse_coo_tensor_args_native.h:
 
-/usr/include/c10/util/Deprecated.h:
+/usr/include/ATen/ops/special_entr_ops.h:
 
-/usr/include/c++/12/bits/streambuf.tcc:
+/usr/include/ATen/ops/arctan_ops.h:
 
-/usr/include/c++/12/bits/std_function.h:
+/usr/include/ATen/ops/vander_native.h:
 
-/usr/include/ATen/ops/normal_ops.h:
+/usr/include/ATen/ops/nanquantile_native.h:
 
-/usr/include/ATen/ops/convolution_overrideable.h:
+/usr/include/ATen/core/dispatch/OperatorOptions.h:
 
-/usr/include/aarch64-linux-gnu/bits/stdint-uintn.h:
+/usr/include/ATen/ops/_euclidean_dist.h:
 
-/usr/include/ATen/ops/less_native.h:
+/usr/include/ATen/ops/_resize_output_native.h:
 
-/usr/include/ATen/ops/_pdist_backward_ops.h:
+/usr/include/ATen/ops/randint_ops.h:
 
-/usr/include/ATen/ops/nested_to_padded_tensor.h:
+/usr/include/aarch64-linux-gnu/bits/pthread_stack_min-dynamic.h:
 
-/usr/include/ATen/ops/_thnn_differentiable_lstm_cell_backward.h:
+/usr/include/ATen/ops/value_selecting_reduction_backward_native.h:
 
-/usr/include/c10/util/in_place.h:
+/usr/include/ATen/ops/inverse_ops.h:
 
-/usr/include/ATen/ops/_embedding_bag.h:
+/usr/include/ATen/ops/embedding.h:
 
-/usr/include/ATen/ops/bmm_ops.h:
+/usr/include/ATen/ops/linalg_ldl_factor_ex.h:
 
-/usr/include/ATen/ops/copy.h:
+/usr/include/torch/csrc/api/include/torch/nn/options/rnn.h:
 
-/usr/include/ATen/ops/is_complex.h:
+/usr/include/ATen/ops/fft_fftfreq.h:
+
+/usr/include/ATen/ops/arcsinh_ops.h:
+
+/usr/include/ATen/ops/_upsample_nearest_exact3d_native.h:
+
+/usr/include/ATen/NativeFunctions.h:
+
+/usr/include/ATen/ops/special_zeta.h:
+
+/usr/include/ATen/ops/_amp_update_scale.h:
+
+/usr/include/c++/12/unordered_map:
+
+/usr/include/ATen/ops/_foreach_erfc_ops.h:
+
+/usr/include/ATen/ops/adaptive_avg_pool3d_ops.h:
+
+/usr/include/c++/12/tuple:
+
+/usr/include/ATen/ops/sort_native.h:
+
+/usr/include/ATen/ops/msort_ops.h:
+
+/usr/include/ATen/ops/unique_consecutive.h:
+
+/usr/include/ATen/ops/cross_ops.h:
+
+/usr/include/ATen/ops/embedding_backward_native.h:
+
+/usr/include/ATen/ops/fft_rfftfreq.h:
+
+/usr/include/c++/12/bits/chrono.h:
+
+/usr/include/ATen/ops/linalg_eig.h:
+
+/usr/include/c++/12/tr1/exp_integral.tcc:
+
+/usr/include/ATen/ops/_foreach_round_native.h:
+
+/usr/include/ATen/ops/_gather_sparse_backward_ops.h:
+
+/usr/include/c++/12/pstl/execution_defs.h:
+
+/usr/include/ATen/ops/clamp_min_native.h:
+
+/usr/include/c10/util/ThreadLocalDebugInfo.h:
+
+/usr/include/c10/util/Type.h:
 
 /usr/include/ATen/ops/reshape_as_ops.h:
 
@@ -9355,6 +9443,10 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 /usr/include/aarch64-linux-gnu/bits/types/mbstate_t.h:
 
 /usr/include/ATen/ops/sum_ops.h:
+
+/usr/include/aarch64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
+
+/usr/include/aarch64-linux-gnu/sys/single_threaded.h:
 
 /usr/include/ATen/ops/max_pool1d.h:
 
@@ -9416,6 +9508,12 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/c++/12/tr1/ell_integral.tcc:
 
+/usr/include/ATen/ops/tanh_ops.h:
+
+/usr/include/ATen/ops/dense_dim_ops.h:
+
+/usr/include/ATen/ops/avg_pool3d.h:
+
 /usr/include/ATen/ops/lu_solve_native.h:
 
 /usr/include/ATen/core/TensorBody.h:
@@ -9464,6 +9562,42 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/ATen/ops/_linalg_slogdet.h:
 
+/usr/include/ATen/ops/max_pool3d_native.h:
+
+/usr/include/ATen/ops/view_ops.h:
+
+/usr/include/ATen/ops/mkldnn_reorder_conv2d_weight.h:
+
+/usr/include/ATen/NamedTensorUtils.h:
+
+/usr/include/c10/core/DeviceType.h:
+
+/usr/include/c10/core/OptionalRef.h:
+
+/usr/include/unistd.h:
+
+/usr/include/ATen/ops/cudnn_convolution_add_relu.h:
+
+/usr/include/ATen/ops/_triton_multi_head_attention.h:
+
+/usr/include/c++/12/bits/cpp_type_traits.h:
+
+/usr/include/ATen/ops/linalg_matrix_exp.h:
+
+/usr/include/ATen/ops/vander.h:
+
+/usr/include/ATen/ops/resize_as.h:
+
+/usr/include/ATen/ops/_cudnn_rnn.h:
+
+/usr/include/aarch64-linux-gnu/bits/types/__FILE.h:
+
+/usr/include/ATen/ops/subtract_native.h:
+
+/usr/include/ATen/ops/digamma_native.h:
+
+/usr/include/c++/12/bits/locale_classes.h:
+
 /usr/include/ATen/ops/special_xlogy_native.h:
 
 /usr/include/ATen/ops/native_dropout_backward.h:
@@ -9474,10 +9608,6 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/ATen/ops/inverse.h:
 
-/usr/include/ATen/ops/special_modified_bessel_k0_meta.h:
-
-/usr/include/c++/12/bits/string_view.tcc:
-
 /usr/include/ATen/ops/_nnz_native.h:
 
 /usr/include/stdint.h:
@@ -9487,6 +9617,10 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 /usr/include/c++/12/bits/allocated_ptr.h:
 
 /usr/include/c++/12/bits/istream.tcc:
+
+/usr/include/ATen/ops/special_modified_bessel_k0_meta.h:
+
+/usr/include/c++/12/bits/string_view.tcc:
 
 /usr/include/ATen/ops/to_sparse_bsr_ops.h:
 
@@ -9500,113 +9634,21 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/ATen/ops/batch_norm_elemt_ops.h:
 
-/usr/include/ATen/ops/logical_not_ops.h:
+/usr/include/aarch64-linux-gnu/bits/types/timer_t.h:
 
-/usr/include/torch/csrc/api/include/torch/nn/utils/rnn.h:
+/usr/include/ATen/ops/atan2_native.h:
 
-/usr/include/c++/12/bits/ostream.tcc:
+/usr/include/ATen/ops/_embedding_bag_forward_only.h:
 
-/usr/include/ATen/ops/_validate_sparse_coo_tensor_args_native.h:
+/usr/include/ATen/ops/col_indices.h:
 
-/usr/include/ATen/ops/special_entr_ops.h:
+/usr/include/features.h:
 
-/usr/include/ATen/ops/arctan_ops.h:
+/usr/include/ATen/ops/fft_fftfreq_ops.h:
 
-/usr/include/ATen/ops/vander_native.h:
+/usr/include/ATen/ops/linalg_qr_meta.h:
 
-/usr/include/ATen/ops/nanquantile_native.h:
-
-/usr/include/ATen/core/dispatch/OperatorOptions.h:
-
-/usr/include/ATen/ops/_euclidean_dist.h:
-
-/usr/include/ATen/ops/_resize_output_native.h:
-
-/usr/include/ATen/ops/randint_ops.h:
-
-/usr/include/aarch64-linux-gnu/bits/pthread_stack_min-dynamic.h:
-
-/usr/include/ATen/ops/value_selecting_reduction_backward_native.h:
-
-/usr/include/ATen/ops/inverse_ops.h:
-
-/usr/include/ATen/ops/embedding.h:
-
-/usr/include/ATen/ops/linalg_ldl_factor_ex.h:
-
-/usr/include/aarch64-linux-gnu/sys/single_threaded.h:
-
-/usr/include/aarch64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
-
-/usr/include/torch/csrc/api/include/torch/nn/options/rnn.h:
-
-/usr/include/ATen/ops/fft_fftfreq.h:
-
-/usr/include/ATen/ops/arcsinh_ops.h:
-
-/usr/include/ATen/ops/_upsample_nearest_exact3d_native.h:
-
-/usr/include/ATen/NativeFunctions.h:
-
-/usr/include/ATen/ops/special_zeta.h:
-
-/usr/include/ATen/ops/_amp_update_scale.h:
-
-/usr/include/c++/12/unordered_map:
-
-/usr/include/ATen/ops/_foreach_erfc_ops.h:
-
-/usr/include/ATen/ops/adaptive_avg_pool3d_ops.h:
-
-/usr/include/c++/12/tuple:
-
-/usr/include/ATen/ops/thnn_conv2d_native.h:
-
-/usr/include/ATen/ops/_upsample_nearest_exact1d_backward_meta.h:
-
-/usr/include/ATen/ops/upsample_nearest3d_backward_ops.h:
-
-/usr/include/ATen/ops/q_per_channel_axis_ops.h:
-
-/usr/include/ATen/ops/_amp_foreach_non_finite_check_and_unscale_ops.h:
-
-/usr/include/ATen/ops/cat_native.h:
-
-/usr/include/ATen/ops/special_erf.h:
-
-/usr/include/ATen/ops/quantized_batch_norm_ops.h:
-
-/usr/include/aarch64-linux-gnu/bits/wchar.h:
-
-/usr/include/c++/12/bits/exception_defines.h:
-
-/usr/include/c10/util/complex_utils.h:
-
-/usr/include/ATen/ops/flatten_dense_tensors.h:
-
-/usr/include/ATen/ops/sort_native.h:
-
-/usr/include/ATen/ops/msort_ops.h:
-
-/usr/include/ATen/ops/unique_consecutive.h:
-
-/usr/include/ATen/ops/cross_ops.h:
-
-/usr/include/ATen/ops/embedding_backward_native.h:
-
-/usr/include/ATen/ops/fft_rfftfreq.h:
-
-/usr/include/c++/12/bits/chrono.h:
-
-/usr/include/ATen/ops/linalg_eig.h:
-
-/usr/include/c++/12/tr1/exp_integral.tcc:
-
-/usr/include/ATen/ops/_foreach_round_native.h:
-
-/usr/include/ATen/ops/_gather_sparse_backward_ops.h:
-
-/usr/include/c++/12/pstl/execution_defs.h:
+/usr/include/ATen/ops/glu_backward_ops.h:
 
 /usr/include/c++/12/bits/ptr_traits.h:
 
@@ -9634,55 +9676,27 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/c++/12/bits/cxxabi_init_exception.h:
 
-/usr/include/ATen/ops/cumprod_backward_native.h:
+/usr/include/ATen/ops/_test_autograd_multiple_dispatch.h:
 
-/usr/include/ATen/ops/_debug_has_internal_overlap.h:
+/usr/include/aarch64-linux-gnu/bits/stdint-intn.h:
 
-/usr/include/ATen/ops/is_leaf_ops.h:
+/usr/include/ATen/ops/alias_copy_ops.h:
 
-/usr/include/ATen/ops/_cast_Float.h:
+/usr/include/ATen/Parallel-inl.h:
 
-/usr/include/ATen/ops/lu_unpack.h:
+/usr/include/ATen/ops/ones_like_native.h:
 
-/usr/include/ATen/ops/crow_indices_ops.h:
+/usr/include/ATen/core/IListRef.h:
 
-/usr/include/c++/12/utility:
+/usr/include/ATen/ops/triangular_solve_ops.h:
 
-/usr/include/ATen/ops/_linalg_slogdet_meta.h:
+/usr/include/ATen/ops/_conj_ops.h:
 
-/usr/include/c++/12/bits/invoke.h:
+/usr/include/ATen/ops/miopen_batch_norm_native.h:
 
-/usr/include/torch/csrc/api/include/torch/nn/functional/normalization.h:
+/usr/include/ATen/ops/index_copy_native.h:
 
-/usr/include/ATen/ops/multi_margin_loss_backward_native.h:
-
-/usr/include/ATen/ops/_dimI.h:
-
-/usr/include/ATen/ops/clone_native.h:
-
-/usr/include/ATen/ops/choose_qparams_optimized_ops.h:
-
-/usr/include/c++/12/bits/stl_iterator.h:
-
-/usr/include/aarch64-linux-gnu/bits/types/__locale_t.h:
-
-/usr/include/ATen/ops/_reshape_from_tensor.h:
-
-/usr/include/ATen/ops/fft_fftfreq_ops.h:
-
-/usr/include/ATen/ops/linalg_qr_meta.h:
-
-/usr/include/ATen/ops/glu_backward_ops.h:
-
-/usr/include/ATen/ops/corrcoef_ops.h:
-
-/usr/include/ATen/ops/is_set_to_ops.h:
-
-/usr/include/ATen/ops/linalg_eig_ops.h:
-
-/usr/include/aarch64-linux-gnu/bits/types/error_t.h:
-
-/usr/include/torch/csrc/autograd/cpp_hook.h:
+/usr/include/ATen/ops/_upsample_nearest_exact2d_backward_ops.h:
 
 /usr/include/ATen/ops/ravel.h:
 
@@ -9690,153 +9704,37 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/c++/12/bits/hashtable_policy.h:
 
+/usr/include/torch/csrc/autograd/cpp_hook.h:
+
 /usr/include/ATen/ops/sparse_csr_tensor.h:
 
 /usr/include/ATen/ops/native_dropout_backward_ops.h:
 
 /usr/include/ATen/ops/_foreach_cos_ops.h:
 
-/usr/include/ATen/ops/inverse_native.h:
+/usr/include/ATen/ops/fft_fftn_native.h:
 
-/usr/include/ATen/ops/nonzero_ops.h:
+/usr/include/aarch64-linux-gnu/bits/long-double.h:
 
-/usr/include/ATen/ops/_coalesced_ops.h:
+/usr/include/ATen/ops/embedding_dense_backward_native.h:
 
-/usr/include/torch/csrc/autograd/function_hook.h:
+/usr/include/aarch64-linux-gnu/asm/errno.h:
 
-/usr/include/ATen/ops/geqrf.h:
+/usr/include/aarch64-linux-gnu/bits/posix1_lim.h:
 
-/usr/include/c++/12/bits/forward_list.h:
+/usr/include/ATen/ops/convolution_overrideable.h:
 
-/usr/include/ATen/ops/q_per_channel_zero_points_ops.h:
+/usr/include/aarch64-linux-gnu/bits/stdint-uintn.h:
 
-/usr/include/ATen/ops/special_modified_bessel_k1.h:
+/usr/include/ATen/ops/less_native.h:
 
-/usr/include/c++/12/bits/stl_numeric.h:
+/usr/include/ATen/ops/_pdist_backward_ops.h:
 
-/usr/include/ATen/ops/layer_norm_native.h:
+/usr/include/ATen/ops/nested_to_padded_tensor.h:
 
-/usr/include/c10/core/UndefinedTensorImpl.h:
+/usr/include/ATen/ops/_thnn_differentiable_lstm_cell_backward.h:
 
-/usr/include/ATen/ops/subtract_native.h:
-
-/usr/include/ATen/ops/digamma_native.h:
-
-/usr/include/c++/12/bits/locale_classes.h:
-
-/usr/include/aarch64-linux-gnu/bits/types/__FILE.h:
-
-/usr/include/ATen/ops/replication_pad2d_backward_native.h:
-
-/usr/include/c10/util/string_utils.h:
-
-/usr/include/ATen/ops/convolution_backward_overrideable.h:
-
-/usr/include/ATen/ops/adjoint_ops.h:
-
-/usr/include/c++/12/bits/node_handle.h:
-
-/usr/include/ATen/ops/var_ops.h:
-
-/usr/include/ATen/ops/upsample_nearest1d_backward_ops.h:
-
-/usr/include/ATen/ops/atleast_2d_ops.h:
-
-/usr/include/ATen/ops/isinf_native.h:
-
-/usr/include/c++/12/cstdint:
-
-/usr/include/c++/12/chrono:
-
-/usr/include/ATen/ops/squeeze_ops.h:
-
-/usr/include/c++/12/tr1/modified_bessel_func.tcc:
-
-/usr/include/ATen/ops/miopen_batch_norm_ops.h:
-
-/usr/include/aarch64-linux-gnu/bits/wordsize.h:
-
-/usr/include/ATen/core/alias_info.h:
-
-/usr/include/ATen/ops/linear.h:
-
-/usr/include/ATen/core/DeprecatedTypeProperties.h:
-
-/usr/include/ATen/ops/_make_dual_copy_ops.h:
-
-/usr/include/ATen/ops/constant_pad_nd.h:
-
-/usr/include/ATen/core/Generator.h:
-
-/usr/include/ATen/ops/frac_meta.h:
-
-/usr/include/c++/12/bits/basic_string.tcc:
-
-/usr/include/ATen/ops/row_stack.h:
-
-/usr/include/ATen/ops/_cast_Int_ops.h:
-
-/usr/include/ATen/ops/nanquantile_ops.h:
-
-/usr/include/torch/csrc/api/include/torch/nn/options/fold.h:
-
-/usr/include/ATen/ops/rrelu_ops.h:
-
-/usr/include/ATen/ops/miopen_rnn.h:
-
-/usr/include/ATen/ops/tanh_ops.h:
-
-/usr/include/ATen/ops/dense_dim_ops.h:
-
-/usr/include/ATen/ops/avg_pool3d.h:
-
-/usr/include/ATen/ops/dropout_native.h:
-
-/usr/include/ATen/ops/amax_ops.h:
-
-/usr/include/aarch64-linux-gnu/bits/endianness.h:
-
-/usr/include/ATen/ops/copy_native.h:
-
-/usr/include/ATen/core/boxing/KernelFunction_impl.h:
-
-/usr/include/aarch64-linux-gnu/bits/thread-shared-types.h:
-
-/usr/include/c++/12/istream:
-
-/usr/include/ATen/ops/_mkldnn_reshape_ops.h:
-
-/usr/include/aarch64-linux-gnu/c++/12/bits/c++config.h:
-
-/usr/include/c++/12/cctype:
-
-/usr/include/aarch64-linux-gnu/bits/select.h:
-
-/usr/include/ATen/ops/hardtanh_backward_native.h:
-
-/usr/include/c++/12/bits/localefwd.h:
-
-/usr/include/ATen/ops/convolution_backward.h:
-
-/usr/include/ATen/ops/prelu_backward_native.h:
-
-/usr/include/ATen/ops/ge_ops.h:
-
-/usr/include/features-time64.h:
-
-/usr/include/limits.h:
-
-/usr/include/ATen/ops/numpy_T_ops.h:
-
-/usr/include/ATen/ops/elu_meta.h:
-
-/usr/include/ATen/ops/_nested_view_from_buffer_native.h:
-
-/usr/include/ATen/ops/_fw_primal_ops.h:
-
-/usr/include/c++/12/new:
-
-/usr/include/ATen/ops/logit_ops.h:
+/usr/include/c10/util/in_place.h:
 
 /usr/include/c++/12/bits/hash_bytes.h:
 
@@ -9856,69 +9754,107 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/ATen/ops/binomial_ops.h:
 
-/usr/include/ATen/ops/fft_fftn_native.h:
+/usr/include/ATen/ops/logit_ops.h:
 
-/usr/include/aarch64-linux-gnu/bits/long-double.h:
+/usr/include/c++/12/new:
 
-/usr/include/ATen/ops/embedding_dense_backward_native.h:
+/usr/include/limits.h:
 
-/usr/include/aarch64-linux-gnu/asm/errno.h:
+/usr/include/ATen/ops/numpy_T_ops.h:
 
-/usr/include/aarch64-linux-gnu/bits/posix1_lim.h:
+/usr/include/ATen/ops/elu_meta.h:
 
-/usr/include/aarch64-linux-gnu/bits/types/timer_t.h:
+/usr/include/ATen/ops/_nested_view_from_buffer_native.h:
 
-/usr/include/ATen/ops/max_pool3d_native.h:
+/usr/include/ATen/ops/_fw_primal_ops.h:
 
-/usr/include/ATen/ops/view_ops.h:
+/usr/include/ATen/ops/mvlgamma_ops.h:
 
-/usr/include/ATen/ops/mkldnn_reorder_conv2d_weight.h:
+/usr/include/ATen/ops/_cast_Char_native.h:
 
-/usr/include/ATen/NamedTensorUtils.h:
+/usr/include/ATen/ops/multinomial_ops.h:
 
-/usr/include/c10/core/DeviceType.h:
+/usr/include/ATen/ops/_cholesky_solve_helper.h:
 
-/usr/include/c10/core/OptionalRef.h:
+/usr/include/aarch64-linux-gnu/bits/types/error_t.h:
 
-/usr/include/unistd.h:
+/usr/include/ATen/ops/inverse_native.h:
 
-/usr/include/ATen/ops/cudnn_convolution_add_relu.h:
+/usr/include/ATen/ops/nonzero_ops.h:
 
-/usr/include/ATen/ops/_triton_multi_head_attention.h:
+/usr/include/ATen/ops/_coalesced_ops.h:
+
+/usr/include/torch/csrc/autograd/function_hook.h:
+
+/usr/include/ATen/ops/geqrf.h:
+
+/usr/include/aarch64-linux-gnu/bits/types/__mbstate_t.h:
+
+/usr/include/ATen/ops/hardtanh_backward_native.h:
+
+/usr/include/c++/12/bits/localefwd.h:
+
+/usr/include/aarch64-linux-gnu/bits/select.h:
+
+/usr/include/ATen/ops/convolution_backward.h:
+
+/usr/include/aarch64-linux-gnu/bits/types/__locale_t.h:
+
+/usr/include/ATen/ops/_reshape_from_tensor.h:
+
+/usr/include/ATen/ops/corrcoef_ops.h:
+
+/usr/include/ATen/ops/is_set_to_ops.h:
+
+/usr/include/ATen/ops/linalg_eig_ops.h:
+
+/usr/include/ATen/ops/dropout_native.h:
+
+/usr/include/ATen/ops/amax_ops.h:
+
+/usr/include/aarch64-linux-gnu/bits/endianness.h:
+
+/usr/include/ATen/ops/copy_native.h:
+
+/usr/include/ATen/core/boxing/KernelFunction_impl.h:
+
+/usr/include/aarch64-linux-gnu/bits/thread-shared-types.h:
+
+/usr/include/ATen/core/Generator.h:
+
+/usr/include/ATen/ops/frac_meta.h:
+
+/usr/include/c++/12/bits/basic_string.tcc:
+
+/usr/include/c++/12/istream:
+
+/usr/include/ATen/ops/_mkldnn_reshape_ops.h:
+
+/usr/include/aarch64-linux-gnu/c++/12/bits/c++config.h:
+
+/usr/include/c++/12/cctype:
+
+/usr/include/c++/12/bits/stl_multimap.h:
+
+/usr/include/aarch64-linux-gnu/bits/wordsize.h:
+
+/usr/include/ATen/core/alias_info.h:
+
+/usr/include/ATen/ops/linear.h:
+
+/usr/include/ATen/core/DeprecatedTypeProperties.h:
+
+/usr/include/ATen/ops/_make_dual_copy_ops.h:
+
+/usr/include/ATen/ops/constant_pad_nd.h:
 
 /usr/include/torch/csrc/api/include/torch/nn/modules/transformercoder.h:
 
 /usr/include/ATen/ops/unsqueeze_ops.h:
 
-/usr/include/c++/12/cstdlib:
+/usr/include/ATen/ops/crow_indices_ops.h:
 
-/usr/include/aarch64-linux-gnu/bits/stdint-intn.h:
-
-/usr/include/ATen/ops/alias_copy_ops.h:
-
-/usr/include/ATen/ops/_cast_Char_native.h:
-
-/usr/include/ATen/ops/_cholesky_solve_helper.h:
-
-/usr/include/ATen/ops/multinomial_ops.h:
-
-/usr/include/ATen/ops/_test_autograd_multiple_dispatch.h:
-
-/usr/include/ATen/Parallel-inl.h:
-
-/usr/include/ATen/ops/ones_like_native.h:
-
-/usr/include/ATen/core/IListRef.h:
-
-/usr/include/ATen/ops/triangular_solve_ops.h:
-
-/usr/include/ATen/ops/_conj_ops.h:
-
-/usr/include/ATen/ops/miopen_batch_norm_native.h:
-
-/usr/include/ATen/ops/index_copy_native.h:
-
-/usr/include/ATen/ops/_upsample_nearest_exact2d_backward_ops.h:
+/usr/include/c++/12/utility:
 
 /usr/include/aarch64-linux-gnu/gnu/stubs.h:
 
@@ -9928,11 +9864,37 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/aarch64-linux-gnu/bits/math-vector.h:
 
+/usr/include/ATen/ops/linalg_matrix_power_ops.h:
+
+/usr/include/ATen/ops/fractional_max_pool3d_ops.h:
+
+/usr/include/ATen/ops/_autocast_to_full_precision_ops.h:
+
+/usr/include/ATen/ops/isnan_native.h:
+
+/usr/include/ATen/ops/numpy_T.h:
+
+/usr/include/ATen/ops/_values.h:
+
 /usr/include/ATen/ops/cauchy_ops.h:
 
 /usr/include/ATen/ops/vsplit_native.h:
 
 /usr/include/c10/util/AlignOf.h:
+
+/usr/include/aarch64-linux-gnu/bits/types/__fpos64_t.h:
+
+/usr/include/ATen/ops/fft_ifft2_ops.h:
+
+/usr/include/c10/util/TypeIndex.h:
+
+/home/ross/Downloads/Hearing_aid/include/dnf_torch.h:
+
+/usr/include/ATen/TensorNames.h:
+
+/usr/include/c10/util/ConstexprCrc.h:
+
+/usr/include/ATen/ops/fft_rfftfreq_ops.h:
 
 /usr/include/ATen/ops/geqrf_ops.h:
 
@@ -9951,6 +9913,14 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 /usr/include/ATen/ops/masked_select_backward.h:
 
 /usr/include/ATen/ops/asinh_ops.h:
+
+/usr/include/torch/csrc/autograd/variable.h:
+
+/usr/include/c++/12/ext/alloc_traits.h:
+
+/usr/include/ATen/ops/is_signed.h:
+
+/usr/include/ATen/ops/log10.h:
 
 /usr/include/ATen/ops/slow_conv_dilated3d_ops.h:
 
@@ -9972,9 +9942,13 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/ATen/ops/cudnn_convolution_transpose_ops.h:
 
-/usr/include/aarch64-linux-gnu/bits/timesize.h:
+/usr/include/ATen/ops/leaky_relu_backward_meta.h:
 
-/usr/include/c10/core/TensorOptions.h:
+/usr/include/ATen/ops/positive_ops.h:
+
+/usr/include/aarch64-linux-gnu/bits/setjmp.h:
+
+/usr/include/ATen/ops/lift_fresh_ops.h:
 
 /usr/include/ATen/ops/log2_native.h:
 
@@ -9986,25 +9960,15 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/ATen/ops/diagflat.h:
 
-/usr/include/ATen/ops/fractional_max_pool3d_ops.h:
+/usr/include/c++/12/cmath:
 
-/usr/include/ATen/ops/_autocast_to_full_precision_ops.h:
+/usr/include/aarch64-linux-gnu/bits/atomic_wide_counter.h:
 
-/usr/include/ATen/ops/isnan_native.h:
+/usr/include/ATen/ops/special_multigammaln_ops.h:
 
-/usr/include/ATen/ops/numpy_T.h:
+/usr/include/ATen/ops/cosine_embedding_loss_ops.h:
 
-/usr/include/ATen/ops/_values.h:
-
-/usr/include/ATen/ops/linalg_matrix_power_ops.h:
-
-/usr/include/ATen/ops/view_as_complex_copy_native.h:
-
-/usr/include/ATen/ops/bitwise_and_native.h:
-
-/usr/include/c++/12/bits/concept_check.h:
-
-/usr/include/ATen/core/symbol.h:
+/usr/include/c++/12/backward/auto_ptr.h:
 
 /usr/include/aarch64-linux-gnu/bits/flt-eval-method.h:
 
@@ -10022,95 +9986,85 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/lib/gcc/aarch64-linux-gnu/12/include/stddef.h:
 
-/usr/include/ATen/ops/prelu_backward_ops.h:
+/usr/include/c++/12/bits/forward_list.h:
 
-/usr/include/c10/util/Half.h:
+/usr/include/ATen/ops/q_per_channel_zero_points_ops.h:
 
-/home/ross/Downloads/Hearing_aid/include/dnf_torch.h:
+/usr/include/ATen/ops/special_modified_bessel_k1.h:
 
-/usr/include/ATen/TensorNames.h:
+/usr/include/c++/12/bits/stl_numeric.h:
 
-/usr/include/c10/util/ConstexprCrc.h:
+/usr/include/ATen/ops/layer_norm_native.h:
 
-/usr/include/ATen/ops/fft_rfftfreq_ops.h:
+/usr/include/c10/core/UndefinedTensorImpl.h:
 
-/usr/include/aarch64-linux-gnu/bits/types/__fpos64_t.h:
+/usr/include/ATen/ops/thnn_conv2d_native.h:
 
-/usr/include/ATen/ops/fft_ifft2_ops.h:
+/usr/include/ATen/ops/_upsample_nearest_exact1d_backward_meta.h:
 
-/usr/include/c10/util/TypeIndex.h:
+/usr/include/ATen/ops/upsample_nearest3d_backward_ops.h:
 
-/usr/include/aarch64-linux-gnu/bits/cpu-set.h:
+/usr/include/ATen/ops/q_per_channel_axis_ops.h:
 
-/usr/include/c10/util/reverse_iterator.h:
+/usr/include/ATen/ops/_amp_foreach_non_finite_check_and_unscale_ops.h:
 
-/usr/include/ATen/ops/binary_cross_entropy_ops.h:
+/usr/include/ATen/ops/cat_native.h:
 
-/usr/include/ATen/ops/detach_copy.h:
+/usr/include/ATen/ops/special_erf.h:
 
-/usr/include/ATen/ops/vander.h:
+/usr/include/ATen/ops/quantized_batch_norm_ops.h:
 
-/usr/include/ATen/ops/resize_as.h:
+/usr/include/aarch64-linux-gnu/bits/wchar.h:
 
-/usr/include/ATen/ops/_cudnn_rnn.h:
+/usr/include/c++/12/bits/exception_defines.h:
 
-/usr/include/ATen/ops/nll_loss_forward.h:
+/usr/include/c10/util/complex_utils.h:
 
-/usr/include/ATen/ops/_cast_Char_ops.h:
+/usr/include/ATen/ops/flatten_dense_tensors.h:
 
-/usr/include/ATen/ops/mvlgamma_ops.h:
+/usr/include/aarch64-linux-gnu/bits/timesize.h:
 
-/usr/include/c++/12/bits/locale_facets.tcc:
+/usr/include/c10/core/TensorOptions.h:
 
-/usr/include/ATen/ops/_validate_sparse_csr_tensor_args_ops.h:
+/usr/include/c++/12/bits/std_function.h:
 
-/usr/include/ATen/ops/eq_meta.h:
+/usr/include/ATen/ops/normal_ops.h:
 
-/usr/include/ATen/ops/fft_ifft_ops.h:
+/usr/include/ATen/ops/squeeze_ops.h:
 
-/usr/include/ATen/ops/clamp_min_native.h:
+/usr/include/c++/12/tr1/modified_bessel_func.tcc:
 
-/usr/include/c10/util/Type.h:
-
-/usr/include/c10/util/ThreadLocalDebugInfo.h:
-
-/usr/include/ATen/ops/bitwise_left_shift.h:
-
-/usr/include/aarch64-linux-gnu/bits/types/__mbstate_t.h:
-
-/usr/include/c++/12/ext/alloc_traits.h:
-
-/usr/include/ATen/ops/is_signed.h:
-
-/usr/include/ATen/ops/log10.h:
-
-/usr/include/torch/csrc/autograd/variable.h:
+/usr/include/ATen/ops/miopen_batch_norm_ops.h:
 
 /usr/include/c++/12/stdlib.h:
 
-/usr/include/c++/12/bits/cpp_type_traits.h:
+/usr/include/c++/12/cstdlib:
 
-/usr/include/ATen/ops/linalg_matrix_exp.h:
+/usr/include/ATen/ops/cumprod_backward_native.h:
 
-/usr/include/aarch64-linux-gnu/bits/atomic_wide_counter.h:
+/usr/include/ATen/ops/_debug_has_internal_overlap.h:
 
-/usr/include/ATen/ops/special_multigammaln_ops.h:
+/usr/include/ATen/ops/is_leaf_ops.h:
 
-/usr/include/ATen/ops/cosine_embedding_loss_ops.h:
+/usr/include/ATen/ops/_cast_Float.h:
 
-/usr/include/c++/12/backward/auto_ptr.h:
+/usr/include/ATen/ops/lu_unpack.h:
 
-/usr/include/ATen/ops/leaky_relu_backward_meta.h:
+/usr/include/ATen/ops/_linalg_slogdet_meta.h:
 
-/usr/include/ATen/ops/positive_ops.h:
+/usr/include/c++/12/bits/invoke.h:
 
-/usr/include/aarch64-linux-gnu/bits/setjmp.h:
+/usr/include/torch/csrc/api/include/torch/nn/functional/normalization.h:
 
-/usr/include/ATen/ops/lift_fresh_ops.h:
+/usr/include/ATen/ops/multi_margin_loss_backward_native.h:
 
-/usr/include/c++/12/bits/stl_multimap.h:
+/usr/include/ATen/ops/_dimI.h:
 
-/usr/include/c++/12/cmath:
+/usr/include/ATen/ops/clone_native.h:
+
+/usr/include/ATen/ops/choose_qparams_optimized_ops.h:
+
+/usr/include/c++/12/bits/stl_iterator.h:
 
 /usr/include/ATen/ops/logical_or_ops.h:
 
@@ -10139,6 +10093,14 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 /usr/include/ATen/ops/isposinf_ops.h:
 
 /usr/include/ATen/ops/_neg_view_ops.h:
+
+/usr/include/ATen/ops/_embedding_bag.h:
+
+/usr/include/ATen/ops/bmm_ops.h:
+
+/usr/include/ATen/ops/copy.h:
+
+/usr/include/ATen/ops/is_complex.h:
 
 /usr/include/ATen/ops/linalg_lu_solve_meta.h:
 
@@ -10334,23 +10296,13 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/c++/12/tr1/poly_hermite.tcc:
 
-/usr/include/ATen/ops/_convolution_mode.h:
+/usr/include/ATen/ops/replication_pad2d_backward_native.h:
 
-/usr/include/ATen/ops/gelu_backward.h:
+/usr/include/c10/util/string_utils.h:
 
-/usr/include/ATen/ops/quantize_per_tensor_dynamic_native.h:
+/usr/include/ATen/ops/convolution_backward_overrideable.h:
 
-/usr/include/c10/util/llvmMathExtras.h:
-
-/usr/include/c++/12/functional:
-
-/usr/include/ATen/ops/fractional_max_pool3d_backward_ops.h:
-
-/usr/include/ATen/ops/batch_norm_backward_reduce_native.h:
-
-/usr/include/c10/core/SymInt.h:
-
-/usr/include/aarch64-linux-gnu/bits/libm-simd-decl-stubs.h:
+/usr/include/ATen/ops/adjoint_ops.h:
 
 /usr/include/c10/core/Event.h:
 
@@ -10380,17 +10332,65 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/include/c++/12/string:
 
+/usr/include/ATen/ops/row_stack.h:
+
+/usr/include/ATen/ops/_cast_Int_ops.h:
+
+/usr/include/ATen/ops/nanquantile_ops.h:
+
+/usr/include/torch/csrc/api/include/torch/nn/options/fold.h:
+
+/usr/include/ATen/ops/rrelu_ops.h:
+
+/usr/include/ATen/ops/miopen_rnn.h:
+
+/usr/include/c++/12/bits/node_handle.h:
+
 /usr/include/aarch64-linux-gnu/bits/locale.h:
 
 /usr/include/ATen/ops/_symeig_helper_ops.h:
 
 /usr/include/c10/core/impl/LocalDispatchKeySet.h:
 
+/usr/include/c10/util/Deprecated.h:
+
+/usr/include/c++/12/bits/streambuf.tcc:
+
 /usr/include/ATen/ops/hardshrink_backward_native.h:
 
 /usr/include/ATen/ops/gradient.h:
 
 /usr/include/c++/12/bits/stl_bvector.h:
+
+/usr/include/c++/12/chrono:
+
+/usr/include/ATen/ops/var_ops.h:
+
+/usr/include/ATen/ops/upsample_nearest1d_backward_ops.h:
+
+/usr/include/ATen/ops/atleast_2d_ops.h:
+
+/usr/include/ATen/ops/isinf_native.h:
+
+/usr/include/c++/12/cstdint:
+
+/usr/include/ATen/ops/batch_norm_backward_reduce_native.h:
+
+/usr/include/c10/core/SymInt.h:
+
+/usr/include/aarch64-linux-gnu/bits/libm-simd-decl-stubs.h:
+
+/usr/include/ATen/ops/_convolution_mode.h:
+
+/usr/include/ATen/ops/gelu_backward.h:
+
+/usr/include/ATen/ops/quantize_per_tensor_dynamic_native.h:
+
+/usr/include/c10/util/llvmMathExtras.h:
+
+/usr/include/c++/12/functional:
+
+/usr/include/ATen/ops/fractional_max_pool3d_backward_ops.h:
 
 /usr/include/c++/12/bits/stl_queue.h:
 
@@ -10622,11 +10622,11 @@ CMakeFiles/dnf_torch.dir/dnf_torch.cpp.o: /home/ross/Downloads/Hearing_aid/src/d
 
 /usr/lib/gcc/aarch64-linux-gnu/12/include/syslimits.h:
 
-/usr/include/c10/core/Storage.h:
-
 /usr/include/math.h:
 
 /home/ross/Downloads/Hearing_aid/src/dnf_torch.cpp:
+
+/usr/include/c10/core/Storage.h:
 
 /usr/include/c++/12/bits/shared_ptr_atomic.h:
 
