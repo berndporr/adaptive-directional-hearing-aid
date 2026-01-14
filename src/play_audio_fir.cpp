@@ -104,7 +104,7 @@ int main() {
     ALSAPlaybackDevice speaker("default", SAMPLING_RATE, SPEAKER_CHANNELS, FRAMES_PER_PERIOD, FORMAT);
 
     Fir1 fir(NTAPS,0.00000);
-    fir.setLearningRate(LEARNING_RATE);
+    fir.setLearningRate(FIR_LEARNING_RATE);
     size_t delay_line_length = NTAPS/2;
 
     DelayLine delay_line(delay_line_length);

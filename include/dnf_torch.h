@@ -47,6 +47,9 @@ private:
         std::vector<torch::nn::Linear> fc;
         Net(int nLayers, int nInput, bool withBias = false);
         torch::Tensor forward(torch::Tensor x, ActMethod am);
+
+        void save(torch::serialize::OutputArchive& archive) const override;
+        void load(torch::serialize::InputArchive& archive) override;
     };
 
 public:
@@ -143,10 +146,16 @@ public:
     /**
      * Gets the torch model, for example, to read out the weights.
      **/
-    const Net getModel() const
+    Net& getModel()
     {
         return model;
     }
+
+    const Net& getModel() const
+    {
+        return model;
+    }
+
 
     /**
      * Xavier gain for the weight init.

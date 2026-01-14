@@ -77,6 +77,10 @@ const std::vector<char>& ALSAPCMDevice::get_buffer() const{
     return buffer;
 }
 
+ unsigned int ALSAPCMDevice::get_sample_rate(){
+    return sample_rate;
+}
+
 size_t ALSAPCMDevice::get_bytes_per_frame() {
     return bytes_per_frame;
 }

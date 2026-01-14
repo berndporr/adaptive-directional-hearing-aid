@@ -107,23 +107,25 @@ bool validate_stereo_s16le(const WavFormat& f) {
 }
 
 int16_t filter_stereo_frame_and_convert_to_mono(int16_t left,int16_t right,DNF& dnf){
-    int32_t sum32 = static_cast<int32_t>(left) + static_cast<int32_t>(right);
+    int32_t sum32  = static_cast<int32_t>(left) + static_cast<int32_t>(right);
     int32_t diff32 = static_cast<int32_t>(right) - static_cast<int32_t>(left);
-    
-    float sum  = static_cast<float>(sum32 >> 1);
-    float diff = static_cast<float>(diff32 >> 1);
-                
-                
-    float output = dnf.filter(sum,diff);
-                
-    float y = output;
 
-    if (y >  32767.0f) y =  32767.0f;
-    if (y < -32768.0f) y = -32768.0f;
-                
-    int16_t out16 = static_cast<int16_t>(std::lrintf(y));
-    
-    return out16;
+    // Normalize to [-1, 1]
+    constexpr float INV_SCALE = 1.0f / 32768.0f;
+
+    float sum  = static_cast<float>(sum32  >> 1) * INV_SCALE;
+    float diff = static_cast<float>(diff32 >> 1) * INV_SCALE;
+
+    // Neural filter (operates in normalized domain)
+    float output = dnf.filter(sum, diff);
+
+    // Back to PCM range
+    float pcm = output * 32768.0f;
+
+    // Final clamp
+    pcm = std::clamp(pcm, -32768.0f, 32767.0f);
+
+    return static_cast<int16_t>(std::lrintf(pcm));
 }
 
 void print_progress(size_t current, size_t total) {
@@ -145,6 +147,20 @@ void print_progress(size_t current, size_t total) {
     std::cout.flush();
 }
 
+void saveDNFMiddleLayer(DNF& dnf, const std::string& filename) 
+{
+    try {
+        torch::serialize::OutputArchive archive;
+        dnf.getModel().save(archive);
+        archive.save_to(filename);
+    }
+    catch (const c10::Error& e) {
+        std::cerr << "Failed to save DNF model: " << e.what() << std::endl;
+    }
+}
+    
+
+
 int main() {
     std::string filename = "../training_audio.wav";
     std::string output_filename = "../result.wav";
@@ -164,6 +180,15 @@ int main() {
     ALSAPlaybackDevice speaker("default", fmt.sampleRate, SPEAKER_CHANNELS, FRAMES_PER_PERIOD, FORMAT);
     speaker.open();
 
+    unsigned int actualRate = speaker.get_sample_rate();
+
+    if (actualRate != fmt.sampleRate) {
+        std::cerr << "Sample rate mismatch!\n"
+                << "WAV file:  " << fmt.sampleRate << " Hz\n"
+                << "ALSA rate: " << actualRate << " Hz\n";
+        return 1;
+    }
+    
     //set up neural network for training
     int nTaps = NTAPS;
     int nLayers = NEURAL_NETWORK_LAYERS;
@@ -230,7 +255,7 @@ int main() {
 
     std::cout << "\n" << "playback and writing to file" << "\n";
 
-    while(queue.size()!=0){
+    while(!queue.empty()){
         AudioMessage msg = std::move(queue.front());
         queue.pop();
 
@@ -266,7 +291,11 @@ int main() {
 
     wavOut.close();
     
+    std::string model_filename = "../dnf_model.pt";
+    
+    saveDNFMiddleLayer(dnf, model_filename);
 
+    std::cout << "model saved to" << model_filename << "\n";
     speaker.close();
     return 0;
 }

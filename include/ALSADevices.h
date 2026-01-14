@@ -45,6 +45,8 @@ class ALSAPCMDevice {
     unsigned int get_channels();
     const std::vector<char>& get_buffer() const;
     unsigned int get_period_time();
+    unsigned int get_sample_rate();
+    
 };
 
 

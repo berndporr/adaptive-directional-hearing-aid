@@ -134,3 +134,23 @@ void DNF::setLearningRate(float mu)
 		static_cast<torch::optim::SGDOptions &>(group.options()).lr(mu);
 	}
 }
+
+void DNF::Net::save(torch::serialize::OutputArchive& archive) const
+{
+    for (size_t i = 0; i < fc.size(); ++i)
+    {
+        torch::serialize::OutputArchive layer_archive;
+        fc[i]->save(layer_archive);
+        archive.write("fc_" + std::to_string(i), layer_archive);
+    }
+}
+
+void DNF::Net::load(torch::serialize::InputArchive& archive)
+{
+    for (size_t i = 0; i < fc.size(); ++i)
+    {
+        torch::serialize::InputArchive layer_archive;
+        archive.read("fc_" + std::to_string(i), layer_archive);
+        fc[i]->load(layer_archive);
+    }
+}
