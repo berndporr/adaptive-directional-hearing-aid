@@ -46,9 +46,15 @@ private:
         Net(int nLayers, int nInput, bool withBias = false);
         torch::Tensor forward(torch::Tensor x, ActMethod am);
 
+        //saves the model for use later
         void save(torch::serialize::OutputArchive& archive) const override;
+        //loads a saved model
         void load(torch::serialize::InputArchive& archive) override;
+
+        //prevents back propagation on all layers except the last layer
+        void freezeAllButLast();
     };
+
 
 public:
     /**
@@ -63,6 +69,7 @@ public:
     DNF(const int nLayers,
         const int nTaps,
         const int signalDelayLineLength,
+        const std::string& model_filename="",
         const ActMethod am = Act_Tanh,
         const bool tryGPU = false);
 
@@ -155,6 +162,8 @@ public:
         return model;
     }
 
+    // Debug helper: print all layer weights and biases
+    void printModel() const;
 
     /**
      * Xavier gain for the weight init.

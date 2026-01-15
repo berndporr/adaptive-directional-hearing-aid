@@ -74,15 +74,6 @@ void playback_thread_func(ALSAPlaybackDevice* speaker, AudioQueue* audio_queue) 
     }
 }
 
-void loadDNFModel(DNF& dnf, const std::string& filename)
-{
-    torch::serialize::InputArchive archive;
-    archive.load_from(filename);
-    dnf.getModel().load(archive);
-
-    dnf.getModel().eval();
-    dnf.setLearningRate(0.0f);
-}
 
 int main() {
     const snd_pcm_format_t FORMAT = SND_PCM_FORMAT_S16_LE;
@@ -100,10 +91,10 @@ int main() {
         )
     );
 
-    DNF dnf(nLayers,nTaps,delay_line_length);
     std::string model_filename = "../dnf_model.pt";
+    DNF dnf(nLayers,nTaps,delay_line_length,model_filename);
 
-    loadDNFModel(dnf, model_filename);
+    dnf.setLearningRate(static_cast<float>(REAL_TIME_LEARNING_RATE));
 
     microphone.open();
     speaker.open();

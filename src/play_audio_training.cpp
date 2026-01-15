@@ -117,6 +117,9 @@ int16_t filter_stereo_frame_and_convert_to_mono(int16_t left,int16_t right,DNF& 
 
     // Neural filter (operates in normalized domain)
     float output = dnf.filter(sum, diff);
+    
+
+    //float output = sum;
 
     // Back to PCM range
     float pcm = output * 32768.0f;
@@ -162,7 +165,13 @@ void saveDNFMiddleLayer(DNF& dnf, const std::string& filename)
 
 int main() {
     std::string filename = "../training_audio.wav";
-    std::string output_filename = "../result.wav";
+    std::string output_filename = "";
+    if(LEARNING_RATE==0){
+        output_filename = "../result_unfiltered.wav";
+    }else{
+        output_filename = "../result.wav";
+    }
+    
     //check file is in desired format
     WavFormat fmt;
     if (!read_wav_format(filename, fmt)) {
@@ -202,8 +211,6 @@ int main() {
 
     DNF dnf(nLayers,nTaps,delay_line_length);
 
-    dnf.setLearningRate(static_cast<float>(LEARNING_RATE));
-    
     //reading data from file
     std::ifstream f(filename, std::ios::binary);
     f.seekg(fmt.dataOffset);
@@ -221,14 +228,17 @@ int main() {
     auto* out = reinterpret_cast<int16_t*>(msg.data.data());
     size_t message_index =0;
     const size_t totalMessages = ((fmt.dataSize / sizeof(int16_t)) / 2) / 32;
+    
+    dnf.setLearningRate(0.0f);
     for (size_t i = 0; i < totalFrames; ++i) {
         int16_t left  = samples[2 * i];
         int16_t right = samples[2 * i + 1];
 
         out[frame_index] = filter_stereo_frame_and_convert_to_mono(left,right,dnf); 
-        
         frame_index++;
-        
+        if(i==NTAPS){
+            dnf.setLearningRate(static_cast<float>(LEARNING_RATE));
+        }
         if(frame_index==static_cast<size_t>(speaker.get_frames_per_period())){
             msg.frames =speaker.get_frames_per_period() ;
             queue.push(std::move(msg));
@@ -301,7 +311,7 @@ int main() {
     std::string model_filename = "../dnf_model.pt";
     
     saveDNFMiddleLayer(dnf, model_filename);
-
+    dnf.printModel();
     std::cout << "model saved to" << model_filename << "\n";
     speaker.close();
     return 0;

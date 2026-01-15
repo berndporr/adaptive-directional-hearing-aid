@@ -149,6 +149,7 @@ snd_pcm_sframes_t ALSAPlaybackDevice::play_from_buffer() {
 
     return frames_written;
 }
+
 snd_pcm_sframes_t ALSAPlaybackDevice::play_from_array(const std::vector<char>& data,snd_pcm_sframes_t frames_to_play) {
     if (frames_to_play != frames_per_period){
         fprintf(stderr, "frames_to_play must equal frames in period <%lu>\n", frames_per_period);

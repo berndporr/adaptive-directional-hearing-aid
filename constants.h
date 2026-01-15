@@ -24,8 +24,20 @@
 
 //constants for the neural network
 #define SAMPLING_RATE 8000
-#define LEARNING_RATE 150
-#define NTAPS 20
+/*Learning for training file, if set to zero it will output an unfiltered
+/ result saved into result_unfiltered
+*/
+#define LEARNING_RATE 100
+#define NTAPS 200
 #define NEURAL_NETWORK_LAYERS 4
+
+//enable back prop in real time model, using the learning rate defined below
+#define ENABLE_BACK_PROP false
+
+#if ENABLE_BACK_PROP
+    #define REAL_TIME_LEARNING_RATE 100
+#else
+    #define REAL_TIME_LEARNING_RATE 0
+#endif
 
 #endif

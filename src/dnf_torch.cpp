@@ -54,6 +54,7 @@ torch::Tensor DNF::Net::forward(torch::Tensor x, ActMethod am)
 DNF::DNF(const int nLayers,
 		 const int nTaps,
 		 const int signalDelayLineLength,
+		 const std::string& model_filename,
 		 const ActMethod am,
 		 const bool tryGPU) : noiseDelayLineLength(nTaps),
 							  signalDelayLineLength(signalDelayLineLength),
@@ -73,6 +74,17 @@ DNF::DNF(const int nLayers,
 
 	model.to(device);
 	model.train();
+
+	//load weights and biases from external file
+	if(model_filename!=""){
+		torch::serialize::InputArchive archive;
+    	archive.load_from(model_filename);
+    	model.load(archive);
+
+	}
+
+	//model.freezeAllButLast();
+	
 
 	saveInitialParameters();
 }
@@ -160,3 +172,43 @@ void DNF::Net::load(torch::serialize::InputArchive& archive)
         fc[i]->load(layer_archive);
     }
 }
+
+void DNF::Net::freezeAllButLast()
+{
+    // Freeze everything
+    for (auto& p : parameters())
+    {
+        p.set_requires_grad(false);
+    }
+
+    // Unfreeze last FC layer
+    for (auto& p : fc.back()->parameters())
+    {
+        p.set_requires_grad(true);
+    }
+	
+}
+
+void DNF::printModel() const
+{
+    const auto& model = getModel();
+
+    size_t layer_idx = 0;
+    for (const auto& layer : model.fc)
+    {
+        std::cout << "Layer " << layer_idx << " weights:\n";
+        std::cout << layer->weight << "\n";
+
+        if (layer->bias.defined())
+        {
+            std::cout << "Layer " << layer_idx << " bias:\n";
+            std::cout << layer->bias << "\n";
+        }
+
+        std::cout << "----------------------------------\n";
+        layer_idx++;
+    }
+}
+
+
+
