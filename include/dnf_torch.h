@@ -53,6 +53,8 @@ private:
 
         //prevents back propagation on all layers except the last layer
         void freezeAllButLast();
+        void unfreezeAll();
+        bool train_last_only = false;
     };
 
 

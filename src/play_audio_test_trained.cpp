@@ -148,28 +148,12 @@ void print_progress(size_t current, size_t total) {
     std::cout.flush();
 }
 
-void saveDNFMiddleLayer(DNF& dnf, const std::string& filename) 
-{
-    try {
-        torch::serialize::OutputArchive archive;
-        dnf.getModel().save(archive);
-        archive.save_to(filename);
-    }
-    catch (const c10::Error& e) {
-        std::cerr << "Failed to save DNF model: " << e.what() << std::endl;
-    }
-}
-    
 
 
 int main() {
     std::string filename = "../training_audio.wav";
-    std::string output_filename = "";
-    if(LEARNING_RATE==0){
-        output_filename = "../result_unfiltered.wav";
-    }else{
-        output_filename = "../result.wav";
-    }
+    std::string output_filename = "../result.wav";
+    
     
     //check file is in desired format
     WavFormat fmt;
@@ -208,8 +192,7 @@ int main() {
         )
     );
 
-    DNF dnf(nLayers,nTaps,delay_line_length);
-
+    
     //reading data from file
     std::ifstream f(filename, std::ios::binary);
     f.seekg(fmt.dataOffset);
@@ -228,16 +211,18 @@ int main() {
     size_t message_index =0;
     const size_t totalMessages = ((fmt.dataSize / sizeof(int16_t)) / 2) / 32;
     
-    dnf.setLearningRate(0.0f);
+    std::string model_filename = "../dnf_model.pt";
+    DNF dnf(nLayers,nTaps,delay_line_length,model_filename);
+    dnf.getModel().freezeAllButLast();
+    dnf.setLearningRate(static_cast<float>(LEARNING_RATE));
+
     for (size_t i = 0; i < totalFrames; ++i) {
         int16_t left  = samples[2 * i];
         int16_t right = samples[2 * i + 1];
 
         out[frame_index] = filter_stereo_frame_and_convert_to_mono(left,right,dnf); 
         frame_index++;
-        if(i==NTAPS){
-            dnf.setLearningRate(static_cast<float>(LEARNING_RATE));
-        }
+
         if(frame_index==static_cast<size_t>(speaker.get_frames_per_period())){
             msg.frames =speaker.get_frames_per_period() ;
             queue.push(std::move(msg));
@@ -306,12 +291,8 @@ int main() {
     wavOut.write(reinterpret_cast<char*>(&header), sizeof(header));
 
     wavOut.close();
-    
-    std::string model_filename = "../dnf_model.pt";
-    
-    saveDNFMiddleLayer(dnf, model_filename);
+
     dnf.printModel();
-    std::cout << "model saved to" << model_filename << "\n";
     speaker.close();
     return 0;
 }

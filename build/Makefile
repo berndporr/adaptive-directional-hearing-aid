@@ -194,6 +194,19 @@ main_training/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_training.dir/build.make CMakeFiles/main_training.dir/build
 .PHONY : main_training/fast
 
+#=============================================================================
+# Target rules for targets named main_test
+
+# Build rule for target.
+main_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main_test
+.PHONY : main_test
+
+# fast build rule for target.
+main_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_test.dir/build.make CMakeFiles/main_test.dir/build
+.PHONY : main_test/fast
+
 ALSADevices.o: ALSADevices.cpp.o
 .PHONY : ALSADevices.o
 
@@ -314,6 +327,30 @@ play_audio_neural.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_neural.dir/build.make CMakeFiles/main_neural.dir/play_audio_neural.cpp.s
 .PHONY : play_audio_neural.cpp.s
 
+play_audio_test_trained.o: play_audio_test_trained.cpp.o
+.PHONY : play_audio_test_trained.o
+
+# target to build an object file
+play_audio_test_trained.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_test.dir/build.make CMakeFiles/main_test.dir/play_audio_test_trained.cpp.o
+.PHONY : play_audio_test_trained.cpp.o
+
+play_audio_test_trained.i: play_audio_test_trained.cpp.i
+.PHONY : play_audio_test_trained.i
+
+# target to preprocess a source file
+play_audio_test_trained.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_test.dir/build.make CMakeFiles/main_test.dir/play_audio_test_trained.cpp.i
+.PHONY : play_audio_test_trained.cpp.i
+
+play_audio_test_trained.s: play_audio_test_trained.cpp.s
+.PHONY : play_audio_test_trained.s
+
+# target to generate assembly for a file
+play_audio_test_trained.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_test.dir/build.make CMakeFiles/main_test.dir/play_audio_test_trained.cpp.s
+.PHONY : play_audio_test_trained.cpp.s
+
 play_audio_training.o: play_audio_training.cpp.o
 .PHONY : play_audio_training.o
 
@@ -351,6 +388,7 @@ help:
 	@echo "... fir"
 	@echo "... main_fir"
 	@echo "... main_neural"
+	@echo "... main_test"
 	@echo "... main_training"
 	@echo "... ALSADevices.o"
 	@echo "... ALSADevices.i"
@@ -367,6 +405,9 @@ help:
 	@echo "... play_audio_neural.o"
 	@echo "... play_audio_neural.i"
 	@echo "... play_audio_neural.s"
+	@echo "... play_audio_test_trained.o"
+	@echo "... play_audio_test_trained.i"
+	@echo "... play_audio_test_trained.s"
 	@echo "... play_audio_training.o"
 	@echo "... play_audio_training.i"
 	@echo "... play_audio_training.s"

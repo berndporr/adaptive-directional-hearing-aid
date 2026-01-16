@@ -26,8 +26,18 @@ time2 = np.arange(len(data2)) / sr2
 
 # Make difference signal (truncate to shortest length)
 min_len = min(len(data1), len(data2))
-diff = data1[:min_len] - data2[:min_len]
+abs1 = np.abs(data1[:min_len])
+abs2 = np.abs(data2[:min_len])
+diff = abs2 - abs1
 time_diff = np.arange(len(diff)) / sr1  # same sample rate
+diff = np.clip(diff, -1.0, 1.0)
+
+max_amp = max(
+    np.max(np.abs(data1)),
+    np.max(np.abs(data2)),
+    np.max(np.abs(diff))
+)
+
 
 # Plot
 plt.figure(figsize=(14, 9))
@@ -35,6 +45,7 @@ plt.figure(figsize=(14, 9))
 # First subplot: filtered
 plt.subplot(3, 1, 1)
 plt.plot(time1, data1, color='blue')
+plt.ylim(-max_amp, max_amp)
 plt.title(f"Filtered Waveform: {wav_path1}")
 plt.xlabel("Time (s)")
 plt.ylabel("Amplitude")
@@ -43,6 +54,7 @@ plt.grid(True)
 # Second subplot: unfiltered
 plt.subplot(3, 1, 2)
 plt.plot(time2, data2, color='green')
+plt.ylim(-max_amp, max_amp)
 plt.title(f"Unfiltered Waveform: {wav_path2}")
 plt.xlabel("Time (s)")
 plt.ylabel("Amplitude")
@@ -51,7 +63,7 @@ plt.grid(True)
 # Third subplot: difference
 plt.subplot(3, 1, 3)
 plt.plot(time_diff, diff, color='red')
-plt.title("Difference (Filtered - Unfiltered)")
+plt.title("Difference (Unfiltered - Filtered)(absoluted)")
 plt.xlabel("Time (s)")
 plt.ylabel("Amplitude")
 plt.grid(True)

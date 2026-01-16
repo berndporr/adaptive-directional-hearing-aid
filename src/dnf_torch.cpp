@@ -29,27 +29,53 @@ DNF::Net::Net(int nLayers, int nInput, bool withBias)
 
 torch::Tensor DNF::Net::forward(torch::Tensor x, ActMethod am)
 {
-	for (auto &f : fc)
-	{
-		switch (am)
-		{
-		default:
-		case Act_Tanh:
-			x = torch::atan(f->forward(x));
-			break;
-		case Act_Sigmoid:
-			x = torch::sigmoid(f->forward(x));
-			break;
-		case Act_ReLU:
-			x = torch::relu(f->forward(x));
-			break;
-		case Act_NONE:
-			x = f->forward(x);
-			break;
-		}
-	}
-	return x;
+    // All layers except last
+    for (size_t i = 0; i + 1 < fc.size(); ++i)
+    {
+        switch (am)
+        {
+        default:
+        case Act_Tanh:
+            x = torch::atan(fc[i]->forward(x));
+            break;
+        case Act_Sigmoid:
+            x = torch::sigmoid(fc[i]->forward(x));
+            break;
+        case Act_ReLU:
+            x = torch::relu(fc[i]->forward(x));
+            break;
+        case Act_NONE:
+            x = fc[i]->forward(x);
+            break;
+        }
+    }
+
+    if (train_last_only)
+    {
+        x = x.detach();
+    }
+
+    // Last layer
+    switch (am)
+    {
+    default:
+    case Act_Tanh:
+        x = torch::atan(fc.back()->forward(x));
+        break;
+    case Act_Sigmoid:
+        x = torch::sigmoid(fc.back()->forward(x));
+        break;
+    case Act_ReLU:
+        x = torch::relu(fc.back()->forward(x));
+        break;
+    case Act_NONE:
+        x = fc.back()->forward(x);
+        break;
+    }
+
+    return x;
 }
+
 
 DNF::DNF(const int nLayers,
 		 const int nTaps,
@@ -83,8 +109,6 @@ DNF::DNF(const int nLayers,
 
 	}
 
-	//model.freezeAllButLast();
-	
 
 	saveInitialParameters();
 }
@@ -187,7 +211,18 @@ void DNF::Net::freezeAllButLast()
         p.set_requires_grad(true);
     }
 	
+    train_last_only = true;
+	
 }
+
+void DNF::Net::unfreezeAll()
+{
+    for (auto& p : parameters()) {
+        p.set_requires_grad(true);
+    }
+    train_last_only = false;
+}
+
 
 void DNF::printModel() const
 {
@@ -209,6 +244,7 @@ void DNF::printModel() const
         layer_idx++;
     }
 }
+
 
 
 

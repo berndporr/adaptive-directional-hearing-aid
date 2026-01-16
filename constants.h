@@ -18,21 +18,27 @@
 #define AVERAGE_DISTANCE_FROM_EAR_TO_EAR_CM 18
 //multiplier to increase the delay of the signal so that it is more
 //than the minimum
-#define DELAY_LINE_MULTIPLIER 4
+#define DELAY_LINE_MULTIPLIER 2
 //queue size for communication between threads
 #define MAX_QUEUE_SIZE 5
 
 //constants for the neural network
 #define SAMPLING_RATE 8000
 /*Learning for training file, if set to zero it will output an unfiltered
-/ result saved into result_unfiltered
+/ result saved into result_unfiltered. It will be delayed as it went
+/ through the filter. This can be used as a base to compare with 
+/ filtered results
 */
 #define LEARNING_RATE 100
-#define NTAPS 200
-#define NEURAL_NETWORK_LAYERS 4
+#define NTAPS 3
+#define NEURAL_NETWORK_LAYERS 3
 
-//enable back prop in real time model, using the learning rate defined below
-#define ENABLE_BACK_PROP false
+/*enable back prop in real time model, 
+/using the learning rate defined below
+/it will only do the last layer as doing the whole network takes too
+/long
+*/
+#define ENABLE_BACK_PROP true
 
 #if ENABLE_BACK_PROP
     #define REAL_TIME_LEARNING_RATE 100

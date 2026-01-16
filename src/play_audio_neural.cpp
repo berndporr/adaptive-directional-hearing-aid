@@ -8,7 +8,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <vector>
-
+#include <iostream>
 
 struct AudioMessage {
     std::vector<char> data;
@@ -37,6 +37,7 @@ public:
     void push(AudioMessage msg) {
         std::unique_lock<std::mutex> lock(mtx);
         if (queue.size() >= maxQueueSize){
+            std::cout << "dropped" << "\n";
             return;
         }
 
@@ -93,6 +94,7 @@ int main() {
 
     std::string model_filename = "../dnf_model.pt";
     DNF dnf(nLayers,nTaps,delay_line_length,model_filename);
+    dnf.getModel().freezeAllButLast();
 
     dnf.setLearningRate(static_cast<float>(REAL_TIME_LEARNING_RATE));
 
