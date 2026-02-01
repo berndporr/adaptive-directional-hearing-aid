@@ -1,5 +1,3 @@
-# Work in Progress
-
 Command to record audio to overwrite training_audio file
 
 arecord -D hw:5,0 -f S16_LE -c 2 -r 44100 training_audio.wav
