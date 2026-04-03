@@ -3,9 +3,10 @@ Before running you need to install libtorch which you will be able to do by foll
 Libtorch
 
 Intel architectures: Get libtorch from the PyTorch homepage. Create an environment variable CMAKE_PREFIX_PATH=/path/to/libtorch pointing to the libtorch directory.
+
 ARM Debian (Raspberry PI): just do apt install libtorch-dev and you are all set!
 
-sudo apt install libtorch-dev
+
 
 Command to record audio to overwrite training_audio file or test microphones are working
 
