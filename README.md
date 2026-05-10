@@ -1,8 +1,18 @@
-Command to record audio to overwrite training_audio file
+Before running you need to install libtorch which you will be able to do by following the below:
+
+Libtorch
+
+Intel architectures: Get libtorch from the PyTorch homepage. Create an environment variable CMAKE_PREFIX_PATH=/path/to/libtorch pointing to the libtorch directory.
+
+ARM Debian (Raspberry PI): just do apt install libtorch-dev and you are all set!
+
+
+
+Command to record audio to overwrite training_audio file or test microphones are working
 
 arecord -D hw:5,0 -f S16_LE -c 2 -r 44100 training_audio.wav
 
-Below is the device tree overlay to enable i2s communication on port 2 of the Rock 5B/5B+
+Below is the device tree overlay to enable i2s communication on port 2 of the Rock 5B/5B+. The way to attach this device tree overlay depends on the operating system you are using, however for Armbian, which is what I used, the steps are shown here https://docs.armbian.com/User-Guide_Armbian_overlays/
 
 ```dts
 /dts-v1/;
