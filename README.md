@@ -1,60 +1,46 @@
-Before running you need to install libtorch which you will be able to do by following the below:
+# Adaptive directional hearing aid
 
-Libtorch
+## Hardware
 
-Intel architectures: Get libtorch from the PyTorch homepage. Create an environment variable CMAKE_PREFIX_PATH=/path/to/libtorch pointing to the libtorch directory.
+ - Rock5B or Rock5B+
+ - MEMEs mics
 
-ARM Debian (Raspberry PI): just do apt install libtorch-dev and you are all set!
+## Prerequisites
 
+Install Armbian trixie, vendor with kernel `Linux rock-5b 6.1.115-vendor-rk35xx`.
 
+Install the following packages:
 
-Command to record audio to overwrite training_audio file or test microphones are working
+```
+apt install libasound2-dev cmake build-essential g++ pkgconf xauth x11-apps xfonts-base 
+```
 
-arecord -D hw:5,0 -f S16_LE -c 2 -r 44100 training_audio.wav
+## MEMS mics
 
-Below is the device tree overlay to enable i2s communication on port 2 of the Rock 5B/5B+. The way to attach this device tree overlay depends on the operating system you are using, however for Armbian, which is what I used, the steps are shown here https://docs.armbian.com/User-Guide_Armbian_overlays/
+Install the device tree with:
 
-```dts
-/dts-v1/;
-/plugin/;
+```
+sudo armbian-add-overlay mems_mic_i2s2_m1.dts
+```
 
-/ {
-    metadata {
-        title = "Enable I2S2-M1 2-channel dummy sound card";
-        exclusive = "GPIO3_B5", "GPIO3_B6", "GPIO3_B2", "GPIO3_B3", "i2s2_2ch";
-    };
-};
+Reboot.
 
-&{/} {
-    i2s2_dummy_codec: i2s2-dummy-codec {
-        compatible = "rockchip,dummy-codec";
-        #sound-dai-cells = <0>;
-    };
+Check with:
 
-    i2s2_dummy_sound: i2s2-dummy-sound {
-        #address-cells = <1>;
-        #size-cells = <0>;
-        compatible = "simple-audio-card";
-        simple-audio-card,format = "i2s";
-        simple-audio-card,name = "dummy-card";
-        simple-audio-card,mclk-fs = <256>;
-        status = "okay";
+```
+arecord -l
+```
+if you see the dummy card:
 
-        simple-audio-card,dai-link@0 {
-            reg = <0>;
-            format = "i2s";
-            cpu {
-                sound-dai = <&i2s2_2ch>;
-            };
-            codec {
-                sound-dai = <&i2s2_dummy_codec>;
-            };
-        };
-    };
-};
+```
+card 5: dummycard [dummy-card], device 0: fe490000.i2s-dummy_codec dummy_codec-0 [fe490000.i2s-dummy_codec dummy_codec-0]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
 
-&i2s2_2ch {
-    pinctrl-0 = <&i2s2m1_lrck &i2s2m1_sclk &i2s2m1_sdi &i2s2m1_sdo>;
-    status = "okay";
-};
+```
 
+Wire up the MEMS mics and record some sound from the mics:
+
+```
+arecord -D hw:5,0 -f S16_LE -c 2 -r 44100 mic_audio.wav
+```
