@@ -3,9 +3,9 @@
 ## Hardware
 
  - Rock5B or Rock5B+
- - MEMEs mics
+ - MEMS I2S mics
 
-## Prerequisites
+## Software prerequisites
 
 Install Armbian trixie, vendor with kernel `Linux rock-5b 6.1.115-vendor-rk35xx`.
 
@@ -16,6 +16,8 @@ apt install libasound2-dev cmake build-essential g++ pkgconf xauth x11-apps xfon
 ```
 
 ## MEMS mics
+
+The current mics are from DFR robot: https://wiki.dfrobot.com/sen0526/
 
 Install the device tree with:
 
@@ -33,14 +35,22 @@ arecord -l
 if you see the dummy card:
 
 ```
-card 5: dummycard [dummy-card], device 0: fe490000.i2s-dummy_codec dummy_codec-0 [fe490000.i2s-dummy_codec dummy_codec-0]
+card 5: memsmiccard [mems-mic-card], device 0: fe490000.i2s-dummy_codec dummy_codec-0 [fe490000.i2s-dummy_codec dummy_codec-0]
   Subdevices: 1/1
   Subdevice #0: subdevice #0
-
 ```
 
-Wire up the MEMS mics and record some sound from the mics:
+Wire up the MEMS mics:
+
+![alt tag](wiring.png)
+
+and record some sound from the mics:
 
 ```
-arecord -D hw:5,0 -f S16_LE -c 2 -r 44100 mic_audio.wav
+arecord -D hw:memsmiccard -c 2 -r 44100 -f S16_LE /tmp/audio.wav
 ```
+
+## Credit
+
+ - Bernd Porr
+ - Ross Cameron
