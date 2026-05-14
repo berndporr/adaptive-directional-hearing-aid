@@ -42,6 +42,10 @@ bool ALSAPCMDevice::open ()
 
     snd_pcm_hw_params_get_period_time (params, &period_time, 0);
 
+    bytes_per_frame
+        = static_cast<unsigned> ((snd_pcm_format_width (format) / 8))
+          * channels;
+
     return true;
 }
 
@@ -67,6 +71,8 @@ size_t ALSAPCMDevice::get_bytes_per_frame () { return bytes_per_frame; }
 snd_pcm_sframes_t
 ALSACaptureDevice::capture_into_array (std::vector<char> &data)
 {
+//    fprintf (stderr, "buffer:%ld, frames_per_period:%ld\n", data.size (),
+//             frames_per_period);
     snd_pcm_sframes_t frames_read
         = snd_pcm_readi (handle, data.data (),
                          static_cast<snd_pcm_uframes_t> (frames_per_period));
@@ -139,4 +145,3 @@ ALSAPlaybackDevice::play_from_array (const std::vector<char> &data,
 
     return frames_written;
 }
-

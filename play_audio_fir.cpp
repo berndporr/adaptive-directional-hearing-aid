@@ -107,11 +107,11 @@ class DelayLine
 int main ()
 {
     const snd_pcm_format_t FORMAT = SND_PCM_FORMAT_S16_LE;
-    ALSACaptureDevice microphone ("plughw:5,0", FIR_SAMPLING_RATE,
+    ALSACaptureDevice microphone ("hw:memsmiccard,0", FIR_SAMPLING_RATE,
                                   MICROPHONE_CHANNELS, FRAMES_PER_PERIOD,
                                   FORMAT);
-    ALSAPlaybackDevice speaker ("default", FIR_SAMPLING_RATE, SPEAKER_CHANNELS,
-                                FRAMES_PER_PERIOD, FORMAT);
+    ALSAPlaybackDevice speaker ("plughw:rockchipes8316,0", FIR_SAMPLING_RATE,
+                                SPEAKER_CHANNELS, FRAMES_PER_PERIOD, FORMAT);
 
     Fir1 fir (FIR_NTAPS, 0.00000);
     fir.setLearningRate (FIR_LEARNING_RATE);

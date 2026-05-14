@@ -7,12 +7,19 @@
 
 ## Software prerequisites
 
-Install Armbian trixie, vendor with kernel `Linux rock-5b 6.1.115-vendor-rk35xx`.
+ - Install Armbian trixie, vendor with kernel `Linux rock-5b 6.1.115-vendor-rk35xx`.
 
-Install the following packages:
+ - Install the following packages:
 
 ```
 apt install libasound2-dev cmake build-essential g++ pkgconf xauth x11-apps xfonts-base 
+```
+
+ - Install the FIR / LMS filter library: https://github.com/berndporr/fir1
+```
+cmake .
+make
+sudo make install
 ```
 
 ## MEMS mics
