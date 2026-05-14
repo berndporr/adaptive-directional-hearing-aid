@@ -1,5 +1,5 @@
 
-#include "../include/ALSADevices.h"
+#include "ALSADevices.h"
 #include <cstring>
 
 

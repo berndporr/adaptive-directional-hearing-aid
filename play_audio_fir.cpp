@@ -1,6 +1,6 @@
-#include "../include/ALSADevices.h"
+#include "ALSADevices.h"
 #include "Fir1.h"
-#include "../constants.h"
+#include "constants.h"
 #include <cmath>
 #include <cstddef>
 #include <cstdint>
