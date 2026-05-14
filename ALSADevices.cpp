@@ -1,6 +1,7 @@
 
 #include "ALSADevices.h"
 #include <cstring>
+#include <mutex>
 #include <thread>
 
 bool ALSAPCMDevice::open ()
@@ -65,8 +66,8 @@ void ALSACaptureDevice::worker ()
                 {
                     auto framedata
                         = reinterpret_cast<const int16_t *> (buffer.data ());
-                    const float left = framedata[2 * i] / 32768.0;
-                    const float right = framedata[2 * i + 1] / 32768.0;
+                    const float left = framedata[2 * i] / 32768.0f;
+                    const float right = framedata[2 * i + 1] / 32768.0f;
                     if (onFrame)
                         {
                             onFrame (left, right);
@@ -134,9 +135,11 @@ snd_pcm_sframes_t ALSACaptureDevice::capture (std::vector<char> &buffer)
 
 snd_pcm_sframes_t ALSAPlaybackDevice::play ()
 {
+    mtx.lock();
     snd_pcm_sframes_t frames_written
         = snd_pcm_writei (handle, buffer.data (),
                           static_cast<snd_pcm_uframes_t> (frames_per_period));
+    mtx.unlock();
 
     if (frames_written == -EINTR)
         {
@@ -169,8 +172,9 @@ void ALSAPlaybackDevice::addFrame (float l, float r)
         {
             return;
         }
-    buffer[bufferIndex * 2] = l * 32768;
-    buffer[bufferIndex * 2 + 1] = r * 32768;
+    std::lock_guard<std::mutex> guard(mtx);
+    buffer[bufferIndex * 2] = (int16_t)(l * 32768);
+    buffer[bufferIndex * 2 + 1] = (int16_t)(r * 32768);
     bufferIndex++;
 }
 

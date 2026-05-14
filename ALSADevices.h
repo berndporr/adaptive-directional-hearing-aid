@@ -3,6 +3,7 @@
 
 #include <atomic>
 #include <functional>
+#include <mutex>
 #include <thread>
 #define ALSA_PCM_NEW_HW_PARAMS_API
 
@@ -80,6 +81,7 @@ class ALSAPlaybackDevice : public ALSAPCMDevice
     snd_pcm_sframes_t play ();
     std::atomic<int> bufferIndex = 0;
     std::vector<int16_t> buffer;
+    std::mutex mtx;
 };
 
 #endif

@@ -46,7 +46,22 @@ class AdaptiveFilter
     float processSync (const float l, const float r);
     void processAsync (const float l, const float r);
 
-  private:
+    using OnFrame = std::function<void (const float l, const float r)>;
+    void registerCallback (OnFrame of) { onFrame = of; }
+
+    void start() {
+      if (running) return;
+      thr = std::thread(&AdaptiveFilter::worker,this);
+    }
+
+    void stop() {
+      if (!running) return;
+      running = false;
+      cv.notify_all();
+      if (thr.joinable()) thr.join();
+    }
+
+    private:
     std::shared_ptr<Fir1> fir;
     std::shared_ptr<DelayLine> delayLine;
     std::thread thr;
@@ -57,8 +72,6 @@ class AdaptiveFilter
     std::optional<float> shared_left;
     std::optional<float> shared_right;
 
-    using OnFrame = std::function<void (const float l, const float r)>;
-    void registerCallback (OnFrame of) { onFrame = of; }
     void worker ();
     OnFrame onFrame;
     const size_t delay_line_length = static_cast<size_t> (std::round (
