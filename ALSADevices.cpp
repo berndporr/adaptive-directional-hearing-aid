@@ -135,11 +135,12 @@ snd_pcm_sframes_t ALSACaptureDevice::capture (std::vector<char> &buffer)
 
 snd_pcm_sframes_t ALSAPlaybackDevice::play ()
 {
-    mtx.lock();
+    mtx.lock ();
     snd_pcm_sframes_t frames_written
         = snd_pcm_writei (handle, buffer.data (),
                           static_cast<snd_pcm_uframes_t> (frames_per_period));
-    mtx.unlock();
+    bufferIndex = 0;
+    mtx.unlock ();
 
     if (frames_written == -EINTR)
         {
@@ -172,16 +173,17 @@ void ALSAPlaybackDevice::addFrame (float l, float r)
         {
             return;
         }
-    std::lock_guard<std::mutex> guard(mtx);
+    std::lock_guard<std::mutex> guard (mtx);
     buffer[bufferIndex * 2] = (int16_t)(l * 32768);
     buffer[bufferIndex * 2 + 1] = (int16_t)(r * 32768);
     bufferIndex++;
 }
 
-void ALSAPlaybackDevice::worker () {
+void ALSAPlaybackDevice::worker ()
+{
     running = true;
-    while (running) {
-        play();
-        bufferIndex = 0;
-    }
+    while (running)
+        {
+            play ();
+        }
 }
