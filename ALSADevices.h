@@ -16,11 +16,8 @@ class ALSAPCMDevice
     snd_pcm_sframes_t frames_per_period;
     snd_pcm_format_t format;
     _snd_pcm_stream type;
-    std::vector<char> buffer;
     size_t bytes_per_frame;
     unsigned int period_time;
-
-    void allocate_buffer ();
 
   public:
     ALSAPCMDevice (std::string device_name, unsigned int sample_rate,
@@ -37,7 +34,6 @@ class ALSAPCMDevice
     snd_pcm_sframes_t get_frames_per_period ();
     size_t get_bytes_per_frame ();
     unsigned int get_channels ();
-    const std::vector<char> &get_buffer () const;
     unsigned int get_period_time ();
     unsigned int get_sample_rate ();
 };
@@ -53,7 +49,6 @@ class ALSACaptureDevice : public ALSAPCMDevice
     {
     }
 
-    snd_pcm_sframes_t capture_into_buffer ();
     snd_pcm_sframes_t capture_into_array (std::vector<char> &data);
 };
 
@@ -68,9 +63,6 @@ class ALSAPlaybackDevice : public ALSAPCMDevice
     {
     }
 
-    snd_pcm_sframes_t play_from_buffer ();
-    void copy_from_capture (const ALSACaptureDevice &mic);
-    void copy_from_capture_mono (const ALSACaptureDevice &mic);
     snd_pcm_sframes_t play_from_array (const std::vector<char> &data,
                                        snd_pcm_sframes_t frames_to_play);
 };

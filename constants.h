@@ -20,7 +20,7 @@
 //than the minimum
 #define DELAY_LINE_MULTIPLIER 2
 //queue size for communication between threads
-#define MAX_QUEUE_SIZE 5
+#define MAX_QUEUE_SIZE 2
 
 //constants for the neural network
 #define SAMPLING_RATE 8000
