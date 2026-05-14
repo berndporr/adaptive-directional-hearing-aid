@@ -27,6 +27,7 @@ target_link_libraries(alsa_devices PUBLIC
 # ---- Executables ----
 add_executable(main_fir
     play_audio_fir.cpp
+    adaptive_filter.cpp
 )
 
 target_link_libraries(main_fir PRIVATE

@@ -1,13 +1,15 @@
 
 #include "ALSADevices.h"
 #include <cstring>
+#include <thread>
 
 bool ALSAPCMDevice::open ()
 {
     snd_pcm_hw_params_t *params;
 
     /* Open PCM device. */
-    int rc = snd_pcm_open (&handle, device_name.c_str (), type, 0);
+    int rc = snd_pcm_open (&handle, device_name.c_str (),
+                           SND_PCM_STREAM_CAPTURE, 0);
     if (rc < 0)
         {
             fprintf (stderr, "unable to open pcm device: %s\n",
@@ -46,11 +48,37 @@ bool ALSAPCMDevice::open ()
         = static_cast<unsigned> ((snd_pcm_format_width (format) / 8))
           * channels;
 
+    thr = std::thread (&ALSAPCMDevice::worker, this);
+
     return true;
+}
+
+void ALSACaptureDevice::worker ()
+{
+    std::vector<char> buffer;
+    buffer.resize (bytes_per_frame * frames_per_period);
+    running = true;
+    while (running)
+        {
+            capture (buffer);
+            for (int i = 0; i < frames_per_period; i++)
+                {
+                    auto framedata
+                        = reinterpret_cast<const int16_t *> (buffer.data ());
+                    const float left = framedata[2 * i] / 32768.0;
+                    const float right = framedata[2 * i + 1] / 32768.0;
+                    if (onFrame)
+                        {
+                            onFrame (left, right);
+                        }
+                }
+        }
 }
 
 void ALSAPCMDevice::close ()
 {
+    running = false;
+    thr.join ();
     snd_pcm_drain (handle);
     snd_pcm_close (handle);
 }
@@ -68,13 +96,12 @@ unsigned int ALSAPCMDevice::get_sample_rate () { return sample_rate; }
 
 size_t ALSAPCMDevice::get_bytes_per_frame () { return bytes_per_frame; }
 
-snd_pcm_sframes_t
-ALSACaptureDevice::capture_into_array (std::vector<char> &data)
+snd_pcm_sframes_t ALSACaptureDevice::capture (std::vector<char> &buffer)
 {
-//    fprintf (stderr, "buffer:%ld, frames_per_period:%ld\n", data.size (),
-//             frames_per_period);
+    //    fprintf (stderr, "buffer:%ld, frames_per_period:%ld\n", data.size (),
+    //             frames_per_period);
     snd_pcm_sframes_t frames_read
-        = snd_pcm_readi (handle, data.data (),
+        = snd_pcm_readi (handle, buffer.data (),
                          static_cast<snd_pcm_uframes_t> (frames_per_period));
 
     if (frames_read == 0)
@@ -105,20 +132,10 @@ ALSACaptureDevice::capture_into_array (std::vector<char> &data)
     return frames_read;
 }
 
-snd_pcm_sframes_t
-ALSAPlaybackDevice::play_from_array (const std::vector<char> &data,
-                                     snd_pcm_sframes_t frames_to_play)
+snd_pcm_sframes_t ALSAPlaybackDevice::play ()
 {
-    if (frames_to_play != frames_per_period)
-        {
-            fprintf (stderr,
-                     "frames_to_play must equal frames in period <%lu>\n",
-                     frames_per_period);
-            return 0;
-        }
-
     snd_pcm_sframes_t frames_written
-        = snd_pcm_writei (handle, data.data (),
+        = snd_pcm_writei (handle, buffer.data (),
                           static_cast<snd_pcm_uframes_t> (frames_per_period));
 
     if (frames_written == -EINTR)
@@ -144,4 +161,23 @@ ALSAPlaybackDevice::play_from_array (const std::vector<char> &data,
         }
 
     return frames_written;
+}
+
+void ALSAPlaybackDevice::addFrame (float l, float r)
+{
+    if (bufferIndex >= frames_per_period)
+        {
+            return;
+        }
+    buffer[bufferIndex * 2] = l * 32768;
+    buffer[bufferIndex * 2 + 1] = r * 32768;
+    bufferIndex++;
+}
+
+void ALSAPlaybackDevice::worker () {
+    running = true;
+    while (running) {
+        play();
+        bufferIndex = 0;
+    }
 }

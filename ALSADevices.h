@@ -1,6 +1,9 @@
 #ifndef __ALSADevices_H
 #define __ALSADevices_H
 
+#include <atomic>
+#include <functional>
+#include <thread>
 #define ALSA_PCM_NEW_HW_PARAMS_API
 
 #include <alsa/asoundlib.h>
@@ -10,22 +13,22 @@
 class ALSAPCMDevice
 {
   protected:
-    snd_pcm_t *handle;
+    const snd_pcm_format_t format = SND_PCM_FORMAT_S16_LE;
+    snd_pcm_t *handle = nullptr;
     std::string device_name;
-    unsigned int sample_rate, channels;
+    unsigned int sample_rate;
     snd_pcm_sframes_t frames_per_period;
-    snd_pcm_format_t format;
-    _snd_pcm_stream type;
     size_t bytes_per_frame;
     unsigned int period_time;
+    unsigned int channels;
+    virtual void worker () = 0;
 
   public:
-    ALSAPCMDevice (std::string device_name, unsigned int sample_rate,
-                   unsigned int channels, unsigned int frames_per_period,
-                   snd_pcm_format_t format, _snd_pcm_stream type)
+    ALSAPCMDevice (const std::string device_name,
+                   const unsigned int sample_rate, const unsigned int channels,
+                   const unsigned int frames_per_period)
         : device_name (device_name), sample_rate (sample_rate),
-          channels (channels), frames_per_period (frames_per_period),
-          format (format), type (type)
+          frames_per_period (frames_per_period), channels (channels)
     {
     }
 
@@ -36,35 +39,47 @@ class ALSAPCMDevice
     unsigned int get_channels ();
     unsigned int get_period_time ();
     unsigned int get_sample_rate ();
+    std::thread thr;
+    bool running = false;
 };
 
 class ALSACaptureDevice : public ALSAPCMDevice
 {
   public:
-    ALSACaptureDevice (std::string device_name, unsigned int sample_rate,
-                       unsigned int channels, unsigned int frames_per_period,
-                       snd_pcm_format_t format)
-        : ALSAPCMDevice (device_name, sample_rate, channels, frames_per_period,
-                         format, SND_PCM_STREAM_CAPTURE)
+    ALSACaptureDevice (const std::string device_name,
+                       const unsigned int sample_rate,
+                       const unsigned int channels,
+                       unsigned int frames_per_period)
+        : ALSAPCMDevice (device_name, sample_rate, channels, frames_per_period)
     {
     }
 
-    snd_pcm_sframes_t capture_into_array (std::vector<char> &data);
+    using OnFrame = std::function<void (const float l, const float r)>;
+    void registerCallback (OnFrame of) { onFrame = of; }
+
+  private:
+    snd_pcm_sframes_t capture (std::vector<char> &buffer);
+    OnFrame onFrame;
+    virtual void worker() override;
 };
 
 class ALSAPlaybackDevice : public ALSAPCMDevice
 {
   public:
     ALSAPlaybackDevice (std::string device_name, unsigned int sample_rate,
-                        unsigned int channels, unsigned int frames_per_period,
-                        snd_pcm_format_t format)
-        : ALSAPCMDevice (device_name, sample_rate, channels, frames_per_period,
-                         format, SND_PCM_STREAM_PLAYBACK)
+                        unsigned int channels, unsigned int frames_per_period)
+        : ALSAPCMDevice (device_name, sample_rate, channels, frames_per_period)
     {
+        buffer.resize (bytes_per_frame * frames_per_period);
     }
 
-    snd_pcm_sframes_t play_from_array (const std::vector<char> &data,
-                                       snd_pcm_sframes_t frames_to_play);
+    void addFrame (float l, float r);
+
+  private:
+    virtual void worker();
+    snd_pcm_sframes_t play ();
+    std::atomic<int> bufferIndex = 0;
+    std::vector<int16_t> buffer;
 };
 
 #endif
