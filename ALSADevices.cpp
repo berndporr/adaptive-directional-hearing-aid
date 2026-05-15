@@ -56,23 +56,15 @@ bool ALSAPCMDevice::open ()
 
 void ALSACaptureDevice::worker ()
 {
-    std::vector<char> buffer;
+    std::vector<int16_t> buffer;
     buffer.resize (bytes_per_frame * frames_per_period);
     running = true;
     while (running)
         {
             capture (buffer);
-            for (int i = 0; i < frames_per_period; i++)
-                {
-                    auto framedata
-                        = reinterpret_cast<const int16_t *> (buffer.data ());
-                    const float left = framedata[2 * i] / 32768.0f;
-                    const float right = framedata[2 * i + 1] / 32768.0f;
-                    if (onFrame)
-                        {
-                            onFrame (left, right);
-                        }
-                }
+            if (onPeriod) {
+                onPeriod(buffer);
+            }
         }
 }
 
@@ -97,7 +89,7 @@ unsigned int ALSAPCMDevice::get_sample_rate () { return sample_rate; }
 
 size_t ALSAPCMDevice::get_bytes_per_frame () { return bytes_per_frame; }
 
-snd_pcm_sframes_t ALSACaptureDevice::capture (std::vector<char> &buffer)
+snd_pcm_sframes_t ALSACaptureDevice::capture (std::vector<int16_t> &buffer)
 {
     //    fprintf (stderr, "buffer:%ld, frames_per_period:%ld\n", data.size (),
     //             frames_per_period);

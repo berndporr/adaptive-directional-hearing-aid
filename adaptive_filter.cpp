@@ -1,6 +1,23 @@
 #include "adaptive_filter.h"
 
-float AdaptiveFilter::processSync (const float l, const float r)
+void AdaptiveFilter::processPeriod (std::vector<int16_t> &output)
+{
+    unsigned long frames_per_period = shared_input.value ().size () / 2;
+    if (shared_input.value ().size () != output.size ())
+        {
+            output.resize (shared_input.value ().size ());
+        }
+    for (unsigned long i = 0; i < frames_per_period; i++)
+        {
+            const float left = shared_input.value ()[2 * i] / 32768.0f;
+            const float right = shared_input.value ()[2 * i + 1] / 32768.0f;
+            const float y = processSample (left, right);
+            output[2 * i] = y * 32768;
+            output[2 * i + 1] = y * 32768;
+        }
+}
+
+float AdaptiveFilter::processSample (const float l, const float r)
 {
     float sum = r + l;
     float diff = r - l;
@@ -28,18 +45,19 @@ float AdaptiveFilter::processSync (const float l, const float r)
     return y;
 }
 
-void AdaptiveFilter::processAsync (const float l, const float r) {
-    if (shared_left.has_value() || shared_right.has_value()) {
-        fprintf(stderr,"Dropping frame.\n");
+void AdaptiveFilter::processAsync (const std::vector<int16_t> &period)
+{
+    if (!(shared_input->empty())) {
+        fprintf(stderr,"Congestion! Filter still working.");
         return;
     }
-    shared_left = l;
-    shared_right = r;
-    cv.notify_all();
+    shared_input = std::move (period);
+    cv.notify_all ();
 }
 
 void AdaptiveFilter::worker ()
 {
+    std::vector<int16_t> output;
     running = true;
     while (running)
         {
@@ -47,11 +65,11 @@ void AdaptiveFilter::worker ()
             cv.wait (lock);
             if (!running)
                 break;
-            float y = processSync(shared_left.value(), shared_right.value());
-            if (onFrame) {
-                onFrame(y,y);
-            }
-            shared_left.reset();
-            shared_right.reset();
+            processPeriod(output);
+            if (onPeriod)
+                {
+                    onPeriod (output);
+                }
+            shared_input.reset ();
         }
 }

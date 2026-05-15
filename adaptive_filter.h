@@ -43,25 +43,30 @@ class AdaptiveFilter
         delayLine = std::make_shared<DelayLine> (delay_line_length);
     }
     void setLearningrate (float mu) { fir->setLearningRate (mu); }
-    float processSync (const float l, const float r);
-    void processAsync (const float l, const float r);
+    float processSample (const float l, const float r);
+    void processAsync (const std::vector<int16_t> &period);
 
-    using OnFrame = std::function<void (const float l, const float r)>;
-    void registerCallback (OnFrame of) { onFrame = of; }
+    using OnPeriod = std::function<void (const std::vector<int16_t> &)>;
+    void registerCallback (OnPeriod op) { onPeriod = op; }
 
-    void start() {
-      if (running) return;
-      thr = std::thread(&AdaptiveFilter::worker,this);
+    void start ()
+    {
+        if (running)
+            return;
+        thr = std::thread (&AdaptiveFilter::worker, this);
     }
 
-    void stop() {
-      if (!running) return;
-      running = false;
-      cv.notify_all();
-      if (thr.joinable()) thr.join();
+    void stop ()
+    {
+        if (!running)
+            return;
+        running = false;
+        cv.notify_all ();
+        if (thr.joinable ())
+            thr.join ();
     }
 
-    private:
+  private:
     std::shared_ptr<Fir1> fir;
     std::shared_ptr<DelayLine> delayLine;
     std::thread thr;
@@ -69,11 +74,11 @@ class AdaptiveFilter
 
     std::mutex m;
     std::condition_variable cv;
-    std::optional<float> shared_left;
-    std::optional<float> shared_right;
+    std::optional<std::vector<int16_t> > shared_input;
 
+    void processPeriod (std::vector<int16_t> &output);
     void worker ();
-    OnFrame onFrame;
+    OnPeriod onPeriod;
     const size_t delay_line_length = static_cast<size_t> (std::round (
         ((AVERAGE_DISTANCE_FROM_EAR_TO_EAR_CM / 100.0) / SPEED_OF_SOUND)
         * FIR_SAMPLING_RATE * DELAY_LINE_MULTIPLIER));

@@ -55,13 +55,13 @@ class ALSACaptureDevice : public ALSAPCMDevice
     {
     }
 
-    using OnFrame = std::function<void (const float l, const float r)>;
-    void registerCallback (OnFrame of) { onFrame = of; }
+    using OnPeriod = std::function<void (const std::vector<int16_t> &)>;
+    void registerCallback (OnPeriod of) { onPeriod = of; }
 
   private:
-    snd_pcm_sframes_t capture (std::vector<char> &buffer);
-    OnFrame onFrame;
-    virtual void worker() override;
+    snd_pcm_sframes_t capture (std::vector<int16_t> &buffer);
+    OnPeriod onPeriod;
+    virtual void worker () override;
 };
 
 class ALSAPlaybackDevice : public ALSAPCMDevice
@@ -71,17 +71,10 @@ class ALSAPlaybackDevice : public ALSAPCMDevice
                         unsigned int channels, unsigned int frames_per_period)
         : ALSAPCMDevice (device_name, sample_rate, channels, frames_per_period)
     {
-        buffer.resize (bytes_per_frame * frames_per_period);
     }
 
-    void addFrame (float l, float r);
-
-  private:
-    virtual void worker();
-    snd_pcm_sframes_t play ();
-    std::atomic<int> bufferIndex = 0;
-    std::vector<int16_t> buffer;
-    std::mutex mtx;
+    snd_pcm_sframes_t onPeriod (const std::vector<int16_t> &period);
+    virtual void worker () override {};
 };
 
 #endif
