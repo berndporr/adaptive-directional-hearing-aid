@@ -47,10 +47,12 @@ float AdaptiveFilter::processSample (const float l, const float r)
 
 void AdaptiveFilter::processAsync (const std::vector<int16_t> &period)
 {
-    if (!(shared_input->empty())) {
-        fprintf(stderr,"Congestion in the adaptive filter.");
-        return;
-    }
+    std::lock_guard lk (m);
+    if (shared_input.has_value())
+        {
+            fprintf (stderr, "Congestion in the adaptive filter.");
+            return;
+        }
     shared_input = std::move (period);
     cv.notify_all ();
 }
@@ -58,18 +60,21 @@ void AdaptiveFilter::processAsync (const std::vector<int16_t> &period)
 void AdaptiveFilter::worker ()
 {
     std::vector<int16_t> output;
+
     running = true;
     while (running)
         {
             std::unique_lock lock (m);
-            cv.wait (lock);
+            cv.wait (lock,
+                     [&] { return shared_input.has_value () || !running; });
             if (!running)
                 break;
-            processPeriod(output);
+            processPeriod (output);
             if (onPeriod)
                 {
                     onPeriod (output);
                 }
             shared_input.reset ();
+            lock.unlock ();
         }
 }

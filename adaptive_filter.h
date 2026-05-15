@@ -54,6 +54,7 @@ class AdaptiveFilter
         if (running)
             return;
         thr = std::thread (&AdaptiveFilter::worker, this);
+        shared_input.reset ();
     }
 
     void stop ()
