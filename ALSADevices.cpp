@@ -48,8 +48,6 @@ bool ALSAPCMDevice::open ()
         = static_cast<unsigned> ((snd_pcm_format_width (format) / 8))
           * channels;
 
-    thr = std::thread (&ALSAPCMDevice::worker, this);
-
     return true;
 }
 
@@ -70,8 +68,6 @@ void ALSACaptureDevice::worker ()
 
 void ALSAPCMDevice::close ()
 {
-    running = false;
-    thr.join ();
     snd_pcm_drain (handle);
     snd_pcm_close (handle);
 }
@@ -88,6 +84,23 @@ snd_pcm_sframes_t ALSAPCMDevice::get_frames_per_period ()
 unsigned int ALSAPCMDevice::get_sample_rate () { return sample_rate; }
 
 size_t ALSAPCMDevice::get_bytes_per_frame () { return bytes_per_frame; }
+
+bool ALSACaptureDevice::open ()
+{
+    bool b = ALSAPCMDevice::open ();
+    if (!b) {
+        return b;
+    }
+    thr = std::thread(&ALSACaptureDevice::worker,this);
+    return b;
+}
+
+void ALSACaptureDevice::close ()
+{
+    ALSAPCMDevice::close ();
+    running = false;
+    thr.join ();
+}
 
 snd_pcm_sframes_t ALSACaptureDevice::capture (std::vector<int16_t> &buffer)
 {

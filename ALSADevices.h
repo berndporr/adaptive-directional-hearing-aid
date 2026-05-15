@@ -22,7 +22,6 @@ class ALSAPCMDevice
     size_t bytes_per_frame;
     unsigned int period_time;
     unsigned int channels;
-    virtual void worker () = 0;
 
   public:
     ALSAPCMDevice (const std::string device_name,
@@ -33,15 +32,13 @@ class ALSAPCMDevice
     {
     }
 
-    bool open ();
-    void close ();
+    virtual bool open ();
+    virtual void close ();
     snd_pcm_sframes_t get_frames_per_period ();
     size_t get_bytes_per_frame ();
     unsigned int get_channels ();
     unsigned int get_period_time ();
     unsigned int get_sample_rate ();
-    std::thread thr;
-    bool running = false;
 };
 
 class ALSACaptureDevice : public ALSAPCMDevice
@@ -58,10 +55,15 @@ class ALSACaptureDevice : public ALSAPCMDevice
     using OnPeriod = std::function<void (const std::vector<int16_t> &)>;
     void registerCallback (OnPeriod of) { onPeriod = of; }
 
+    bool open () override;
+    void close () override;
+
   private:
     snd_pcm_sframes_t capture (std::vector<int16_t> &buffer);
     OnPeriod onPeriod;
-    virtual void worker () override;
+    virtual void worker ();
+    std::thread thr;
+    bool running = false;
 };
 
 class ALSAPlaybackDevice : public ALSAPCMDevice
@@ -74,7 +76,6 @@ class ALSAPlaybackDevice : public ALSAPCMDevice
     }
 
     snd_pcm_sframes_t onPeriod (const std::vector<int16_t> &period);
-    virtual void worker () override {};
 };
 
 #endif

@@ -48,7 +48,7 @@ float AdaptiveFilter::processSample (const float l, const float r)
 void AdaptiveFilter::processAsync (const std::vector<int16_t> &period)
 {
     if (!(shared_input->empty())) {
-        fprintf(stderr,"Congestion! Filter still working.");
+        fprintf(stderr,"Congestion in the adaptive filter.");
         return;
     }
     shared_input = std::move (period);
