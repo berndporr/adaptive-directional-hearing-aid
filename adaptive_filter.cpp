@@ -12,8 +12,8 @@ void AdaptiveFilter::processPeriod (std::vector<int16_t> &output)
             const float left = shared_input.value ()[2 * i] / 32768.0f;
             const float right = shared_input.value ()[2 * i + 1] / 32768.0f;
             const float y = processSample (left, right);
-            output[2 * i] = y * 32768;
-            output[2 * i + 1] = y * 32768;
+            output[2 * i] = (int16_t)(y * 32768);
+            output[2 * i + 1] = (int16_t)(y * 32768);
         }
 }
 

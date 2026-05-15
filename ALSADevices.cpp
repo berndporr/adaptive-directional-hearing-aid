@@ -1,7 +1,6 @@
 
 #include "ALSADevices.h"
 #include <cstring>
-#include <mutex>
 #include <thread>
 
 bool ALSAPCMDevice::open ()
@@ -62,9 +61,10 @@ void ALSACaptureDevice::worker ()
     while (running)
         {
             capture (buffer);
-            if (onPeriod) {
-                onPeriod(buffer);
-            }
+            if (onPeriod)
+                {
+                    onPeriod (buffer);
+                }
         }
 }
 
@@ -125,15 +125,11 @@ snd_pcm_sframes_t ALSACaptureDevice::capture (std::vector<int16_t> &buffer)
     return frames_read;
 }
 
-snd_pcm_sframes_t ALSAPlaybackDevice::play ()
+snd_pcm_sframes_t ALSAPlaybackDevice::onPeriod (const std::vector<int16_t> &period)
 {
-    mtx.lock ();
     snd_pcm_sframes_t frames_written
-        = snd_pcm_writei (handle, buffer.data (),
+        = snd_pcm_writei (handle, period.data (),
                           static_cast<snd_pcm_uframes_t> (frames_per_period));
-    bufferIndex = 0;
-    mtx.unlock ();
-
     if (frames_written == -EINTR)
         {
             return 0;
@@ -157,25 +153,4 @@ snd_pcm_sframes_t ALSAPlaybackDevice::play ()
         }
 
     return frames_written;
-}
-
-void ALSAPlaybackDevice::addFrame (float l, float r)
-{
-    if (bufferIndex >= frames_per_period)
-        {
-            return;
-        }
-    std::lock_guard<std::mutex> guard (mtx);
-    buffer[bufferIndex * 2] = (int16_t)(l * 32768);
-    buffer[bufferIndex * 2 + 1] = (int16_t)(r * 32768);
-    bufferIndex++;
-}
-
-void ALSAPlaybackDevice::worker ()
-{
-    running = true;
-    while (running)
-        {
-            play ();
-        }
 }

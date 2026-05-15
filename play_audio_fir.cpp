@@ -13,8 +13,8 @@ int main ()
 
     AdaptiveFilter adaptive_filter(FIR_NTAPS);
 
-    microphone.registerCallback([&](std::vector<int16_t> &period){adaptive_filter.processAsync(period);});
-    adaptive_filter.registerCallback([&](std::vector<int16_t> &period){speaker.onPeriod(period);});
+    microphone.registerCallback([&](const std::vector<int16_t> &period){adaptive_filter.processAsync(period);});
+    adaptive_filter.registerCallback([&](const std::vector<int16_t> &period){speaker.onPeriod(period);});
 
     adaptive_filter.start();
     microphone.open ();
