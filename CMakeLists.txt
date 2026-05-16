@@ -42,7 +42,6 @@ add_executable(test_playback
 )
 
 target_link_libraries(test_playback PRIVATE
-    fir
     alsa_devices
 )
 
@@ -51,6 +50,13 @@ add_executable(test_recording
 )
 
 target_link_libraries(test_recording PRIVATE
-    fir
+    alsa_devices
+)
+
+add_executable(test_passthrough
+    test_passthrough.cpp
+)
+
+target_link_libraries(test_passthrough PRIVATE
     alsa_devices
 )

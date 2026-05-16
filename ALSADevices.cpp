@@ -5,7 +5,6 @@
 
 bool ALSAPCMDevice::open ()
 {
-    snd_pcm_hw_params_t *params;
 
     /* Open PCM device. */
     int rc = snd_pcm_open (&handle, device_name.c_str (),
@@ -16,6 +15,8 @@ bool ALSAPCMDevice::open ()
                      snd_strerror (rc));
             return false;
         }
+
+    snd_pcm_hw_params_t *params;
 
     /* Allocate a hardware parameters object. */
     snd_pcm_hw_params_alloca (&params);
@@ -132,9 +133,6 @@ ALSAPlaybackDevice::onPeriod (const std::vector<int16_t> &period)
         {
             /* EPIPE means underrun */
             snd_pcm_prepare (handle);
-            if (reportUnderruns) {
-                fprintf(stderr,"Playback buffer underrun!\n");
-            }
         }
 
     return frames_written;

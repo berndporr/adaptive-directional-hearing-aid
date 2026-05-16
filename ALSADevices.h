@@ -36,11 +36,11 @@ class ALSAPCMDevice
     const snd_pcm_format_t format = SND_PCM_FORMAT_S16_LE;
     snd_pcm_t *handle = nullptr;
     std::string device_name;
-    unsigned int sample_rate;
-    snd_pcm_sframes_t frames_per_period;
-    size_t bytes_per_frame;
-    unsigned int period_time;
-    unsigned int channels;
+    unsigned int sample_rate = 0;
+    snd_pcm_sframes_t frames_per_period = 0;
+    size_t bytes_per_frame = 0;
+    unsigned int period_time = 0;
+    unsigned int channels = 0;
 };
 
 class ALSACaptureDevice : public ALSAPCMDevice
@@ -83,16 +83,13 @@ class ALSAPlaybackDevice : public ALSAPCMDevice
 
     snd_pcm_sframes_t onPeriod (const std::vector<int16_t> &period);
 
-    void setReportUnderruns(bool ur = true) {
-      reportUnderruns = ur;
-    }
+    inline bool isUnderrunErrorCode (const long int r) { return -EPIPE == r; }
 
   private:
     virtual _snd_pcm_stream get_pcm_stream_type () const override
     {
         return SND_PCM_STREAM_PLAYBACK;
     };
-    bool reportUnderruns = false;
 };
 
 #endif
