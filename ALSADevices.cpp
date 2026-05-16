@@ -1,5 +1,6 @@
 
 #include "ALSADevices.h"
+#include <alsa/asoundlib.h>
 #include <cstring>
 #include <thread>
 
@@ -56,22 +57,24 @@ bool ALSAPCMDevice::open ()
         return false;
     }
 
-    rc = snd_pcm_hw_params_set_period_size (
-        handle, params, static_cast<snd_pcm_uframes_t> (frames_per_period), 0);
+    snd_pcm_uframes_t fpp = static_cast<snd_pcm_uframes_t> (frames_per_period);
+    rc = snd_pcm_hw_params_set_period_size_near (handle, params, &fpp, 0);
     if (rc < 0)
     {
         fprintf (stderr, "Can't set period size: %s.\n", snd_strerror (rc));
         return false;
     }
+    frames_per_period = fpp;
 
-    rc = snd_pcm_hw_params_set_buffer_size (
-        handle, params,
-        static_cast<snd_pcm_uframes_t> (frames_per_period * 2));
+    snd_pcm_uframes_t bufsz
+        = static_cast<snd_pcm_uframes_t> (frames_per_period);
+    rc = snd_pcm_hw_params_set_buffer_size_near (handle, params, &bufsz);
     if (rc < 0)
     {
         fprintf (stderr, "Can't set buffer size: %s.\n", snd_strerror (rc));
         return false;
     }
+    buffer_size = bufsz;
 
     rc = snd_pcm_hw_params (handle, params);
     if (rc < 0)
@@ -106,10 +109,18 @@ void ALSACaptureDevice::worker ()
     running = true;
     while (running)
     {
-        capture (buffer);
-        if (onPeriod)
+        snd_pcm_sframes_t n = capture (buffer);
+        if (n < 0)
+        {
+            fprintf (stderr, "Capture error: %s\n", snd_strerror ((int)n));
+        }
+        if ((n > 0) && onPeriod)
         {
             onPeriod (buffer);
+            if ((n * channels) != (long int)buffer.size ())
+            {
+                fprintf (stderr, "Capture: %ld != %ld\n", n * channels, buffer.size ());
+            }
         }
     }
 }
@@ -120,18 +131,23 @@ void ALSAPCMDevice::close ()
     snd_pcm_close (handle);
 }
 
-unsigned int ALSAPCMDevice::get_period_time () { return period_time; }
+long unsigned int ALSAPCMDevice::get_period_time () { return period_time; }
 
-unsigned int ALSAPCMDevice::get_channels () { return channels; }
+long unsigned int ALSAPCMDevice::get_channels () { return channels; }
 
-snd_pcm_sframes_t ALSAPCMDevice::get_frames_per_period ()
+long unsigned int ALSAPCMDevice::get_frames_per_period ()
 {
     return frames_per_period;
 }
 
-unsigned int ALSAPCMDevice::get_sample_rate () { return sample_rate; }
+long unsigned int ALSAPCMDevice::get_sample_rate () { return sample_rate; }
 
-size_t ALSAPCMDevice::get_bytes_per_frame () { return bytes_per_frame; }
+long unsigned int ALSAPCMDevice::get_buffer_size () { return buffer_size; }
+
+long unsigned int ALSAPCMDevice::get_bytes_per_frame ()
+{
+    return bytes_per_frame;
+}
 
 bool ALSACaptureDevice::open ()
 {

@@ -11,9 +11,8 @@
 #define FIR_OUTPUT_GAIN 30
 
 //general constants
-#define FRAMES_PER_PERIOD 32
-#define MICROPHONE_CHANNELS 2
-#define SPEAKER_CHANNELS 1
+#define FRAMES_PER_PERIOD 64
+#define CHANNELS 2
 
 //
 #define SPEED_OF_SOUND 343

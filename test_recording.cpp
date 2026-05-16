@@ -19,7 +19,7 @@ struct SOXdatafile
                 throw;
             }
         fprintf (f, "; Sample Rate %d\n", SAMPLING_RATE);
-        fprintf (f, "; Channels %d\n", MICROPHONE_CHANNELS);
+        fprintf (f, "; Channels %d\n", CHANNELS);
     }
     ~SOXdatafile () { fclose (f); }
     void addSample (const int16_t l, const int16_t r)
@@ -34,13 +34,13 @@ int main ()
 {
 
     ALSACaptureDevice microphone ("hw:memsmiccard,0", SAMPLING_RATE,
-                                  MICROPHONE_CHANNELS, FRAMES_PER_PERIOD);
+                                  CHANNELS, FRAMES_PER_PERIOD);
 
     SOXdatafile soxDatafile (datFilename);
 
     microphone.registerCallback ([&] (const std::vector<int16_t> &period) {
         for (long unsigned int i = 0;
-             i < (period.size () / MICROPHONE_CHANNELS); i++)
+             i < (period.size () / CHANNELS); i++)
             {
                 soxDatafile.addSample (period[i * 2], period[i * 2 + 1]);
             }

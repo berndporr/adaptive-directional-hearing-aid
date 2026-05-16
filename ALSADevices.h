@@ -25,11 +25,12 @@ class ALSAPCMDevice
 
     virtual bool open ();
     virtual void close ();
-    snd_pcm_sframes_t get_frames_per_period ();
-    size_t get_bytes_per_frame ();
-    unsigned int get_channels ();
-    unsigned int get_period_time ();
-    unsigned int get_sample_rate ();
+    long unsigned int get_frames_per_period ();
+    long unsigned int get_bytes_per_frame ();
+    long unsigned int get_channels ();
+    long unsigned int get_period_time ();
+    long unsigned int get_sample_rate ();
+    long unsigned int get_buffer_size ();
     virtual _snd_pcm_stream get_pcm_stream_type () const = 0;
 
   protected:
@@ -41,6 +42,7 @@ class ALSAPCMDevice
     size_t bytes_per_frame = 0;
     unsigned int period_time = 0;
     unsigned int channels = 0;
+    long unsigned int buffer_size = 0;
 };
 
 class ALSACaptureDevice : public ALSAPCMDevice

@@ -7,10 +7,10 @@
 int main ()
 {
     ALSACaptureDevice microphone ("hw:memsmiccard,0", SAMPLING_RATE,
-                                  MICROPHONE_CHANNELS, FRAMES_PER_PERIOD);
+                                  CHANNELS, FRAMES_PER_PERIOD);
 
     ALSAPlaybackDevice speaker ("plughw:rockchipes8316,0", SAMPLING_RATE,
-                                SPEAKER_CHANNELS, FRAMES_PER_PERIOD);
+                                CHANNELS, FRAMES_PER_PERIOD);
 
     AdaptiveFilter adaptive_filter (FIR_NTAPS,SAMPLING_RATE);
 

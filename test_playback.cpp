@@ -7,7 +7,7 @@ int main ()
 {
     const int fs = 8000;
     ALSAPlaybackDevice speaker ("plughw:rockchipes8316,0", fs,
-                                SPEAKER_CHANNELS, FRAMES_PER_PERIOD);
+                                CHANNELS, FRAMES_PER_PERIOD);
 
     std::vector<int16_t> buffer;
     buffer.resize (speaker.get_frames_per_period () * speaker.get_channels ());
@@ -16,8 +16,8 @@ int main ()
 
     speaker.open ();
 
-    printf ("Latency in ms reported by ALSA: %d\n",
-            speaker.get_period_time () / 1000);
+    printf ("Latency in us reported by ALSA: %ld\n",
+            speaker.get_period_time ());
 
     long int n = 0;
     for (int i = 0; i < 1000; i++)
