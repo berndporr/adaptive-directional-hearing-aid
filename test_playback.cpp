@@ -16,7 +16,6 @@ int main ()
 
     speaker.open ();
 
-    printf ("Latency in ms requested: %d\n", 1000 * FRAMES_PER_PERIOD / fs);
     printf ("Latency in ms reported by ALSA: %d\n",
             speaker.get_period_time () / 1000);
 

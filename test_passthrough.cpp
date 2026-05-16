@@ -31,7 +31,6 @@ int main ()
     speaker.open ();
     microphone.open ();
 
-    printf("Latency in ms requested: %d\n",1000*FRAMES_PER_PERIOD/fs);
     printf("Latency in ms reported by ALSA: %d\n",microphone.get_period_time()/1000);
 
     printf("Up and running. Press any key to stop.\n");
