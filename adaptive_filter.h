@@ -14,7 +14,7 @@
 class DelayLine
 {
   public:
-    explicit DelayLine (size_t delay) : buffer (delay, 0.0), size (delay) {}
+    explicit DelayLine (size_t delay) : buffer (delay, 0.0) {}
 
     inline double process (double x)
     {
@@ -22,7 +22,7 @@ class DelayLine
         buffer[index] = x;
 
         index++;
-        if (index == size)
+        if (index == buffer.size())
             index = 0;
 
         return y;
@@ -30,7 +30,6 @@ class DelayLine
 
   private:
     std::vector<double> buffer;
-    size_t size;
     size_t index = 0;
 };
 

@@ -35,4 +35,14 @@ target_link_libraries(main_fir PRIVATE
     alsa_devices
 )
 
+add_executable(test_playback
+    test_playback.cpp
+    adaptive_filter.cpp
+)
+
+target_link_libraries(test_playback PRIVATE
+    fir
+    alsa_devices
+)
+
 include(GNUInstallDirs)

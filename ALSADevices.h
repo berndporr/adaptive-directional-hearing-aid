@@ -39,6 +39,7 @@ class ALSAPCMDevice
     unsigned int get_channels ();
     unsigned int get_period_time ();
     unsigned int get_sample_rate ();
+    virtual _snd_pcm_stream get_pcm_stream_type () const = 0;
 };
 
 class ALSACaptureDevice : public ALSAPCMDevice
@@ -57,6 +58,10 @@ class ALSACaptureDevice : public ALSAPCMDevice
 
     bool open () override;
     void close () override;
+    virtual _snd_pcm_stream get_pcm_stream_type () const override
+    {
+        return SND_PCM_STREAM_CAPTURE;
+    };
 
   private:
     snd_pcm_sframes_t capture (std::vector<int16_t> &buffer);
@@ -76,6 +81,11 @@ class ALSAPlaybackDevice : public ALSAPCMDevice
     }
 
     snd_pcm_sframes_t onPeriod (const std::vector<int16_t> &period);
+
+    virtual _snd_pcm_stream get_pcm_stream_type () const override
+    {
+        return SND_PCM_STREAM_PLAYBACK;
+    };
 };
 
 #endif

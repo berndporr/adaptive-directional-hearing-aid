@@ -9,7 +9,7 @@ bool ALSAPCMDevice::open ()
 
     /* Open PCM device. */
     int rc = snd_pcm_open (&handle, device_name.c_str (),
-                           SND_PCM_STREAM_CAPTURE, 0);
+                           get_pcm_stream_type(), 0);
     if (rc < 0)
         {
             fprintf (stderr, "unable to open pcm device: %s\n",
@@ -54,7 +54,7 @@ bool ALSAPCMDevice::open ()
 void ALSACaptureDevice::worker ()
 {
     std::vector<int16_t> buffer;
-    buffer.resize (bytes_per_frame * frames_per_period);
+    buffer.resize (frames_per_period * channels);
     running = true;
     while (running)
         {
@@ -140,6 +140,7 @@ snd_pcm_sframes_t ALSACaptureDevice::capture (std::vector<int16_t> &buffer)
 
 snd_pcm_sframes_t ALSAPlaybackDevice::onPeriod (const std::vector<int16_t> &period)
 {
+//    fprintf(stderr,"period.size()=%ld, frames_per_period=%ld\n",period.size(),frames_per_period);
     snd_pcm_sframes_t frames_written
         = snd_pcm_writei (handle, period.data (),
                           static_cast<snd_pcm_uframes_t> (frames_per_period));
