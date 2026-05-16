@@ -25,7 +25,7 @@ int main ()
             for (long unsigned int j = 0; j < (buffer.size () / 2); j++)
                 {
                     int16_t v
-                        = (int16_t)(sin ((float)n * M_2_PI * fn) * 10000);
+                        = (int16_t)(sin ((float)n * 2 * M_PI * fn) * 10000);
                     buffer[j * 2] = v;
                     buffer[j * 2 + 1] = v;
                     n++;
