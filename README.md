@@ -57,6 +57,17 @@ and record some sound from the mics:
 arecord -D hw:memsmiccard -c 2 -r 44100 -f S16_LE /tmp/audio.wav
 ```
 
+## Headphone
+
+The Rock5 has an internal sound card. Test it with:
+
+```
+aplay -D plughw:rockchipes8316,0 /usr/share/sounds/alsa/Front_Center.wav
+```
+
+If you don't hear anything it's most likely that the volume of the headphone is zero.
+Use `alsamixer` to bump up the volume.
+
 ## Credit
 
  - Bernd Porr

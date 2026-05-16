@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_compile_options(-Wall -Wextra -Wconversion -pedantic)
+include(GNUInstallDirs)
 
 # ---- ALSA library ----
 find_package(PkgConfig REQUIRED)
@@ -25,19 +26,19 @@ target_link_libraries(alsa_devices PUBLIC
 )
 
 # ---- Executables ----
-add_executable(main_fir
-    play_audio_fir.cpp
+add_executable(fir_filtering
+    fir_filtering.cpp
     adaptive_filter.cpp
 )
 
-target_link_libraries(main_fir PRIVATE
+target_link_libraries(fir_filtering PRIVATE
     fir
     alsa_devices
 )
 
+# ---- Tests ----
 add_executable(test_playback
     test_playback.cpp
-    adaptive_filter.cpp
 )
 
 target_link_libraries(test_playback PRIVATE
@@ -45,4 +46,11 @@ target_link_libraries(test_playback PRIVATE
     alsa_devices
 )
 
-include(GNUInstallDirs)
+add_executable(test_recording
+    test_recording.cpp
+)
+
+target_link_libraries(test_recording PRIVATE
+    fir
+    alsa_devices
+)

@@ -1,28 +1,19 @@
-#ifndef __ALSADevices_H
-#define __ALSADevices_H
+#ifndef _ALSADevices_H
+#define _ALSADevices_H
 
 #include <atomic>
 #include <functional>
 #include <mutex>
 #include <thread>
-#define ALSA_PCM_NEW_HW_PARAMS_API
 
+#define ALSA_PCM_NEW_HW_PARAMS_API
 #include <alsa/asoundlib.h>
+
 #include <string>
 #include <vector>
 
 class ALSAPCMDevice
 {
-  protected:
-    const snd_pcm_format_t format = SND_PCM_FORMAT_S16_LE;
-    snd_pcm_t *handle = nullptr;
-    std::string device_name;
-    unsigned int sample_rate;
-    snd_pcm_sframes_t frames_per_period;
-    size_t bytes_per_frame;
-    unsigned int period_time;
-    unsigned int channels;
-
   public:
     ALSAPCMDevice (const std::string device_name,
                    const unsigned int sample_rate, const unsigned int channels,
@@ -40,6 +31,16 @@ class ALSAPCMDevice
     unsigned int get_period_time ();
     unsigned int get_sample_rate ();
     virtual _snd_pcm_stream get_pcm_stream_type () const = 0;
+
+  protected:
+    const snd_pcm_format_t format = SND_PCM_FORMAT_S16_LE;
+    snd_pcm_t *handle = nullptr;
+    std::string device_name;
+    unsigned int sample_rate;
+    snd_pcm_sframes_t frames_per_period;
+    size_t bytes_per_frame;
+    unsigned int period_time;
+    unsigned int channels;
 };
 
 class ALSACaptureDevice : public ALSAPCMDevice
@@ -58,10 +59,6 @@ class ALSACaptureDevice : public ALSAPCMDevice
 
     bool open () override;
     void close () override;
-    virtual _snd_pcm_stream get_pcm_stream_type () const override
-    {
-        return SND_PCM_STREAM_CAPTURE;
-    };
 
   private:
     snd_pcm_sframes_t capture (std::vector<int16_t> &buffer);
@@ -69,6 +66,10 @@ class ALSACaptureDevice : public ALSAPCMDevice
     virtual void worker ();
     std::thread thr;
     bool running = false;
+    virtual _snd_pcm_stream get_pcm_stream_type () const override
+    {
+        return SND_PCM_STREAM_CAPTURE;
+    };
 };
 
 class ALSAPlaybackDevice : public ALSAPCMDevice
@@ -82,10 +83,16 @@ class ALSAPlaybackDevice : public ALSAPCMDevice
 
     snd_pcm_sframes_t onPeriod (const std::vector<int16_t> &period);
 
+    void setReportUnderruns(bool ur = true) {
+      reportUnderruns = ur;
+    }
+
+  private:
     virtual _snd_pcm_stream get_pcm_stream_type () const override
     {
         return SND_PCM_STREAM_PLAYBACK;
     };
+    bool reportUnderruns = false;
 };
 
 #endif

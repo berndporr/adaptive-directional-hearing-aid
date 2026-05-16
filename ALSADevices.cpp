@@ -9,7 +9,7 @@ bool ALSAPCMDevice::open ()
 
     /* Open PCM device. */
     int rc = snd_pcm_open (&handle, device_name.c_str (),
-                           get_pcm_stream_type(), 0);
+                           get_pcm_stream_type (), 0);
     if (rc < 0)
         {
             fprintf (stderr, "unable to open pcm device: %s\n",
@@ -88,10 +88,11 @@ size_t ALSAPCMDevice::get_bytes_per_frame () { return bytes_per_frame; }
 bool ALSACaptureDevice::open ()
 {
     bool b = ALSAPCMDevice::open ();
-    if (!b) {
-        return b;
-    }
-    thr = std::thread(&ALSACaptureDevice::worker,this);
+    if (!b)
+        {
+            return b;
+        }
+    thr = std::thread (&ALSACaptureDevice::worker, this);
     return b;
 }
 
@@ -110,60 +111,30 @@ snd_pcm_sframes_t ALSACaptureDevice::capture (std::vector<int16_t> &buffer)
         = snd_pcm_readi (handle, buffer.data (),
                          static_cast<snd_pcm_uframes_t> (frames_per_period));
 
-    if (frames_read == 0)
+    if (frames_read < 0)
         {
-            fprintf (stderr, "End of file.\n");
-            return 0;
-        }
-    if (frames_read == -EINTR)
-        {
-            return 0;
+            snd_pcm_recover (handle, static_cast<int> (frames_read), 1);
         }
 
-    if (frames_read != static_cast<snd_pcm_sframes_t> (frames_per_period))
-        {
-            fprintf (stderr, "Short read: we read <%ld> frames\n",
-                     frames_read);
-            // A -ve return value means an error.
-            if (frames_read < 0)
-                {
-                    snd_pcm_recover (handle, static_cast<int> (frames_read),
-                                     1);
-                    fprintf (stderr, "error from readi: %s\n",
-                             snd_strerror (static_cast<int> (frames_read)));
-                    return 0;
-                }
-            return frames_read;
-        }
     return frames_read;
 }
 
-snd_pcm_sframes_t ALSAPlaybackDevice::onPeriod (const std::vector<int16_t> &period)
+snd_pcm_sframes_t
+ALSAPlaybackDevice::onPeriod (const std::vector<int16_t> &period)
 {
-//    fprintf(stderr,"period.size()=%ld, frames_per_period=%ld\n",period.size(),frames_per_period);
+    //    fprintf(stderr,"period.size()=%ld,
+    //    frames_per_period=%ld\n",period.size(),frames_per_period);
     snd_pcm_sframes_t frames_written
         = snd_pcm_writei (handle, period.data (),
                           static_cast<snd_pcm_uframes_t> (frames_per_period));
-    if (frames_written == -EINTR)
-        {
-            return 0;
-        }
 
     if (frames_written == -EPIPE)
         {
             /* EPIPE means underrun */
-            fprintf (stderr, "underrun occurred\n");
             snd_pcm_prepare (handle);
-        }
-    else if (frames_written < 0)
-        {
-            fprintf (stderr, "error from writei: %s\n",
-                     snd_strerror (static_cast<int> (frames_written)));
-        }
-    else if (frames_written != frames_per_period)
-        {
-            fprintf (stderr, "short write, write %ld frames\n",
-                     frames_written);
+            if (reportUnderruns) {
+                fprintf(stderr,"Playback buffer underrun!\n");
+            }
         }
 
     return frames_written;

@@ -22,7 +22,7 @@ class DelayLine
         buffer[index] = x;
 
         index++;
-        if (index == buffer.size())
+        if (index == buffer.size ())
             index = 0;
 
         return y;
@@ -36,7 +36,7 @@ class DelayLine
 class AdaptiveFilter
 {
   public:
-    AdaptiveFilter (const int ntaps)
+    AdaptiveFilter (const int ntaps, const int sampling_rate) : sampling_rate(sampling_rate)
     {
         fir = std::make_shared<Fir1> (ntaps, 0.00000);
         delayLine = std::make_shared<DelayLine> (delay_line_length);
@@ -67,6 +67,7 @@ class AdaptiveFilter
     }
 
   private:
+    int sampling_rate = 0;
     std::shared_ptr<Fir1> fir;
     std::shared_ptr<DelayLine> delayLine;
     std::thread thr;
@@ -81,7 +82,7 @@ class AdaptiveFilter
     OnPeriod onPeriod;
     const size_t delay_line_length = static_cast<size_t> (std::round (
         ((AVERAGE_DISTANCE_FROM_EAR_TO_EAR_CM / 100.0) / SPEED_OF_SOUND)
-        * FIR_SAMPLING_RATE * DELAY_LINE_MULTIPLIER));
+        * sampling_rate * DELAY_LINE_MULTIPLIER));
 };
 
 #endif

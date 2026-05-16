@@ -6,13 +6,13 @@
 
 int main ()
 {
-    ALSACaptureDevice microphone ("hw:memsmiccard,0", FIR_SAMPLING_RATE,
+    ALSACaptureDevice microphone ("hw:memsmiccard,0", SAMPLING_RATE,
                                   MICROPHONE_CHANNELS, FRAMES_PER_PERIOD);
 
-    ALSAPlaybackDevice speaker ("plughw:rockchipes8316,0", FIR_SAMPLING_RATE,
+    ALSAPlaybackDevice speaker ("plughw:rockchipes8316,0", SAMPLING_RATE,
                                 SPEAKER_CHANNELS, FRAMES_PER_PERIOD);
 
-    AdaptiveFilter adaptive_filter (FIR_NTAPS);
+    AdaptiveFilter adaptive_filter (FIR_NTAPS,SAMPLING_RATE);
 
     microphone.registerCallback ([&] (const std::vector<int16_t> &period) {
         adaptive_filter.processAsync (period);
@@ -27,9 +27,11 @@ int main ()
     adaptive_filter.start ();
     microphone.open ();
 
+    printf("Up and running. Press any key to stop.\n");
     // do nothing
     getchar ();
 
+    printf("Shutting down...\n");
     microphone.close ();
     adaptive_filter.stop ();
     speaker.close ();
