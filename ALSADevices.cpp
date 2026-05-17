@@ -1,5 +1,6 @@
 #include "ALSADevices.h"
 #include <alsa/asoundlib.h>
+#include <cstddef>
 #include <cstring>
 #include <thread>
 
@@ -101,10 +102,6 @@ bool ALSAPCMDevice::open (const std::string _device_name,
 
     snd_pcm_hw_params_get_period_time (params, &period_time, 0);
 
-    bytes_per_frame
-        = static_cast<unsigned> ((snd_pcm_format_width (format) / 8))
-          * channels;
-
     return true;
 }
 
@@ -136,25 +133,15 @@ void ALSAPCMDevice::close ()
 {
     snd_pcm_drain (handle);
     snd_pcm_close (handle);
+    handle = nullptr;
 }
 
-long unsigned int ALSAPCMDevice::get_period_time () { return period_time; }
+long unsigned int ALSAPCMDevice::get_period_time () const { return period_time; }
 
-long unsigned int ALSAPCMDevice::get_channels () { return channels; }
+long unsigned int ALSAPCMDevice::get_buffer_size () const { return buffer_size; }
 
-long unsigned int ALSAPCMDevice::get_frames_per_period ()
-{
-    return frames_per_period;
-}
+long unsigned int ALSAPCMDevice::get_frames_per_period () const { return frames_per_period; }
 
-long unsigned int ALSAPCMDevice::get_sample_rate () { return sample_rate; }
-
-long unsigned int ALSAPCMDevice::get_buffer_size () { return buffer_size; }
-
-long unsigned int ALSAPCMDevice::get_bytes_per_frame ()
-{
-    return bytes_per_frame;
-}
 
 bool ALSACaptureDevice::open (const std::string _device_name,
                               const unsigned int _sample_rate,
@@ -175,7 +162,7 @@ void ALSACaptureDevice::close ()
 {
     running = false;
     thr.join ();
-    snd_pcm_drop(handle);
+    snd_pcm_drop (handle);
     ALSAPCMDevice::close ();
 }
 
@@ -198,6 +185,8 @@ snd_pcm_sframes_t ALSACaptureDevice::capture (std::vector<int16_t> &buffer)
 snd_pcm_sframes_t
 ALSAPlaybackDevice::onPeriod (const std::vector<int16_t> &period)
 {
+    // Can't deliver audio if we haven't got an open device.
+    if (!handle) return 0;
     //    fprintf(stderr,"period.size()=%ld,
     //    frames_per_period=%ld\n",period.size(),frames_per_period);
     snd_pcm_sframes_t frames_written
@@ -215,6 +204,6 @@ ALSAPlaybackDevice::onPeriod (const std::vector<int16_t> &period)
 
 void ALSAPlaybackDevice::close ()
 {
-	snd_pcm_drain(handle);
+    snd_pcm_drain (handle);
     ALSAPCMDevice::close ();
 }
