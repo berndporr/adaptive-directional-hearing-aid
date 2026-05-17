@@ -1,11 +1,17 @@
-
 #include "ALSADevices.h"
 #include <alsa/asoundlib.h>
 #include <cstring>
 #include <thread>
 
-bool ALSAPCMDevice::open ()
+bool ALSAPCMDevice::open (const std::string _device_name,
+                          const unsigned int _sample_rate,
+                          const unsigned int _channels,
+                          const unsigned int _frames_per_period)
 {
+    device_name = _device_name;
+    sample_rate = _sample_rate;
+    channels = _channels;
+    frames_per_period = _frames_per_period;
 
     /* Open PCM device. */
     int rc = snd_pcm_open (&handle, device_name.c_str (),
@@ -119,7 +125,8 @@ void ALSACaptureDevice::worker ()
             onPeriod (buffer);
             if ((n * channels) != (long int)buffer.size ())
             {
-                fprintf (stderr, "Capture: %ld != %ld\n", n * channels, buffer.size ());
+                fprintf (stderr, "Capture: %ld != %ld\n", n * channels,
+                         buffer.size ());
             }
         }
     }
@@ -149,9 +156,13 @@ long unsigned int ALSAPCMDevice::get_bytes_per_frame ()
     return bytes_per_frame;
 }
 
-bool ALSACaptureDevice::open ()
+bool ALSACaptureDevice::open (const std::string _device_name,
+                              const unsigned int _sample_rate,
+                              const unsigned int _channels,
+                              const unsigned int _frames_per_period)
 {
-    bool b = ALSAPCMDevice::open ();
+    bool b = ALSAPCMDevice::open (_device_name, _sample_rate, _channels,
+                                  _frames_per_period);
     if (!b)
     {
         return b;

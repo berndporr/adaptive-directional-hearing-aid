@@ -15,15 +15,12 @@
 class ALSAPCMDevice
 {
   public:
-    ALSAPCMDevice (const std::string device_name,
-                   const unsigned int sample_rate, const unsigned int channels,
-                   const unsigned int frames_per_period)
-        : device_name (device_name), sample_rate (sample_rate),
-          frames_per_period (frames_per_period), channels (channels)
-    {
-    }
+    ALSAPCMDevice () {}
 
-    virtual bool open ();
+    virtual bool open (const std::string _device_name,
+                       const unsigned int _sample_rate,
+                       const unsigned int _channels,
+                       const unsigned int _frames_per_period);
     virtual void close ();
     long unsigned int get_frames_per_period ();
     long unsigned int get_bytes_per_frame ();
@@ -45,21 +42,20 @@ class ALSAPCMDevice
     long unsigned int buffer_size = 0;
 };
 
+/**
+ * ALSA capture device with callback. Samples are of type int16_t and
+ * are always interleaved in the buffer for stereo.
+ */
 class ALSACaptureDevice : public ALSAPCMDevice
 {
   public:
-    ALSACaptureDevice (const std::string device_name,
-                       const unsigned int sample_rate,
-                       const unsigned int channels,
-                       unsigned int frames_per_period)
-        : ALSAPCMDevice (device_name, sample_rate, channels, frames_per_period)
-    {
-    }
-
     using OnPeriod = std::function<void (const std::vector<int16_t> &)>;
     void registerCallback (OnPeriod of) { onPeriod = of; }
 
-    bool open () override;
+    bool open (const std::string _device_name,
+                       const unsigned int _sample_rate,
+                       const unsigned int _channels,
+                       const unsigned int _frames_per_period) override;
     void close () override;
 
   private:
@@ -77,12 +73,6 @@ class ALSACaptureDevice : public ALSAPCMDevice
 class ALSAPlaybackDevice : public ALSAPCMDevice
 {
   public:
-    ALSAPlaybackDevice (std::string device_name, unsigned int sample_rate,
-                        unsigned int channels, unsigned int frames_per_period)
-        : ALSAPCMDevice (device_name, sample_rate, channels, frames_per_period)
-    {
-    }
-
     snd_pcm_sframes_t onPeriod (const std::vector<int16_t> &period);
 
     inline bool isUnderrunErrorCode (const long int r) { return -EPIPE == r; }

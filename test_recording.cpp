@@ -33,8 +33,7 @@ struct SOXdatafile
 int main ()
 {
 
-    ALSACaptureDevice microphone ("hw:memsmiccard,0", SAMPLING_RATE,
-                                  CHANNELS, FRAMES_PER_PERIOD);
+    ALSACaptureDevice microphone;
 
     SOXdatafile soxDatafile (datFilename);
 
@@ -46,7 +45,8 @@ int main ()
             }
     });
 
-    microphone.open ();
+    microphone.open ("hw:memsmiccard,0", SAMPLING_RATE,
+                                  CHANNELS, FRAMES_PER_PERIOD);
 
     printf ("Bear with me!\n");
 
