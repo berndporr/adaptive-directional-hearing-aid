@@ -173,9 +173,10 @@ bool ALSACaptureDevice::open (const std::string _device_name,
 
 void ALSACaptureDevice::close ()
 {
-    ALSAPCMDevice::close ();
     running = false;
     thr.join ();
+    snd_pcm_drop(handle);
+    ALSAPCMDevice::close ();
 }
 
 snd_pcm_sframes_t ALSACaptureDevice::capture (std::vector<int16_t> &buffer)
@@ -210,4 +211,10 @@ ALSAPlaybackDevice::onPeriod (const std::vector<int16_t> &period)
     }
 
     return frames_written;
+}
+
+void ALSAPlaybackDevice::close ()
+{
+	snd_pcm_drain(handle);
+    ALSAPCMDevice::close ();
 }

@@ -73,6 +73,8 @@ class ALSACaptureDevice : public ALSAPCMDevice
 class ALSAPlaybackDevice : public ALSAPCMDevice
 {
   public:
+    void close () override;
+
     snd_pcm_sframes_t onPeriod (const std::vector<int16_t> &period);
 
     inline bool isUnderrunErrorCode (const long int r) { return -EPIPE == r; }

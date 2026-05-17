@@ -5,21 +5,30 @@
 
 int main ()
 {
+    // sampling rate
     const int fs = 8000;
-    ALSAPlaybackDevice speaker;
 
+    // We play a sine wave of 1kHz
+    // In normalised freq:
+    const float fn = 1000.0f / (float)fs;
+
+    // 3 seconds
+    // In ALSA Periods:
+    const int nPeriods = (int)(3.0*fs/FRAMES_PER_PERIOD);
+
+    // Sample buffer for one Period
     std::vector<int16_t> buffer;
-    buffer.resize (speaker.get_frames_per_period () * speaker.get_channels ());
-    // 1kHz in normalised freq.
-    float fn = 1000.0f / (float)fs;
+    buffer.resize (CHANNELS * FRAMES_PER_PERIOD);
 
+    // Our Loudspeaker
+    ALSAPlaybackDevice speaker;
     speaker.open ("plughw:rockchipes8316,0", fs, CHANNELS, FRAMES_PER_PERIOD);
 
     printf ("Latency in us reported by ALSA: %ld\n",
             speaker.get_period_time ());
 
     long int n = 0;
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < nPeriods; i++)
     {
         for (long unsigned int j = 0; j < (buffer.size () / 2); j++)
         {

@@ -12,8 +12,7 @@ int main ()
     ALSAPlaybackDevice speaker;
 
     std::vector<int16_t> boostbuffer;
-    boostbuffer.resize (microphone.get_frames_per_period ()
-                        * microphone.get_channels ());
+    boostbuffer.resize (FRAMES_PER_PERIOD * CHANNELS);
 
     microphone.registerCallback ([&] (const std::vector<int16_t> &period) {
         int i = 0;

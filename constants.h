@@ -8,7 +8,7 @@
 #define SAMPLING_RATE 8000
 #define FIR_NTAPS 200
 #define FIR_LEARNING_RATE 0.000001
-#define FIR_OUTPUT_GAIN 30
+#define FIR_OUTPUT_GAIN 100
 
 //general constants
 #define FRAMES_PER_PERIOD 64
