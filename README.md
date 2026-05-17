@@ -68,6 +68,48 @@ aplay -D plughw:rockchipes8316,0 /usr/share/sounds/alsa/Front_Center.wav
 If you don't hear anything it's most likely that the volume of the headphone is zero.
 Use `alsamixer` to bump up the volume.
 
+## Building
+
+```
+cmake .
+make
+```
+
+## LMS filter
+
+This uses a classical LMS filter to cancel out sound from the side. Run with
+
+```
+./fir_filtering
+```
+
+## Tests
+
+### Capture
+
+```
+./test_recording
+```
+
+Records to the `/tmp` directory the file 
+`/tmp/test_recording.dat`. Which can be converted by `sox` to a wave
+file with `sox test_recording.dat test_recording.wav` or played with `sox test_recording.dat -d`.
+
+### Playback
+
+```
+./test_playback
+```
+
+plays a 1kHz sine wave in stereo.
+
+### Low latency passthrough
+
+```
+./test_passthrough
+```
+sends simply the data from the mics to the headphones.
+
 ## Credit
 
  - Bernd Porr
