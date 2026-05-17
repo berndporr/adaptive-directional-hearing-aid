@@ -40,6 +40,7 @@ class AdaptiveFilter
     {
         fir = std::make_shared<Fir1> (ntaps, 0.00000);
         delayLine = std::make_shared<DelayLine> (delay_line_length);
+        fir->setLearningRate (0);
     }
     void setLearningrate (float mu) { fir->setLearningRate (mu); }
     float processSample (const float l, const float r);
@@ -66,6 +67,10 @@ class AdaptiveFilter
             thr.join ();
     }
 
+    void enableLogging(const char* filename) {
+        flog = fopen(filename,"wt");
+    }
+
   private:
     int sampling_rate = 0;
     std::shared_ptr<Fir1> fir;
@@ -83,6 +88,8 @@ class AdaptiveFilter
     const size_t delay_line_length = static_cast<size_t> (std::round (
         ((AVERAGE_DISTANCE_FROM_EAR_TO_EAR_CM / 100.0) / SPEED_OF_SOUND)
         * sampling_rate * DELAY_LINE_MULTIPLIER));
+
+    FILE* flog = nullptr;
 };
 
 #endif

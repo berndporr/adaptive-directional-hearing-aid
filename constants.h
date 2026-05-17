@@ -7,8 +7,8 @@
 //constants for the fir filter
 #define SAMPLING_RATE 8000
 #define FIR_NTAPS 200
-#define FIR_LEARNING_RATE 0.000001
-#define FIR_OUTPUT_GAIN 100
+#define FIR_LEARNING_RATE 10.0f
+#define FIR_OUTPUT_GAIN 50
 
 //general constants
 #define FRAMES_PER_PERIOD 64

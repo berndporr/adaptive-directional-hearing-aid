@@ -12,11 +12,14 @@ float AdaptiveFilter::processSample (const float l, const float r)
             fir->reset ();
             fir->zeroCoeff ();
             canceller = 0;
+            fprintf(stderr,"LMS overflow.\n");
         }
 
     double output = delayed_sum - canceller;
 
     fir->lms_update (output);
+
+    if (flog) fprintf(flog,"%e\t%e\t%e\t%e\n",sum,diff,canceller,output);
 
     float y = (float)(output * FIR_OUTPUT_GAIN);
 

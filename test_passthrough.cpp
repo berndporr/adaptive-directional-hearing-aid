@@ -18,7 +18,7 @@ int main ()
         int i = 0;
         for (const int16_t &v : period)
         {
-            boostbuffer[i] = v * 10;
+            boostbuffer[i] = v * 50;
             i++;
         }
         long int r = speaker.onPeriod (boostbuffer);
