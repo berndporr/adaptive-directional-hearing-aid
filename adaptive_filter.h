@@ -11,11 +11,23 @@
 #include <optional>
 #include <thread>
 
+/**
+ * Delay line is double values.
+ */
 class DelayLine
 {
   public:
+    /**
+     * Constructs the delay line.
+     * @param delay The number of delay steps
+     */
     explicit DelayLine (size_t delay) : buffer (delay, 0.0) {}
 
+    /**
+     * Processes a sample.
+     * @param x Input to the delay line.
+     * @return Output of the delay line.
+     */
     inline double process (double x)
     {
         double y = buffer[index];
@@ -33,10 +45,20 @@ class DelayLine
     size_t index = 0;
 };
 
+/**
+ * LMS Adaptive Noise canceller.
+ * It tries to cancel out anything that's in l-r.
+ * It's working asynchronously by subscribing to an audio stream
+ * and publishing the results.
+ */
 class AdaptiveFilter
 {
   public:
-    AdaptiveFilter (const int ntaps, const int sampling_rate) : sampling_rate(sampling_rate)
+    /**
+     * Constructs the adaptive FIR filter.
+     */
+    AdaptiveFilter (const int ntaps, const int sampling_rate)
+        : sampling_rate (sampling_rate)
     {
         fir = std::make_shared<Fir1> (ntaps, 0.00000);
         delayLine = std::make_shared<DelayLine> (delay_line_length);
@@ -62,13 +84,16 @@ class AdaptiveFilter
         if (!running)
             return;
         running = false;
+        // Waking up the worker thread and finish it.
         cv.notify_all ();
+        // Waiting for the worker thread to finish.
         if (thr.joinable ())
             thr.join ();
     }
 
-    void enableLogging(const char* filename) {
-        flog = fopen(filename,"wt");
+    void enableLogging (const char *filename)
+    {
+        flog = fopen (filename, "wt");
     }
 
   private:
@@ -89,7 +114,7 @@ class AdaptiveFilter
         ((AVERAGE_DISTANCE_FROM_EAR_TO_EAR_CM / 100.0) / SPEED_OF_SOUND)
         * sampling_rate * DELAY_LINE_MULTIPLIER));
 
-    FILE* flog = nullptr;
+    FILE *flog = nullptr;
 };
 
 #endif
