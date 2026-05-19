@@ -56,6 +56,8 @@ class AdaptiveFilter
   public:
     /**
      * Constructs the adaptive FIR filter.
+     * @param ntaps Number of taps of the adaptive FIR filter.
+     * @param sampling_rate The sampling rate.
      */
     AdaptiveFilter (const int ntaps, const int sampling_rate)
         : sampling_rate (sampling_rate)
@@ -64,13 +66,31 @@ class AdaptiveFilter
         delayLine = std::make_shared<DelayLine> (delay_line_length);
         fir->setLearningRate (0);
     }
+
+    /**
+     * Sets the learning rate of the FIR filter.
+     */
     void setLearningrate (float mu) { fir->setLearningRate (mu); }
-    float processSample (const float l, const float r);
+
+    /**
+     * Subscriber to the microphone of a sound card.
+     * @param period is the chunk of data processed: stereo interleaved LRLR.
+     */
     void processAsync (const std::vector<int16_t> &period);
 
+    /**
+     * Callback when a new chunk is ready.
+     */
     using OnPeriod = std::function<void (const std::vector<int16_t> &)>;
+
+    /**
+     * Registers the callback for the subscriber.
+     */
     void registerCallback (OnPeriod op) { onPeriod = op; }
 
+    /**
+     * Starts the thread processing the audio chunks async.
+     */
     void start ()
     {
         if (running)
@@ -79,6 +99,9 @@ class AdaptiveFilter
         shared_input.reset ();
     }
 
+    /**
+     * Stops the thread processing the async audio chunks.
+     */
     void stop ()
     {
         if (!running)
@@ -91,6 +114,9 @@ class AdaptiveFilter
             thr.join ();
     }
 
+    /**
+     * Enables logging sample by sample
+     */
     void enableLogging (const char *filename)
     {
         flog = fopen (filename, "wt");
@@ -108,6 +134,7 @@ class AdaptiveFilter
     std::optional<std::vector<int16_t> > shared_input;
 
     void processPeriod (std::vector<int16_t> &output);
+    float processSample (const float l, const float r);
     void worker ();
     OnPeriod onPeriod;
     const size_t delay_line_length = static_cast<size_t> (std::round (
