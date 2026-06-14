@@ -1,11 +1,10 @@
 #include "adaptive_filter.h"
 
-float AdaptiveFilter::processSample (const float l, const float r)
+float AdaptiveFilter::processSample (std::shared_ptr<Fir1> fir,
+                                     std::shared_ptr<DelayLine> delayLine,
+                                     float v, float diff)
 {
-    float sum = r + l;
-    float diff = r - l;
-
-    double delayed_sum = delayLine->process (sum);
+    const double delayed = delayLine->process (v);
     double canceller = fir->filter (diff);
     if (std::abs (canceller) > 1)
     {
@@ -15,21 +14,19 @@ float AdaptiveFilter::processSample (const float l, const float r)
         fprintf (stderr, "LMS overflow.\n");
     }
 
-    double output = delayed_sum - canceller;
+    double output = delayed - canceller;
 
     fir->lms_update (output);
 
     if (flog)
-        fprintf (flog, "%e\t%e\t%e\t%e\n", sum, diff, canceller, output);
+        fprintf (flog, "%e\t%e\t%e\n", diff, canceller, output);
 
-    float y = (float)(output * FIR_OUTPUT_GAIN);
-
-    if (y > 1)
-        y = 1;
-    if (y < -1)
-        y = -1;
-
-    return y;
+    output = output * FIR_OUTPUT_GAIN;
+    if (output > 1)
+        output = 1;
+    if (output < -1)
+        output = -1;
+    return (float)output;
 }
 
 void AdaptiveFilter::processPeriod (std::vector<int16_t> &output)
@@ -43,9 +40,11 @@ void AdaptiveFilter::processPeriod (std::vector<int16_t> &output)
     {
         const float left = shared_input.value ()[2 * i] / 32768.0f;
         const float right = shared_input.value ()[2 * i + 1] / 32768.0f;
-        const float y = processSample (left, right);
-        output[2 * i] = (int16_t)(y * 32768);
-        output[2 * i + 1] = (int16_t)(y * 32768);
+        const float diff = left - right;
+        const float lOut = processSample (firL,delayLineL,left,diff);
+        const float rOut = processSample (firR,delayLineR,right,diff);
+        output[2 * i] = (int16_t)(lOut * 32768);
+        output[2 * i + 1] = (int16_t)(rOut * 32768);
     }
 }
 

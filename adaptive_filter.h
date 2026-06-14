@@ -62,15 +62,22 @@ class AdaptiveFilter
     AdaptiveFilter (const int ntaps, const int sampling_rate)
         : sampling_rate (sampling_rate)
     {
-        fir = std::make_shared<Fir1> (ntaps, 0.00000);
-        delayLine = std::make_shared<DelayLine> (delay_line_length);
-        fir->setLearningRate (0);
+        firL = std::make_shared<Fir1> (ntaps, 0.00000);
+        delayLineL = std::make_shared<DelayLine> (delay_line_length);
+        firR = std::make_shared<Fir1> (ntaps, 0.00000);
+        delayLineR = std::make_shared<DelayLine> (delay_line_length);
+        firL->setLearningRate (0);
+        firR->setLearningRate (0);
     }
 
     /**
      * Sets the learning rate of the FIR filter.
      */
-    void setLearningrate (float mu) { fir->setLearningRate (mu); }
+    void setLearningrate (float mu)
+    {
+        firL->setLearningRate (mu);
+        firR->setLearningRate (mu);
+    }
 
     /**
      * Subscriber to the microphone of a sound card.
@@ -124,8 +131,10 @@ class AdaptiveFilter
 
   private:
     int sampling_rate = 0;
-    std::shared_ptr<Fir1> fir;
-    std::shared_ptr<DelayLine> delayLine;
+    std::shared_ptr<Fir1> firL;
+    std::shared_ptr<Fir1> firR;
+    std::shared_ptr<DelayLine> delayLineL;
+    std::shared_ptr<DelayLine> delayLineR;
     std::thread thr;
     bool running = false;
 
@@ -134,7 +143,9 @@ class AdaptiveFilter
     std::optional<std::vector<int16_t> > shared_input;
 
     void processPeriod (std::vector<int16_t> &output);
-    float processSample (const float l, const float r);
+    float processSample (std::shared_ptr<Fir1> fir,
+                         std::shared_ptr<DelayLine> delayLine, float v,
+                         float diff);
     void worker ();
     OnPeriod onPeriod;
     const size_t delay_line_length = static_cast<size_t> (std::round (
