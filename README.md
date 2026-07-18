@@ -1,5 +1,7 @@
 # Adaptive directional hearing aid
 
+(Work in progress)
+
 The idea is to use the difference L-R as a cancellation signal for sound off axis with an adaptive filter.
 We do it for left and right separately:
 
