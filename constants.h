@@ -6,7 +6,7 @@
 
 //constants for the fir filter
 #define SAMPLING_RATE 8000
-#define FIR_NTAPS 200
+#define FIR_NTAPS 50
 #define FIR_LEARNING_RATE 10.0f
 #define FIR_OUTPUT_GAIN 50
 

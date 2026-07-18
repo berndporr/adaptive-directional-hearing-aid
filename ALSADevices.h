@@ -22,15 +22,11 @@ class ALSAPCMDevice
 
     /**
      * Opens the ALSA device with the requested paramters.
-     * @param _device_name ALSA device as listed for example by "aplay -l" or
-     * "arecord -l".
-     * @param _sample_rate Requested exact sampling rate of the device. No
-     * deviation is allowed.
-     * @param _channels Requested exact number of channels. No deviation is
-     * allowed.
-     * @param _frames_per_period Desired number of frames per period. This
-     * might be chnanged by ALSA.
-     * @return Is true on success. False if any of the parameters won't work.
+     * @param _device_name ALSA device as listed for example by "aplay -l" or "arecord -l".
+     * @param _sample_rate Exact sampling rate of the device. Nn deviation is allowed.
+     * @param _channels Exact number of channels. No deviation is allowed.
+     * @param _frames_per_period Desired number of frames per period. This might be chnanged by ALSA.
+     * @return True on success. False if any of the parameters won't work.
      */
     virtual bool open (const std::string _device_name,
                        const unsigned int _sample_rate,
@@ -84,7 +80,7 @@ class ALSAPCMDevice
 
 /**
  * ALSA capture device with callback. Samples are of type int16_t and
- * are always interleaved in the buffer for stereo.
+ * are interleaved in the buffer for stereo.
  */
 class ALSACaptureDevice : public ALSAPCMDevice
 {
@@ -99,7 +95,7 @@ class ALSACaptureDevice : public ALSAPCMDevice
     /**
      * Registers the callback. Note it needs to be faster than the
      * duration of one period. Ideally it should be a lot shorter
-     * and hand it over to a non-blocking reciever.
+     * and hand it over to a non-blocking subscriber.
      */
     void registerCallback (OnPeriod of) { onPeriod = of; }
 
@@ -108,12 +104,9 @@ class ALSACaptureDevice : public ALSAPCMDevice
      * If this method is successful on return it will start calling the
      * callback at the rate of the period.
      * @param _device_name ALSA device as listed for example by "arecord -l".
-     * @param _sample_rate Requested exact sampling rate of the device. No
-     * deviation is allowed.
-     * @param _channels Requested exact number of channels. No deviation is
-     * allowed.
-     * @param _frames_per_period Desired number of frames per period. This
-     * might be chnanged by ALSA.
+     * @param _sample_rate Requested exact sampling rate of the device. No deviation is allowed.
+     * @param _channels Requested exact number of channels. No deviation is allowed.
+     * @param _frames_per_period Desired number of frames per period. This might be chnanged by ALSA.
      * @return Is true on success. False if any of the parameters won't work.
      */
     bool open (const std::string _device_name, const unsigned int _sample_rate,
@@ -139,7 +132,7 @@ class ALSACaptureDevice : public ALSAPCMDevice
 };
 
 /**
- * ALSA playbacl device. Samples are of type int16_t and
+ * ALSA playback device. Samples are of type int16_t and
  * are always interleaved in the buffer for stereo.
  */
 class ALSAPlaybackDevice : public ALSAPCMDevice

@@ -120,7 +120,12 @@ plays a 1kHz sine wave in stereo.
 ```
 sends simply the data from the mics to the headphones.
 
-## Credits
+## Documentation
+
+The online docs of the classes are here:
+https://berndporr.github.io/adaptive-directional-hearing-aid/
+
+## Credit
 
  - Bernd Porr
  - Ross Cameron
