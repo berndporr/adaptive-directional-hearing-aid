@@ -1,9 +1,19 @@
 # Adaptive directional hearing aid
 
+The idea is to use the difference L-R as a cancellation signal for sound off axis with an adaptive filter.
+We do it for left and right separately:
+
+![alt tag](schem.png)
+
 ## Hardware
 
  - Rock5B or Rock5B+
  - MEMS I2S mics
+ 
+Glue the mems mics to the headphone:
+
+![alt tag](setupphoto.jpg)
+
 
 ## Software prerequisites
 
@@ -110,7 +120,8 @@ plays a 1kHz sine wave in stereo.
 ```
 sends simply the data from the mics to the headphones.
 
-## Credit
+## Credits
 
  - Bernd Porr
  - Ross Cameron
+ - Luca Faccenda
